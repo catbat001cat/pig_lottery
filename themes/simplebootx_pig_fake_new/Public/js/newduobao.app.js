@@ -1104,8 +1104,6 @@ function buy(type)
 //操作
 //猜大按钮
 $("#caida").click(function () {
-	alert(1111);
-	
 	if (is_waitting)
 		return;
 	
