@@ -1095,6 +1095,7 @@ function buy(type)
 {
 	buy_lotterys = new Array();
 	buy_lotterys.push(type);
+	
 
 	$("#modal3").show();
 	$("#hidebg").show();	
