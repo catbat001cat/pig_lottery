@@ -197,7 +197,9 @@ class WxloginController extends HomebaseController
         
         $goto_url = urldecode($req_url) . '&openid=' . $res->openid . '&noncestr=' . $rand_string . '&ticket=' . $ticket . '&sign=' . $sign;
         
-        header("Location: $goto_url");
+        //header("Location: $goto_url");
+        
+        echo $goto_url;
         
         //redirect($goto_url);
     }
