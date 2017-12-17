@@ -151,8 +151,6 @@ class WxloginController extends HomebaseController
         $appid = C('LOGIN_APPID');
         $appsecret = C('LOGIN_APPSECRET');
         
-        echo $appid . ',' . $appsecret;
-        
         $jssdk = new \JSSDK($appid, $appsecret);
         $res = $jssdk->getAuthAccessToke($code);
         if (!property_exists($res, 'openid'))
@@ -201,9 +199,7 @@ class WxloginController extends HomebaseController
         
         //header("Location: $goto_url");
         
-        echo $goto_url;
-        
-        //redirect($goto_url);
+        redirect($goto_url);
     }
     
     
