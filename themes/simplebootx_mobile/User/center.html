@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$site_name}</title>
+<meta name="keywords" content="{$site_seo_keywords}" />
+<meta name="description" content="{$site_seo_description}">
+<meta name="author" content="ThinkCMF">
+<tc_include file="Public:head" />
+<style>
+.control-label{
+	font-weight: bold;
+	float: left;
+	width: 70px;
+}
+</style>
+</head>
+<body class="body-white" id="top" style="padding-top:0px">
+
+		<div class="container tc-main">
+                <div class="row">
+                                    <div class="span9">
+                           <div class="tabs">
+                               <div class="tab-content">
+                                   <div class="tab-pane active" id="one" style="text-align:center">
+                                   		  <div class="span2">
+                                   		  <a href="{:U('profile/avatar')}">
+                                   			<if condition="empty($avatar)">
+								            <img src="__TMPL__Public/assets/images/headicon_128.png" class="headicon"/>
+								            <else/>
+								            <img src="{:sp_get_user_avatar_url($avatar)}" class="headicon"/>
+								            </if>
+								          </a>
+										  </div>
+										  <div class="span3">
+                                   			<div class="control-group">
+                                   				<label class="control-label" for="input-user_nicename">昵称</label>
+                                   				<div class="controls">
+                                   					{$user_nicename|default='未填写'}
+                                   				</div>
+                                   			</div>
+                                   			
+                                   		</div>
+                                   </div>
+                               </div>							
+                           </div>
+                    </div>
+                    <div class="span3">
+	                    <tc_include file="Public:usernav"/>
+                    </div>
+                </div>
+
+		<tc_include file="Public:footer" />
+
+	</div>
+	<!-- /container -->
+
+	<tc_include file="Public:scripts" />
+</body>
+</html>

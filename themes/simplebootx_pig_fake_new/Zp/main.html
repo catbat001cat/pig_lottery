@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en" style="font-size: 100px" id="whole">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport"
+	content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>赢家大转盘</title>
+<link rel="stylesheet" href="__TMPL__Public/css_zp/bootstrap.min.css">
+<link rel="stylesheet" href="__TMPL__Public/css_zp/main.css?10006">
+<link rel="stylesheet" href="__TMPL__Public/css_zp/mystyle.css?10012">
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<style>
+        .big-button1
+        {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-user-select: none; /*webkit浏览器*/
+        }
+        .div_huibg
+        {
+            background: #000;
+            opacity: 0.5;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            z-index: 10;
+        }
+        #paytypes
+        {
+            width: 100%;
+            background: #fff;
+            position: absolute;
+            bottom: 0;
+            z-index: 20;
+        }
+        #paytypes label
+        {
+            text-align: center;
+            display: block; /*background: #ff6600;*/
+            height: 24vw;
+            line-height: 24vw;
+            margin: 0;
+            margin-top: 1px;
+            color: #4a4a4a;
+            letter-spacing: 1px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+		#hidebg
+        {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            background-color: #7D7D7D;
+            width: 100%; /*宽度设置为100%，这样才能使隐藏背景层覆盖原页面*/
+            height: 120%;
+            filter: alpha(opacity=80); /*设置透明度为60%*/
+            opacity: 0.8; /*非IE浏览器下设置透明度为60%*/
+            display: none; /* http://www.jb51.net */
+            z-index: 998;
+        }
+        #paytypes label:nth-child(1),#paytypes label:nth-child(2)
+        {
+            border-bottom: 1px solid #e1e1e1;
+        }
+        #paytypes label input
+        {
+            display: none;
+        }
+        #paytypes label img
+        {
+            width: 6vh;
+            display: inline-block;
+            margin-top: -1px;
+            vertical-align: middle;
+        }
+        #weidianrukou
+        {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0,0,0,0.5);
+            width: 100%;
+            height: 100%;
+        }
+        #weidianrukou img
+        {
+            width: 70%;
+			margin-top: 20%;
+    		margin-left: 15%;
+        }
+        #weidianrukou p
+        {
+            color: #fff;
+            font-size: 20px;
+            line-height: 10px;
+        }        
+        .guanbi
+        {
+            font-size: 50px;
+            color: #ccc;
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            display: inline-block;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+	<!--头部-->
+	<!--
+<div class="head clearfix">
+    <div class="pull-left">
+        会员ID：<span id="userID">{$id}</span>
+    </div>
+    <div class="pull-right">
+        <span>余额:￥<em id="user-money">{$wallet['money']}</em><img src="__TMPL__Public/img_zp/btn1.png" id="chargeBtn" onclick="openCharge()" alt=""></span>
+        <div data-href="index.php?g=Zp&m=index&a=searching" class="dh-btn">兑换</div>
+        <a href="{:U('user/center/compaint')}" class="dh-btn">投诉</a>
+    </div>
+</div>-->
+	<header class="l-hd">
+		<div class="fixed_left">
+			<div class="left_div">
+				<p class="fixed_left_font">
+					<span class="name">会员:{$id}</span><span class="balance">余额:¥<b
+						class="amount" id="user-money">{$wallet['money']}</b>
+						</span>
+						<span class="cash_postal" style="right:50px"><button id="chargeBtn" onclick="openCharge()">充值</button></span>
+						<span class="cash_postal"><button onclick="goto_searching()">兑换</button></span>
+				</p>
+			</div>
+		</div>
+		<div class="toast dialog cpm-hide">
+			<div class="shade"></div>
+			<div class="naChanceMsg_1" style="min-hight: 1rem;">
+				<!--<div class="publicClose"></div>-->
+				<p class="pop_context"></p>
+				<div class="btn_stype_1">
+					<p class="goDraw" id="sureDraw">确认</p>
+				</div>
+				<div class="btn_stype_2 cpm-hide">
+					<p class="goDraw  sureDraw_left">确认</p>
+					<p class="goDraw sureDraw_right">取消</p>
+				</div>
+			</div>
+		</div>
+		<div class="toast toast_tk cpm-hide">
+			<div class="shade"></div>
+			<div class="naChanceMsg_tk" style="min-hight: 1rem;">
+				<!--<div class="publicClose"></div>-->
+				<p class="pop_context"></p>
+				<div class="btn_stype_1_tk">
+					<p class="goDraw tk">确认</p>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!--a h体内容---->
+	<div id="main-content"></div>
+    <div id="weidianrukou" style="display: none;">
+        <span class="guanbi">×</span>
+        <img src="{$servicer2_qr}" />
+        
+    </div>
+	<!--底部-->
+		<div class="footer">
+			<ul class="footer_ul">
+				<li class="footer_li footer_li_1 footer_li_active" data-type="pay" id="footer_1" onclick="on_click_footer(1)">
+					<!--<img src="http://oqnv2oygi.bkt.clouddn.com/icon1.png"/>-->
+					<span></span>
+				<p>游戏</p>
+				</li>
+				<li class="footer_li footer_li_2"  id="footer_2" onclick="on_click_footer(2)">
+					<!--<img src="http://oqnv2oygi.bkt.clouddn.com/icon2.png"/>-->
+					<span></span>
+				<p>记录</p>
+				</li>
+				<li class="footer_li footer_li_3" id="footer_3" onclick="on_click_footer(3)">
+					<!--<img src="http://oqnv2oygi.bkt.clouddn.com/icon3.png"/>-->
+					<span></span>
+				<p>查询</p>
+				</li>
+				<li class="footer_li footer_li_4" id="footer_4" onclick="on_click_footer(4)">
+					<!--<img src="http://oqnv2oygi.bkt.clouddn.com/icon4.png"/>-->
+					<span></span>
+				<p>代理赚钱</p>
+				</li>
+				<li class="footer_li footer_li_5" style="cursor: pointer" id="footer_5" onclick="on_click_footer(5)">
+					<!--<img src="http://oqnv2oygi.bkt.clouddn.com/icon5.png"/>-->
+					<span></span>
+				<p>客服</p>
+				</li>
+			</ul>
+		</div>	
+	<!--
+	<nav id="nav" class="navbar navbar-default navbar-fixed-bottom">
+		<div class=" row">
+			<div class="col-xs-3 col-sm-3 active">
+				<div class="clearfix">
+					<img src="__TMPL__Public/img_zp/75.png" alt=""> <span
+						class="active">游戏</span>
+				</div>
+			</div>
+			<div class="col-xs-3 col-sm-3">
+				<div>
+					<img src="__TMPL__Public/img_zp/jl.png" alt=""> <span>记录</span>
+				</div>
+			</div>
+			<div class="col-xs-3 col-sm-3">
+				<div>
+					<img src="__TMPL__Public/img_zp/73.png" alt=""> <span>查询</span>
+				</div>
+			</div>
+			<div class="col-xs-3 col-sm-3">
+				<div>
+					<img src="__TMPL__Public/img_zp/72.png" alt=""> <span>代理赚钱</span>
+				</div>
+			</div>
+			<div class="col-xs-3 col-sm-3">
+				<div>
+					<img src="__TMPL__Public/img_zp/71.png" alt=""> <span>客服</span>
+				</div>
+			</div>
+		</div>
+	</nav>-->
+    <div style="width: 100%; top: 150px; position: absolute; z-index: 999;">
+        <div style="background: #303031; border-radius: 20px; margin: 0 auto; padding: 11px 22px 11px 22px;
+            color: white; display: none;" id="modal2">
+            操作成功
+        </div>
+    </div>	
+            <div id="hidebg">
+            </div>    
+	<!--账户充值-->
+	<div class="full-frame" id="full-frame" style="display: none;">
+		<div class="order">
+			<div class="order-title">账户充值</div>
+			<div class="order-box">
+				<div class="order-close" id="order-close"></div>
+				<!--<div style="padding: 25px 25px 0 25px ">-->
+				<!--<p for="">请输入银行卡号：</p>-->
+				<!--<input id="bankNo" type="number" style="height: 25px;color: #000">-->
+				<!--</div>-->
+				<div class="order-list" id="order-list">
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>5</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>10</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>20</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>50</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>100</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>200</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>300</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>500</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>1000</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>2000</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="close-btn"
+						style="background: url(__TMPL__Public/img_zp/30.png) 50% 50% no-repeat; background-size: 90%; width: 30%; font-weight: bold; text-align: center; padding: 10px 0; height: 100%; line-height: 2.4rem; font-size: 1.63rem;"
+						onclick="$('.full-frame').hide()">关闭</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--充值成功-->
+	<div class="full-success" id="full-success">
+		<div class="order">
+			<div class="full-msg">
+				<h4>充值成功</h4>
+				<p>成功入账5元</p>
+			</div>
+			<div class="buy-btn" id="successConfirm">确定</div>
+		</div>
+	</div>
+    <div class="div_huibg" style="display: none;">
+    </div>	
+    <div id="pay_item_template" style="display:none">
+        <label id="alipay" name="alipay"  title="支付宝">
+            <input type="radio" name="paytype" value="支付宝" onclick="javascript:select_channel('{type}');" />
+            <img src="__TMPL__Public/img/winxin-big-img.png" alt="">
+          	  {name}
+        </label>    
+    </div>
+    <audio id="effectMusic" class="media-audio" src="__TMPL__Public/assets/zp.mp3" preload></audio>
+    <div id="paytypes" style="display: none;margin-bottom:50px;z-index:999">
+         <!--<h4>请选择支付方式</h4>--> 
+         <foreach name="channels" item="vo">
+	         <label id="{$vo['type']}" name="{$vo['type']}"  title="{$vo['name']}">
+	            <input type="radio" name="paytype" value="{$vo['name']}" onclick="javascript:select_channel('{$vo['type']}');" />
+	            <if condition="$vo.wx eq 1">
+	            <img src="__TMPL__Public/img/winxin-big-img.png" alt="">
+	            <else/>
+	            <img src="__TMPL__Public/img/alipay-big-img.png" alt="">
+	            </if>
+	          	  {$vo['name']}
+	        </label>    
+         </foreach>	
+	<script src="__TMPL__Public/js_zp/jquery-3.1.1.min.js"></script>
+	<script src="__TMPL__Public/js_zp/bootstrap.min.js"></script>
+	<script src="__TMPL__Public/js_zp/config.js?10021"></script>
+<php>
+echo '<script>orderNum=[' . $recharge_prices . '];init_recharges();</script>';
+</php>
+	<script>
+	function play_audio()
+	{
+		var au=document.getElementById("effectMusic");
+	    au.play();
+	}
+	
+	function stop_audio()
+	{
+		var au=document.getElementById("effectMusic");
+	    au.stop();
+		au.currentTime = 0;
+	}
+
+	window.onload = function() {
+	    var au=document.getElementById("effectMusic");
+	    au.load();
+	    document.addEventListener("WeixinJSBridgeReady", function () {
+	    	au.load();
+	    }, false);
+	}	
+		$(function() {
+			getUser();
+			$('#main-content').html('');
+			$('#main-content').load("index.php?g=Zp&m=index&a=index");
+			window.location.href = "#1147144";
+			$('.dh-btn').click(
+					function() {
+						$('#main-content').load(
+								"{:U('index.php?g=Zp&m=index&a=searching')}");
+						window.location.href = "#1147146";
+						$('#nav .row>div.active').removeClass('active');
+						$('#nav .row>div>div>span.active')
+								.removeClass('active');
+
+						$('#nav .row>div:eq(2)').addClass('active');
+						$('#nav .row>div:eq(2)>a>span').addClass('active');
+					})
+		})
+		
+		function on_click_footer(tag)
+		{
+			for (var i=1; i<=5; i++)
+				$('#footer_' + i).removeClass('footer_li_active');
+			
+			$('#footer_' + tag).addClass('footer_li_active');
+			
+			var index = tag - 1;
+			
+			if (index == 0) {
+				window.location.href = "{:U('index.php?g=Zp&m=index&a=main')}";
+			} else if (index == 1) {
+				$('#main-content')
+						.load(
+								"{:U('index.php?g=Zp&m=index&a=record')}");
+				window.location.href = "#1147145";
+			} else if (index == 2) {
+				$('#main-content')
+						.load(
+								"{:U('index.php?g=Zp&m=index&a=searching')}");
+				window.location.href = "#1147146";
+			} else if (index == 3) {
+				$('#main-content')
+						.load(
+								"{:U('index.php?g=Zp&m=index&a=proxy')}");
+				window.location.href = "#1147147";
+			} else if (index == 4) {
+				$('#main-content')
+						.load(
+								"{:U('index.php?g=Zp&m=index&a=service')}");
+				window.location.href = "#1147148";
+			}
+		}
+		
+        function success(title) {
+            $("#modal2").fadeIn('fast');
+            if (title) {
+                $("#modal2").text(title);
+            }
+            $("#modal2").css('display', 'inline-block');
+            $("#modal2").css('margin-left', 'left:20%');
+            $("#modal2").fadeIn('fast');
+            window.setTimeout(function () {
+                $("#modal2").fadeOut(1000);
+            }, 2000);
+        }	
+        
+        $('.big-button1').click(function () {
+        	
+        	// 直接跳转
+        	var gross = 0;
+            $(".choosemoney").each(function (e) {
+                var val = $(this).attr("class");
+                var array = val.split(" ");
+                if (array[1] == 'current') {
+                    gross = $(this).children().html();
+                }
+            });
+
+            $('.div_huibg').fadeIn(500);
+            $('#paytypes').slideDown(400);
+        });
+
+        $('.div_huibg').click(function () {
+            $('.div_huibg').fadeOut(300);
+            $('#paytypes').slideUp(200);
+        });        
+		
+		function select_channel(type)
+        {
+        	var gross = recharge_money;
+            
+        	var ticket = Date.parse(new Date());
+        	var sign = hex_md5('ajax_create_order' + gross + ticket + type);
+        	
+        	success('即将跳转到支付');
+            
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: 'index.php?g=Qqonline&m=pay&a=ajax_create_order',
+                data: {
+                	price:gross,
+                	ticket:ticket,
+                	type:type,
+                	sign:sign
+                },
+                success: function (data) {
+                    if (data.ret == 1) {
+                        location.href = data.url;
+                    }
+                    else if (data.ret == -2) {
+                    	setTimeout(function(){WeixinJSBridge.call('closeWindow');},2000);
+                    }
+                    else {
+                        success(data.msg);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    if (XMLHttpRequest.status == 401) {
+                        success('没有权限');
+                    }
+                }
+            });	
+        }
+		
+		function goto_searching()
+		{
+			$('#main-content')
+			.load(
+					"{:U('index.php?g=Zp&m=index&a=searching')}");
+			window.location.href = "#1147146";
+		}
+		
+		$('#nav')
+				.on(
+						'click',
+						'div div div',
+						function(e) {
+							e.preventDefault();
+							/*
+							console.log(gameTimer);
+							clearInterval(gameTimer);
+							gameTimer = null;
+							console.log(gameTimer);
+							 */
+
+							$(this).parent().siblings('.active').removeClass(
+									'active');
+							$(this).parent().addClass('active');
+
+							$(this).parent().siblings().children().children(
+									'.active').removeClass('active');
+							$(this).children('span').addClass('active');
+
+							var index = $(this).parent().index();
+
+							$('#main-content').html('');
+							if (index == 0) {
+								window.location.href = "{:U('index.php?g=Zp&m=index&a=main')}";
+							} else if (index == 1) {
+								$('#main-content')
+										.load(
+												"{:U('index.php?g=Zp&m=index&a=record')}");
+								window.location.href = "#1147145";
+							} else if (index == 2) {
+								$('#main-content')
+										.load(
+												"{:U('index.php?g=Zp&m=index&a=searching')}");
+								window.location.href = "#1147146";
+							} else if (index == 3) {
+								$('#main-content')
+										.load(
+												"{:U('index.php?g=Zp&m=index&a=proxy')}");
+								window.location.href = "#1147147";
+							} else if (index == 4) {
+								$('#main-content')
+										.load(
+												"{:U('index.php?g=Zp&m=index&a=service')}");
+								window.location.href = "#1147148";
+							}
+						})
+	</script>
+<script>
+$('.guanbi').on('click', function () {
+    $('#weidianrukou').fadeOut(300);
+});
+$('#guanzhu').on('click', function () {
+    $('#wxrukou').fadeIn(300);
+});
+
+if ({$is_tips} == 0)
+{
+	$('#weidianrukou').fadeIn(300);
+}
+</script>
+<script>
+function init_share()
+{
+	wx.onMenuShareAppMessage({
+		title : '幸运转盘', // 分享标题
+		desc : "幸运转盘", // 分享描述
+		link : '{$share_url}', // 分享链接
+		imgUrl : '', // 分享图标
+		type : 'link', // 分享类型,music、video或link，不填默认为link
+		dataUrl : '', // 如果type是music或video，则要提供数据链接，默认为空
+		success : function() {
+			// 用户确认分享后执行的回调函数
+			alert('谢谢你的分享');
+		},
+		cancel : function() {
+			// 用户取消分享后执行的回调函数
+		}
+	});
+	wx.onMenuShareTimeline({
+		title : '幸运转盘', // 分享标题
+		desc : "幸运转盘", // 分享描述
+		link : '{$share_url}', // 分享链接
+		imgUrl : '', // 分享图标
+		success : function() {
+			// 用户确认分享后执行的回调函数
+			alert('谢谢你的分享');
+		},
+		cancel : function() {
+			// 用户取消分享后执行的回调函数
+		}
+	});
+}
+
+function init_wx()
+{
+	var cur_url = location.href.split('#')[0];
+	
+	$.getJSON('getwx.php',{
+		req_url:cur_url
+	},function(obj){
+		//通过config接口注入权限验证配置
+		wx.config({
+		    debug: true,
+		    appId: obj.appId,
+		    timestamp: obj.timestamp,
+		    nonceStr: obj.nonceStr,
+		    signature: obj.signature,
+		        jsApiList: [
+					'checkJsApi',//判断当前客户端是否支持指定JS接口
+					'onMenuShareTimeline',//获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
+					'onMenuShareAppMessage',//获取“分享给朋友”按钮点击状态及自定义分享内容接口
+					'onMenuShareQQ',//获取“分享到QQ”按钮点击状态及自定义分享内容接口
+					'onMenuShareWeibo',//获取“分享到腾讯微博”按钮点击状态及自定义分享内容接口
+				]
+		});
+					
+		wx.error(function(res){
+			alert(JSON.stringify(res));
+		});
+					
+		//通过ready接口处理成功验证
+		wx.ready(function(){
+			init_share();
+		});
+		
+		if (after_wx_init != null) {
+			after_wx_init();
+		}		
+	});
+}
+
+//init_wx();
+</script>
+</body>
+</html>

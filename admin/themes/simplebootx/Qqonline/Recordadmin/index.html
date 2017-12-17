@@ -1,0 +1,272 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+			<div class="row-fluid">
+				<div class="span9" style="text-align:center">
+					<h2>最新开奖期号:<span id="current_no">-</span>，剩余开奖时间:<span id="countdown">00</span>秒</h2>
+					<h2>当日总押注:<span id="curday_total_price">0</span>,当日总佣金:<span id="curday_commission">0</span>,当日总中奖:<span id="curday_total_win">0</span>,当日总利润:<span id="curday_total">0</span>,当日盈率:<span id="win_ratio">0</span>%</h2>
+					<h2>本局投注:<span id="current_total_price">0</span>,本局佣金:<span id="current_commission">0</span>,控盘最后一位:<span id="last_num">无</span></h2>
+					<h4 style="text-align: left;">(大小场)买小:<span id="0_-1_total_price">0</span>,买大:<span id="0_1_total_price">0</span>,买合:<span id="0_0_total_price">0</span>,买单:<span id="0_10_total_price">0</span>,买双:<span id="0_11_total_price">0</span></h4>
+					<h4 style="text-align: left;">(数组场1)【0,1】:<span id="1_0_total_price">0</span>,【2,3】:<span id="1_1_total_price">0</span>,【4,5】:<span id="1_2_total_price">0</span>,【6,7】:<span id="1_3_total_price">0</span>,【8,9】:<span id="1_2_total_price">0</span></h4>
+					<h4 style="text-align: left;">(数组场2)【0,1,2】:<span id="1_10_total_price">0</span>,【3,4,5】:<span id="1_11_total_price">0</span>,【6,7,8】:<span id="1_12_total_price">0</span></h4>
+					<h4 style="text-align: left;">(精确场)【0】:<span id="2_0_total_price">0</span>,【1】:<span id="2_1_total_price">0</span>,【3】:<span id="2_2_total_price">0</span>,【4】:<span id="2_3_total_price">0</span>,【5】:<span id="2_4_total_price">0</span>
+					,【6】:<span id="2_0_total_price">0</span>,【7】:<span id="2_1_total_price">0</span>,【8】:<span id="2_2_total_price">0</span>,【9】:<span id="2_3_total_price">0</span></h4>
+					<h4>最优排序:<span id="control">无</span></h4>
+				</div>
+			</div>
+		<form class="well form-search" method="post" action="{:U('Recordadmin/index')}">
+			<div class="search_type cc mb10">
+				<div class="mb10">						
+						期号： 
+						<input type="text" name="no" style="width: 200px;" value="{$filter.no}" placeholder="请输入期号">
+						&nbsp;开始日期： 
+						<input type="date" name="start_ymd" style="width: 200px;" value="{$filter.start_ymd}" placeholder="请输入开始日期,2017-06-02">
+						&nbsp;结束日期： 
+						<input type="date" name="end_ymd" style="width: 200px;" value="{$filter.end_ymd}" placeholder="请输入结束日期,2017-06-02">
+						<input type="submit" class="btn btn-primary" value="搜索" />
+				</div>
+			</div>
+		</form>
+		<php>
+		$status_arr = array('投注中', '等待开奖中', '已开奖');
+		$type_arr = array('小','合','大');
+		</php>
+		<form class="js-ajax-form" action="" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">ID</th>
+						<th>当期期号</th>
+						<th>开奖号码</th>
+						<th>最后三位</th>
+						<th>设置最后一位</th>
+						<th>控盘备注</th>
+						<th>开奖类型</th>
+						<th width="150">开奖时间</th>
+						<th>投注情况</th>
+						<th>佣金情况</th>
+						<th>买小(金额/人数)</th>
+						<th>买合(金额/人数)</th>
+						<th>买大 (金额/人数)</th>
+						<th>买0,1(金额/人数)</th>
+						<th>买2,3(金额/人数)</th>
+						<th>买4,5(金额/人数)</th>
+						<th>买6,7(金额/人数)</th>
+						<th>买8,9(金额/人数)</th>
+						<th>买0,1,2(金额/人数)</th>
+						<th>买3,4,5(金额/人数)</th>
+						<th>买6,7,8(金额/人数)</th>
+						<th>买0(金额/人数)</th>
+						<th>买1(金额/人数)</th>
+						<th>买2(金额/人数)</th>
+						<th>买3(金额/人数)</th>
+						<th>买4(金额/人数)</th>
+						<th>买5(金额/人数)</th>
+						<th>买6(金额/人数)</th>
+						<th>买7(金额/人数)</th>
+						<th>买8(金额/人数)</th>
+						<th>买9(金额/人数)</th>
+						<th>状态</th>
+						<th width="70">操作</th>
+					</tr>
+				</thead>
+				<foreach name="lists" item="vo">
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}"></td>
+                    <td><b>{$vo.id}</b></td>
+					<td><a href="{:U('Agent/recordadmin/index', array('no'=>$vo['no']))}" target="_blank">{$vo.no}</a></td>
+					<td>{$vo.number}</td>
+					<td>{$vo.num3}</td>
+					<td>{$vo.last_num|default='无'}</td>
+					<td>{$vo.control_memo}</td>
+					<if condition="$vo.status eq 2">
+					<td>{$type_arr[$vo['type'] + 1]}</td>
+					<else/>
+					<td>预估</td>
+					</if>
+					<td>{$vo.open_time}</td>
+					<td><span style="color:red">{$vo['total_price']}</span>/{$vo['total_count']}<br>(<if condition="$vo['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['total_commission']|default=0}</span></td>
+					<td>
+					<span style="color:red">{$vo['buy']['0_-1']['total_price']}</span>/{$vo['buy']['0_-1']['total_count']}<br>(<if condition="$vo['buy']['0_-1']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['0_-1']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['0_0']['total_price']}</span>/{$vo['buy']['0_0']['total_count']}<br>(<if condition="$vo['buy']['0_0']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['0_0']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['0_1']['total_price']}</span>/{$vo['buy']['0_1']['total_count']}<br>(<if condition="$vo['buy']['0_1']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['0_1']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['1_0']['total_price']}</span>/{$vo['buy']['1_0']['total_count']}<br>(<if condition="$vo['buy']['1_0']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['1_0']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['1_1']['total_price']}</span>/{$vo['buy']['1_1']['total_count']}<br>(<if condition="$vo['buy']['1_1']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['1_1']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['1_2']['total_price']}</span>/{$vo['buy']['1_2']['total_count']}<br>(<if condition="$vo['buy']['1_2']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['1_2']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['1_3']['total_price']}</span>/{$vo['buy']['1_3']['total_count']}<br>(<if condition="$vo['buy']['1_3']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['1_3']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['1_4']['total_price']}</span>/{$vo['buy']['1_4']['total_count']}<br>(<if condition="$vo['buy']['1_4']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['1_4']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['1_10']['total_price']}</span>/{$vo['buy']['1_10']['total_count']}<br>(<if condition="$vo['buy']['1_10']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['1_10']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['1_11']['total_price']}</span>/{$vo['buy']['1_11']['total_count']}<br>(<if condition="$vo['buy']['1_11']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['1_11']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['1_12']['total_price']}</span>/{$vo['buy']['1_12']['total_count']}<br>(<if condition="$vo['buy']['1_12']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['1_12']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['2_0']['total_price']}</span>/{$vo['buy']['2_0']['total_count']}<br>(<if condition="$vo['buy']['2_0']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['2_0']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['2_1']['total_price']}</span>/{$vo['buy']['2_1']['total_count']}<br>(<if condition="$vo['buy']['2_1']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['2_1']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['2_2']['total_price']}</span>/{$vo['buy']['2_2']['total_count']}<br>(<if condition="$vo['buy']['2_2']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['2_2']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['2_3']['total_price']}</span>/{$vo['buy']['2_3']['total_count']}<br>(<if condition="$vo['buy']['2_3']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['2_3']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['2_4']['total_price']}</span>/{$vo['buy']['2_4']['total_count']}<br>(<if condition="$vo['buy']['2_4']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['2_4']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['2_5']['total_price']}</span>/{$vo['buy']['2_5']['total_count']}<br>(<if condition="$vo['buy']['2_5']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['2_5']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['2_6']['total_price']}</span>/{$vo['buy']['2_6']['total_count']}<br>(<if condition="$vo['buy']['2_6']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['2_6']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['2_7']['total_price']}</span>/{$vo['buy']['2_7']['total_count']}<br>(<if condition="$vo['buy']['2_7']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['2_7']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['2_8']['total_price']}</span>/{$vo['buy']['2_8']['total_count']}<br>(<if condition="$vo['buy']['2_8']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['2_8']['total_result']}</span>)</td>
+					<td><span style="color:red">{$vo['buy']['2_9']['total_price']}</span>/{$vo['buy']['2_9']['total_count']}<br>(<if condition="$vo['buy']['2_9']['total_result'] lt 0"><span style="color:green"><else/><span style="color:red"></if>盈余:{$vo['buy']['2_9']['total_result']}</span>)</td>
+					<td>{$status_arr[$vo['status']]}
+					</td>
+					<td>
+					</td>
+				</tr>
+				</foreach>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location = "{:U('index.php?g=Qqonline&m=Recordadmin&a=index',$formget)}";
+			}
+		}
+		/*
+		setInterval(function() {
+			refersh_window();
+		}, 2000);
+		*/
+		$(function() {
+			setCookie("refersh_time", 0);
+			Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
+				//批量移动
+			});
+		});
+		
+		var is_loading = false;
+		function load_data()
+		{
+			if (is_loading)
+				return;
+			
+			is_loading = true;
+			
+			$.ajax({
+				url : 'index.php?g=Qqonline&m=control&a=ajax_load_data',
+				type : "get",
+				timeout : 4000,
+				dataType : "json",
+				data : {},
+				success : function(data) {
+					
+					is_loading = false;
+					
+					if (data.ret == 1) {
+						
+						$('#current_no').html(data.current_lottery.no);
+						if (data.current_lottery.status == 1)
+							$('#countdown').html('正在整理数据');
+						else if (data.current_lottery.status == 2)
+							$('#countdown').html('等待');
+						else
+						{
+							// 倒计时	
+							var current_time = new Date();
+							var end_time = new Date(data.current_lottery.open_time.replace(/-/g, '/'));
+							var diff = Math
+									.floor((end_time.getTime() - current_time
+											.getTime()) / 1000) - 5;
+							
+							if (diff > 0)
+							{
+								clearTimeout(ts_timer);
+								countdown(diff);
+							}
+						}
+						
+						$('#curday_total_price').html(Number(data.curday_total_price).toFixed(2));
+						$('#curday_commission').html(Number(data.curday_commission).toFixed(2));
+						$('#curday_total_win').html(Number(data.curday_total_win).toFixed(2));
+						$('#curday_total').html(Number(data.curday_total).toFixed(2));
+						$('#win_ratio').html(Number(data.win_ratio).toFixed(2));
+						
+						$('#current_total_price').html(Number(data.current_lottery.total_price).toFixed(2) + '/' + data.current_lottery.total_count + '(盈余:' + data.current_lottery.total_result + ')');
+						$('#current_commission').html(data.current_lottery.total_commission);
+						$('#last_num').html(data.current_lottery.last_num);
+						
+						$('#0_-1_total_price').html(Number(data.current_lottery.buy['0_-1'].total_price).toFixed(2) + '/' + data.current_lottery.buy['0_-1'].total_count + '(盈余:' + data.current_lottery.buy['0_-1'].total_result + ')');
+						$('#0_0_total_price').html(Number(data.current_lottery.buy['0_0'].total_price).toFixed(2) + '/' + data.current_lottery.buy['0_0'].total_count + '(盈余:' + data.current_lottery.buy['0_0'].total_result + ')');
+						$('#0_1_total_price').html(Number(data.current_lottery.buy['0_1'].total_price).toFixed(2) + '/' + data.current_lottery.buy['0_1'].total_count + '(盈余:' + data.current_lottery.buy['0_1'].total_result + ')');
+						$('#1_0_total_price').html(Number(data.current_lottery.buy['1_0'].total_price).toFixed(2) + '/' + data.current_lottery.buy['1_0'].total_count + '(盈余:' + data.current_lottery.buy['1_0'].total_result + ')');
+						$('#1_1_total_price').html(Number(data.current_lottery.buy['1_1'].total_price).toFixed(2) + '/' + data.current_lottery.buy['1_1'].total_count + '(盈余:' + data.current_lottery.buy['1_0'].total_result + ')');
+						$('#1_2_total_price').html(Number(data.current_lottery.buy['1_2'].total_price).toFixed(2) + '/' + data.current_lottery.buy['1_2'].total_count + '(盈余:' + data.current_lottery.buy['1_0'].total_result + ')');
+						$('#1_3_total_price').html(Number(data.current_lottery.buy['1_3'].total_price).toFixed(2) + '/' + data.current_lottery.buy['1_3'].total_count + '(盈余:' + data.current_lottery.buy['1_0'].total_result + ')');
+						$('#1_4_total_price').html(Number(data.current_lottery.buy['1_4'].total_price).toFixed(2) + '/' + data.current_lottery.buy['1_4'].total_count + '(盈余:' + data.current_lottery.buy['1_0'].total_result + ')');
+						$('#1_10_total_price').html(Number(data.current_lottery.buy['1_10'].total_price).toFixed(2) + '/' + data.current_lottery.buy['1_10'].total_count + '(盈余:' + data.current_lottery.buy['1_10'].total_result + ')');
+						$('#1_11_total_price').html(Number(data.current_lottery.buy['1_11'].total_price).toFixed(2) + '/' + data.current_lottery.buy['1_11'].total_count + '(盈余:' + data.current_lottery.buy['1_11'].total_result + ')');
+						$('#1_12_total_price').html(Number(data.current_lottery.buy['1_12'].total_price).toFixed(2) + '/' + data.current_lottery.buy['1_12'].total_count + '(盈余:' + data.current_lottery.buy['1_12'].total_result + ')');
+						$('#2_0_total_price').html(Number(data.current_lottery.buy['2_0'].total_price).toFixed(2) + '/' + data.current_lottery.buy['2_0'].total_count + '(盈余:' + data.current_lottery.buy['2_0'].total_result + ')');
+						$('#2_1_total_price').html(Number(data.current_lottery.buy['2_1'].total_price).toFixed(2) + '/' + data.current_lottery.buy['2_1'].total_count + '(盈余:' + data.current_lottery.buy['2_1'].total_result + ')');
+						$('#2_2_total_price').html(Number(data.current_lottery.buy['2_2'].total_price).toFixed(2) + '/' + data.current_lottery.buy['2_2'].total_count + '(盈余:' + data.current_lottery.buy['2_2'].total_result + ')');
+						$('#2_3_total_price').html(Number(data.current_lottery.buy['2_3'].total_price).toFixed(2) + '/' + data.current_lottery.buy['2_3'].total_count + '(盈余:' + data.current_lottery.buy['2_3'].total_result + ')');
+						$('#2_4_total_price').html(Number(data.current_lottery.buy['2_4'].total_price).toFixed(2) + '/' + data.current_lottery.buy['2_4'].total_count + '(盈余:' + data.current_lottery.buy['2_4'].total_result + ')');
+						$('#2_5_total_price').html(Number(data.current_lottery.buy['2_5'].total_price).toFixed(2) + '/' + data.current_lottery.buy['2_5'].total_count + '(盈余:' + data.current_lottery.buy['2_5'].total_result + ')');
+						$('#2_6_total_price').html(Number(data.current_lottery.buy['2_6'].total_price).toFixed(2) + '/' + data.current_lottery.buy['2_6'].total_count + '(盈余:' + data.current_lottery.buy['2_6'].total_result + ')');
+						$('#2_7_total_price').html(Number(data.current_lottery.buy['2_7'].total_price).toFixed(2) + '/' + data.current_lottery.buy['2_7'].total_count + '(盈余:' + data.current_lottery.buy['2_7'].total_result + ')');
+						$('#2_8_total_price').html(Number(data.current_lottery.buy['2_8'].total_price).toFixed(2) + '/' + data.current_lottery.buy['2_8'].total_count + '(盈余:' + data.current_lottery.buy['2_8'].total_result + ')');
+						$('#2_9_total_price').html(Number(data.current_lottery.buy['2_9'].total_price).toFixed(2) + '/' + data.current_lottery.buy['2_9'].total_count + '(盈余:' + data.current_lottery.buy['2_9'].total_result + ')');
+						
+						$('#control').html(data.current_lottery.number);
+					}
+				},
+				complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数
+				　　　　if(status=='timeout')
+				　　　　　  is_loading = false;
+					console.log(status);				
+				}
+			});
+		}
+		
+		function set_number(id, num)
+		{
+			$.ajax({
+				url : 'index.php?g=Qqonline&m=recordadmin&a=ajax_set_number',
+				type : "get",
+				dataType : "json",
+				data : {
+					id:id,
+					num:num
+				},
+				success : function(data) {
+					if (data.ret == 1) {
+						alert('控盘设置成功!');
+						load_data();
+					}
+					else
+					{
+						alert(data.msg);	
+					}
+				}
+			});
+		}
+		
+		var ts_timer = 0;
+		function countdown(s) {
+			s--;
+			if (s < 0) {
+
+			} else {
+				var up = parseInt(s / 10);
+				var low = s - up * 10;
+				
+				$('#countdown').html(up + '' + low);
+				ts_timer = setTimeout(function() {
+					countdown(s)
+				}, 1000);
+			}
+		}
+		
+		setInterval(function() {
+			load_data();
+		}, 5000);
+	</script>
+</body>
+</html>

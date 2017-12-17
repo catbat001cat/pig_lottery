@@ -1,0 +1,432 @@
+[ 2017-08-12T23:16:51+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000282s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000320s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000090s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000941s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0469s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0399s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0413s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0406s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0407s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0417s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0428s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0462s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:17:17+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000314s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000316s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000088s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001019s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0474s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0439s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0462s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0474s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0450s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0450s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0496s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0431s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:17:43+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000601s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000391s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000113s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001481s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0441s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0567s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0467s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0468s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0468s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0440s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0487s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0477s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:19:26+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000283s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000320s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000090s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000933s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0417s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0407s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0414s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0487s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0483s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0457s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0447s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0426s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:19:50+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000272s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000300s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000085s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000885s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0436s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0411s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0444s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0414s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0411s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0458s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0449s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0484s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:21:41+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000329s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000512s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000138s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001466s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0452s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0396s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0454s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0407s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0406s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0414s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0437s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0401s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:23:55+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000328s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000320s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000088s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000998s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0458s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0524s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0432s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0413s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0435s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0420s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0413s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0431s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:24:01+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000371s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000415s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000119s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001217s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0469s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0452s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0434s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0464s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0447s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0511s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0558s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0437s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:25:31+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000325s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000376s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000107s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001095s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0455s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0419s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0436s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0467s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0446s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0417s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0422s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0418s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:25:39+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000295s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000318s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000089s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000947s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0400s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0401s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0398s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0394s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0405s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0389s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0394s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0399s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:25:59+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000290s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000332s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000091s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000953s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0439s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0427s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0468s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0466s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0420s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0443s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0476s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0396s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:29:13+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000319s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000329s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000092s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001256s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0464s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0401s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0592s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0615s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.2175s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0635s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0518s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0449s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:29:16+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000272s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000297s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000085s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000881s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0457s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0481s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0441s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0453s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0449s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0439s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0418s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0436s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:31:23+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000389s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000485s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000106s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001290s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0485s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0445s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0456s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0455s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0451s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0482s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0443s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0445s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:31:31+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000330s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000320s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000088s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001020s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0402s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0398s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0426s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0499s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0467s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0451s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0407s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0497s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:32:08+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000455s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000472s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000306s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001650s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0420s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0394s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0435s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0416s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0433s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0407s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0426s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0402s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:32:40+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000277s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000311s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000113s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000942s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0428s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0406s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0451s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0412s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0428s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0441s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0429s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0432s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:34:33+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000382s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000581s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000360s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001674s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0428s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0432s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0521s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0445s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0413s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0419s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0457s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0423s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:34:35+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000355s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000326s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000090s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001355s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0428s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0424s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0422s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0409s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0403s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0433s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0425s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0443s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:35:28+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000543s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000455s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000113s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001664s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0430s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0452s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0427s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0466s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0415s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0437s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0432s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0421s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:36:20+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000287s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000316s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000088s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000951s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0443s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0439s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0446s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0456s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0537s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0449s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0439s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0440s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:36:44+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000318s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000330s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000090s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000996s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0439s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0418s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0444s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0404s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0418s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0414s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0427s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0469s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:36:55+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000435s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000328s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000105s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001108s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0525s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0440s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0501s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0431s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0438s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0436s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0442s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0445s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:40:58+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000322s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000363s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000104s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001069s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0443s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0465s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0445s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0444s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0449s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0509s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0452s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0486s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:43:36+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000293s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000328s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000090s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000956s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0454s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0434s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0447s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0470s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0426s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0468s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0486s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0462s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:43:41+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000280s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000580s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000342s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001488s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0435s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0391s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0413s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0482s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0390s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0381s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0389s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0379s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+
+[ 2017-08-12T23:43:44+08:00 ] ::1 /qqonline_ex/index.php?g=Qqonline&m=index&a=ajax_get_user_info
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000270s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000300s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000086s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000886s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0515s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0450s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0473s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0436s ]
+SQL: SHOW COLUMNS FROM `sp_wallet` [ RunTime:0.0460s ]
+SQL: SHOW COLUMNS FROM `sp_lottery` [ RunTime:0.0477s ]
+SQL: SHOW COLUMNS FROM `sp_lottery_ratio` [ RunTime:0.0437s ]
+SQL: SELECT * FROM `sp_wallet` WHERE ( user_id=232 ) LIMIT 1   [ RunTime:0.0435s ]
+NOTIC: [8] Undefined index: url /Users/a007/work/qqonline_ex/application/Common/Controller/AppframeController.class.php 第 22 行.
+

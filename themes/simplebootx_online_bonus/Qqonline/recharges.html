@@ -1,0 +1,55 @@
+<html>
+<head>
+<tc_include file="Public:scripts" />
+</head>
+<title>{$site_name}</title>
+<body>
+
+<div id="item_template" style="display:none">
+<div>
+<span>{create_time}</span>
+<span>{order_sn}</span>
+<span>{price}</span>
+<span>{status}</span>
+</div>
+</div>
+
+<div id="container">
+</div>
+
+</body>
+
+<script>
+function append_item(item)
+{
+	var item_template = $('#item_template').html();
+	
+	var status_arr = ['未付款', '已付款'];
+	
+	item_template = item_template.replace(/{create_time}/g, item.create_time)
+		.replace(/{price}/g, item.price)
+		.replace(/{order_sn}/g, item.order_sn)
+		.replace(/{status}/g, status_arr[item.status]);
+	
+	$('#container').append(item_template);
+}
+
+$.ajax({
+	url: 'index.php?g=Qqonline&m=record&a=get_recharges',
+	type: "get",
+	dataType: "json",  
+	data: {
+	},
+	success: function (data) {
+		if (data.ret == 1)
+		{
+			$('#container').html('');
+			
+			for (var i=0; i<data.info.length; i++)
+				append_item(data.info[i]);
+		}
+	}
+});
+</script>
+
+</html>

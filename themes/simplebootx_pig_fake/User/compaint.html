@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$site_name}</title>
+<meta name="keywords" content="{$site_seo_keywords}" />
+<meta name="description" content="{$site_seo_description}">
+<meta name="author" content="ThinkCMF">
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+<link media="all" type="text/css" href="__TMPL__Public/css/m-style.css" rev="stylesheet" rel="stylesheet">
+<title>投诉</title>
+<script type="text/javascript" src="__TMPL__Public/js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$('#complaint-button').bind('tap',function(e){
+		var name=$('input[name=name]').val();
+		var phone=$('input[name=phone]').val();
+		var content=$('textarea[name=content]').val();
+		if(name==""){msg({contents:'请输入姓名'});return false;}
+		if(phone==""){msg({contents:'请输入手机号'});return false;}
+		if(content==""){msg({contents:'请输入投诉内容'});return false;}
+		msg({contents:'投诉成功！管理员察看后会尽快联系您'});
+		//alert('投诉成功！管理员察看后会尽快联系您! ');
+		//location.reload();
+	});
+	
+	$.each($('.tousu_yuanyin li'),function(i,checkbox){
+		$(checkbox).bind('tap',function(){
+			
+				$('.tousu_yuanyin').hide();
+				$('.tijiao_tousu').show();
+		});
+	});
+	
+	
+
+	
+});
+</script><style>
+
+body{
+    background: #f8f8f8;
+}
+.tousu_top_titile{
+    padding-left: 10px;
+    text-align: left;
+    line-height: 30px;
+    color: #888;
+    font-size: 12px;
+	}
+	.tousu_bottom_text{
+	color: blue;
+    padding-left: 10px;
+    text-align: left;
+    line-height: 30px;
+    font-size: 12px;
+	}
+	.tousu_centent_text{    color: blue;
+    padding-left: 10px;
+    line-height: 30px;
+    font-size: 12px;
+    position: fixed;
+    bottom: 5px;
+    width: 50px;
+    margin-top: -50px;
+    left: 50%;
+    margin-left: -50px;
+	}
+</style>
+</head>
+<body class="body-white" id="top" style="padding-top: 0px">
+	<div id="wrapper">
+		<div id="contents">
+<div class="user-center-desk border-top-ddd tousu_yuanyin">
+			<div class="tousu_top_titile">请选择投诉该网页的原因：</div>
+				<ul class="common-list " data-show="0">
+					<li onclick="show_more()">
+						<span class="title">网页包含欺诈信息（如：假红包）</span>
+						<div class="view-more "><img src="__TMPL__Public/images/gray-right-arrow.png"></div>
+						<div class="clear"></div>
+					</li>
+					<li onclick="show_more()">
+						<span class="title">网页包含色情信息</span>
+						<div class="view-more "><img src="__TMPL__Public/images/gray-right-arrow.png"></div>
+						<div class="clear"></div>
+					</li>
+					<li onclick="show_more()">
+						<span class="title">网页包含暴力恐怖信息</span>
+						<div class="view-more "><img src="__TMPL__Public/images/gray-right-arrow.png"></div>
+						<div class="clear"></div>
+					</li>
+					<li onclick="show_more()">
+						<span class="title">网页包含政治敏感信息</span>
+						<div class="view-more "><img src="__TMPL__Public/images/gray-right-arrow.png"></div>
+						<div class="clear"></div>
+					</li>
+					<li onclick="show_more()">
+						<span class="title">网页在收集个人隐私信息（如：钓鱼链接）</span>
+						<div class="view-more "><img src="__TMPL__Public/images/gray-right-arrow.png"></div>
+						<div class="clear"></div>
+					</li>
+					<li onclick="show_more()">
+						<span class="title">网页包含诱导分享性质的内容</span>
+						<div class="view-more "><img src="__TMPL__Public/images/gray-right-arrow.png"></div>
+						<div class="clear"></div>
+					</li>
+					<li onclick="show_more()">
+						<span class="title">网页包含可能包含谣言信息</span>
+						<div class="view-more "><img src="__TMPL__Public/images/gray-right-arrow.png"></div>
+						<div class="clear"></div>
+					</li>
+				</ul>
+					<div class="tousu_bottom_text" onclick="location.href='http://mp.weixin.qq.com/s/TbX1CcZhQNReneXVc3At9Q'" data-anchor="1">遇到网页流量被劫持怎么办</div>
+					<div class="tousu_centent_text" onclick="location.href='https://weixin110.qq.com/security/readtemplate?t=w_security_center_website/report_agreement&amp;lang=zh_CN'" data-anchor="1">投诉须知</div>
+			</div>
+
+
+		<div class="user-center-desk border-top-ddd tijiao_tousu" style="display:none;">
+			<div class="tousu_top_titile">您可以：</div>
+				<ul class="common-list" data-show="0">
+					<li onclick="location.href='{:U('user/center/compaint_yes')}'" data-anchor="1">
+						<span class="title">提交给微信团队审核</span>
+						<div class="view-more "><img src="__TMPL__Public/images/gray-right-arrow.png"></div>
+						<div class="clear"></div>
+					</li>
+				</ul>
+					<div class="tousu_centent_text" onclick="location.href='https://weixin110.qq.com/security/readtemplate?t=w_security_center_website/report_agreement&amp;lang=zh_CN'" data-anchor="1">投诉须知</div>
+		</div>
+		</div>
+		
+
+
+		</div>
+		
+		<script>
+		function  show_more() {
+			$('.tousu_yuanyin').hide();
+			$('.tijiao_tousu').show();
+		}
+		</script>
+
+</body>
+</html>

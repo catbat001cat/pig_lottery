@@ -1,0 +1,150 @@
+
+    <link rel="stylesheet" href="__TMPL__Public/css/common.css">
+    <style>
+        .row .col-md-4 .col-xs-9{
+            padding-left: 15px;
+            text-align: left;
+        }
+        .container-fluid{
+            padding: 0;
+            height:100%;
+        }
+        .col-md-4{
+            height: 50px;
+            line-height: 50px;
+            border-bottom: 1px solid #5e5e5e;
+        }
+        .col-md-4 .btn{
+            background: url("__TMPL__Public/img/34.png") no-repeat center;
+            -webkit-background-size: 120%;
+            background-size: 120%;
+        }
+        .col-md-4 .btn-group{
+            background: url("__TMPL__Public/img/35.png") no-repeat center;
+            -webkit-background-size: 120%;
+            background-size: 120%;
+            line-height: 0;
+            padding: 16px;
+        }
+        .modal-content{
+            background: #953dbb;
+            color: #000;
+            height: 200px;
+        }
+        .modal-dialog{
+            position: fixed;
+            width: 80%;
+            left: 10%;
+            margin: 0 auto;
+            top: 32%;
+            padding: 10px;
+            border-radius: 10px;
+            background: #662483;
+        }
+        .modal-dialog .modal-less{
+            font-size: 16px;
+            margin: 25px auto;
+            color: #fff;
+            padding: 15px;
+        }
+        .modal-less+div{
+            color: #fff;
+            width: 140px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 21px;
+            text-align: center;
+            background: url(__TMPL__Public/img/30.png) no-repeat;
+            background-size: 100% 100%;
+        }
+        .btn-group-lg>.btn, .btn-lg{
+            font-size: 16px;
+        }
+        .row {
+            height: 100%;
+        }
+        .col-xs-12 {
+            height:3rem;
+            line-height:3rem;
+        }
+        .recordTable{
+            width: 90%;
+            height: 90%;
+            background: url("__TMPL__Public/img/57.png") no-repeat;
+            background-size:100% 100%;
+            margin:  0 15px;
+            padding: 0.5rem;
+            overflow: hidden;
+        }
+        .table>thead>tr>th {
+            border-bottom: none;
+        }
+        .table>tbody>tr>td {
+            border-top: none;
+        }
+        .guess {
+            margin: 0;
+            width:100%;
+        }
+        .guess #recordList{
+            font-size: 12px;
+        }
+    </style>
+
+<div class="main-container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">充值记录（总：<span id="totalMoney">0.00</span> 金币）</div>
+            <div class="recordTable">
+                <table class="table text-center">
+                    <thead class="text-center">
+                    <tr>
+                        <th>时间</th>
+                        <th>订单号</th>
+                        <th>金额</th>
+                        <th>状态</th>
+                    </tr>
+                    </thead>
+                    <tbody id="recordList"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<!--</div>-->
+<script>
+    $(function () {
+    	$.ajax({
+            url: 'index.php?g=Qqonline&m=record&a=get_recharges',
+            type: 'GET',
+            dataType : 'json',
+            success: function (res) {
+            	console.log(JSON.stringify(res));
+                if(res.ret == 1){
+                    $('#totalMoney').html(Number(res.total_money).toFixed(2));
+                    var str = '';
+                    $.each(res.info,function (k,v) {
+                        str +='<tr><td>'+getTime(v.create_time)+'</td><td>'+v.order_sn+'</td><td>'+v.price+'</td>'
+                            +'<td>已支付</td></tr>';
+                    })
+                    $('#recordList').html(str);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //alert('请求错误')
+            }
+        })
+    })
+</script>
+</div>
+<!--<div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">-->
+    <div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+
+                <div class="modal-less text-center title">兑换金额不能小于1元</div>
+
+                <div class="btnSure center-block" onclick="closeModal()"> 确定</div>
+
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$site_name}</title>
+<meta name="keywords" content="{$site_seo_keywords}" />
+<meta name="description" content="{$site_seo_description}">
+<meta name="author" content="ThinkCMF">
+<tc_include file="Public:head" />
+</head>
+<script type="text/javascript" src="__TMPL__Public/js/jquery.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/kl.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/qrcode.min.js"></script>
+<style>
+.btn {
+	width: 8rem;
+	margin: 1rem auto;
+	height: 2rem;
+	font-size: 100%;
+	font-weight: 100;
+	line-height: 2rem;
+	text-align: center;
+	color: #fff;
+	border-radius: 4px;
+	background-color: #f86400;
+}
+</style>
+<body class="body-white" style="padding-top: 0px">
+	<div class="container tc-main" style="margin-top: 0px">
+		<span style="display: block; font-size:20px; margin: 30px 0 0 0; text-align: center;">持有金币</span>
+		<span
+			style="display: block; text-align: center; font-size: 30px; font-weight: 900;">{$coin}</span>
+		<span
+			style="display: block; border-top: 1px solid #eee; border-bottom: 1px solid #eee; margin: 20px auto 0 auto; padding: 0px 0; width: 90%; height: 60px;">
+			<img src="__TMPL__Public/images/vip.png"
+			style="width: 50px; float: left; padding-top: 10px;">
+			<notempty name="next_level"> 
+			<div style="width: 150px; float: left; margin-left: 10px;">
+				<span style="font-size: 21px;">￥ {$next_level['price']} 开通VIP</span> <br> <span style="color: #ccc; font-size: 13px;">享受超多专属特权</span>
+			</div> 
+			<span style="float: right; display: block; width: 80px; height: 30px; background: firebrick; border-radius: 5px; text-align: center; color: #fff; margin-top: 15px;" onclick="pay({$next_level['price']});">开通会员</span>
+			</notempty>
+			<empty name="next_level">
+			<div style="width: 200px; float: left; margin-left: 10px;">
+				<span style="font-size: 21px;">您已是最高等级会员</span> <br> <span style="color: #ccc; font-size: 13px;">可以享受超多专属特权</span>
+			</div> 
+			</empty>
+		</span>
+			 <span
+			style="display: block; width: 90%; height: 60px; border-bottom: 1px solid #999; margin: 0 auto;">
+			<span
+			style="height: 60px; line-height: 60px; display: block; width: 200px; float: left;">300金币=30元</span>
+			<span
+			style="float: right; display: block; width: 50px; height: 30px; line-height: 30px; background: #F8F819; border-radius: 20%; text-align: center; margin-top: 15px;"
+			onclick="pay(30);">充值</span>
+		</span> <span
+			style="display: block; width: 90%; height: 60px; border-bottom: 1px solid #999; margin: 0 auto;">
+			<span
+			style="height: 60px; line-height: 60px; display: block; width: 200px; float: left;">500金币=50元</span>
+			<span
+			style="float: right; display: block; width: 50px; height: 30px; line-height: 30px; background: #F8F819; border-radius: 20%; text-align: center; margin-top: 15px;"
+			onclick="pay(50);">充值</span>
+		</span> <span
+			style="display: block; width: 90%; height: 60px; border-bottom: 1px solid #999; margin: 0 auto;">
+			<span
+			style="height: 60px; line-height: 60px; display: block; width: 200px; float: left;">1000金币=100元</span>
+			<span
+			style="float: right; display: block; width: 50px; height: 30px; line-height: 30px; background: #F8F819; border-radius: 20%; text-align: center; margin-top: 15px;"
+			onclick="pay(100);">充值</span>
+		</span> <span
+			style="display: block; width: 90%; height: 60px; border-bottom: 1px solid #999; margin: 0 auto;">
+			<span
+			style="height: 60px; line-height: 60px; display: block; width: 200px; float: left;">1800金币=150元</span>
+			<span
+			style="float: right; display: block; width: 50px; height: 30px; line-height: 30px; background: #F8F819; border-radius: 20%; text-align: center; margin-top: 15px;"
+			onclick="pay(150);">充值</span>
+		</span> <span
+			style="display: block; width: 90%; height: 60px; border-bottom: 1px solid #999; margin: 0 auto;">
+			<span
+			style="height: 60px; line-height: 60px; display: block; width: 200px; float: left;">3000金币=200元</span>
+			<span
+			style="float: right; display: block; width: 50px; height: 30px; line-height: 30px; background: #F8F819; border-radius: 20%; text-align: center; margin-top: 15px;"
+			onclick="pay(200);">充值</span>
+		</span> <span
+			style="display: block; width: 70%; margin: 20px auto 10px auto; height: 30px; line-height: 30px; text-align: center; background: darkred; color: #fff; border-radius: 3px;"
+			class="payBack" onclick="history.go(-1)">返回</span>
+			<span style="display: block;width: 70%;margin: 20px auto 10px auto;height: 30px;line-height: 30px;text-align: center;/* background: darkred; */color: darkred;border-radius: 3px;">支付有延迟,支付完请隔几秒再刷新</span>
+			
+		<iframe id="pay_wx_frame" width="100px" height="100px">
+		</iframe>
+
+		<tc_include file="Public:footer" />
+
+	</div>
+	<!-- /container -->
+
+	<tc_include file="Public:scripts" />
+
+	<script>
+	function pay(money)
+	{
+		pay_wx(2, 0, money, function(data) {
+			if (data.status == 1)
+				location.href = data.msg;
+			else
+			{
+				alert('支付失败,请联系客服');	
+			}
+		});
+	}
+	</script>
+</body>
+</html>

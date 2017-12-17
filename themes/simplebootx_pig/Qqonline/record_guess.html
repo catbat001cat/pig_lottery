@@ -1,0 +1,50 @@
+
+<style>
+    #recordList tr td:nth-child(1){
+        width: 27%;
+    }
+
+</style>
+<!--<div class="main-container">-->
+    <div class="container-fluid" style="padding: 0 10px">
+        <div class="row">
+            <div class="col-xs-12">竞猜记录（总：<span id="totalMoney">0.00</span> 金币）</div>
+            <div class="recordTable guess">
+                <table class="table text-center">
+                    <thead class="text-center">
+                    <tr>
+                        <th>时间</th>
+                        <th>期号</th>
+                        <th>下注金额</th>
+                        <th>中奖金额</th>
+                    </tr>
+                    </thead>
+                    <tbody id="recordList"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script>
+$(function () {
+	 $.ajax({
+        url: 'index.php?g=Qqonline&m=record&a=get_records',
+        type: 'GET',
+        dataType : 'json',
+        success: function (res) {
+            if(res.ret == 1){
+                $('#totalMoney').html(Number(res.total_money).toFixed(2));
+                var str = '';
+                $.each(res.list,function (k,v) {
+                    str +='<tr><td>'+getTime(v.create_time)+ '</td><td>'+v.no+'</td><td>'+v.price
+                    	+'</td><td>' + v.win + '</td></tr>';
+                })
+                $('#recordList').html(str);
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //alert('请求错误')
+        }
+    })
+});
+</script>

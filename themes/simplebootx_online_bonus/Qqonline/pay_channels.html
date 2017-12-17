@@ -1,0 +1,75 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/> 
+    <title>支付</title>
+    <style style="font-size: 50px;">
+	body.outside {
+	    background: #019fe8 url(__TMPL__Public/img/pay_bg.png) no-repeat top;
+	    background-size: 100%;
+	    text-align: center;
+	}
+	body, button, input, select, textarea {
+	    font-size: .16rem;
+	    line-height: 1.2;
+	    color: #333;
+	    font-family: Helvetica Neue,Helvetica,STHeiTi,sans-serif;
+	}
+	body {
+	    -webkit-user-select: none;
+	    -moz-user-select: none;
+	    -ms-user-select: none;
+	    user-select: none;
+	    background-color: #f5f5f9;
+	}
+	body, html {
+	    min-height: 100%;
+	}    
+    .actions {
+	    position: absolute;
+	    left: 0;
+	    right: 0;
+	    top: 21rem;
+	    margin: auto;
+	    width: 70%;
+	}
+    .actions a {
+	    height: 2rem;
+	    line-height: 2rem;
+	    color: #1b99dc;
+	    background: #fff;
+	    font-size: 1.2rem;
+	    font-weight: 700;
+	    letter-spacing: .041667rem;
+	    border: 1px solid transparent;
+	    border-radius: .1rem;
+	    display: block;
+	    margin-bottom: .4rem;
+	}
+	.tip {
+	    font-size: .8rem;
+	    font-weight: 700;
+	    color: #fff;
+	    line-height: 1.5em;
+	    margin-bottom: .5rem;
+	}
+	a, a:hover {
+	    text-decoration: none;
+	    color: #0ae;
+	}
+	a, img {
+	    -webkit-touch-callout: none;
+	}
+    </style>
+</head>
+<body>
+<body class="outside">
+    
+	<div class="actions">
+	  <foreach name="channels" item="channel">
+	  	<a class="open" href="{$channel.url}">{$channel.name}</a>
+	  </foreach>
+	  <p class="tip">如果选中支付方式不能成功支付，请切换其他支付渠道</p>
+	</div>
+
+</body>

@@ -1,0 +1,31 @@
+<php>
+$user = sp_get_current_user();
+</php>
+<div class="list-group">
+	<a class="list-group-item" style="border-bottom: 1px solid #ddd;margin:0;padding: 10px 3px;" href="{:U('user/dynamics/index')}"><i class="fa fa-list-alt fa-fw"></i> 我的动态</a>
+	<a class="list-group-item" style="border-bottom: 1px solid #ddd;margin:0;padding: 10px 3px;"><i class="fa fa-lock fa-fw"></i> 我的等级<span style="float:right">lv {$user['level']}</span></a>
+	<a class="list-group-item" style="border-bottom: 1px solid #ddd;margin:0;padding: 10px 3px;" href="{:U('user/coin/index')}"><i class="fa fa-star-o fa-fw"></i> 我的账户<span style="float:right;color:#cccccc">开通vip</span></a>
+	<a class="list-group-item" style="border-bottom: 1px solid #ddd;margin:0;padding: 10px 3px;"><i class="fa fa-user fa-fw"></i> 最近访客
+		<span style="display: block;float: right;margin-right: 5px;">
+		<php>
+		$head_icons = array();
+		for ($i=1; $i<=40; $i++)
+			array_push($head_icons, $i);
+		shuffle($head_icons);
+		</php>
+		<img src="__TMPL__Public/assets/images/pl/{$head_icons[0]}.jpg" style="width: 40px;height:40px;border-radius: 50%;position: absolute;right: 60px;top: 5px;">
+		<img src="__TMPL__Public/assets/images/pl/{$head_icons[1]}.jpg" style="width: 40px;height:40px;border-radius: 50%;position: absolute;right: 30px;top: 5px;">
+		<img src="__TMPL__Public/assets/images/pl/{$head_icons[2]}.jpg" style="width: 40px;height:40px;border-radius: 50%;position: absolute;right: 0px;top: 5px;">
+		</span>
+	</a>
+	<a class="list-group-item" style="border-bottom: 1px solid #ddd;margin:0;padding: 10px 3px;" href="{:U('user/center/agent')}"><i class="fa fa-exchange fa-fw"></i> 客服中心<span style="float:right;color:#cccccc">24小时在线</span></a>
+	<a class="list-group-item" style="border-bottom: 1px solid #ddd;margin:0;padding: 10px 3px;" href="javascript:apply()"><i class="fa fa-star-o fa-fw"></i> 秀场主播申请</a>
+	<!--<a class="list-group-item" href="{:U('portal/user/articles')}"><i class="fa fa-file-text fa-fw"></i> 我的文章</a>
+	<a class="list-group-item" href="{:U('comment/comment/index')}"><i class="fa fa-comments-o fa-fw"></i> 我的评论</a>-->
+</div>
+<script>
+function apply()
+{
+	alert('主播申请请联系客服');
+}
+</script>

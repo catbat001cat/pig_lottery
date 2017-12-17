@@ -1,0 +1,55 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="javascript:;">Vip列表</a></li>
+			<li><a href="{:U('Vipadmin/add')}" target="_self">添加</a></li>
+		</ul>
+		<form class="js-ajax-form" action="" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">ID</th>
+						<th>等级</th>
+						<th width="150">最低充值金额</th>
+						<th width="70">操作</th>
+					</tr>
+				</thead>
+				<foreach name="list" item="vo">
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}"></td>
+                    <td><b>{$vo.id}</b></td>
+					<td>{$vo.level}</td>
+					<td>{$vo.price}</td>
+					<td>
+						<a href="{:U('Vipadmin/edit',array('id'=>$vo['id']))}">编辑</a> | 
+						<a href="{:U('Vipadmin/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">删除</a>
+					</td>
+				</tr>
+				</foreach>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location = "{:U('Vipadmin/index',$formget)}";
+			}
+		}
+		setInterval(function() {
+			refersh_window();
+		}, 2000);
+		$(function() {
+			setCookie("refersh_time", 0);
+			Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
+				//批量移动
+			});
+		});
+	</script>
+</body>
+</html>

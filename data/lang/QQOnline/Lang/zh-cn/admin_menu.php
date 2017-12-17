@@ -1,0 +1,9 @@
+<?php
+return array (
+  'QQONLINE_RECORDADMIN_INDEX' => '历史开奖信息',
+  'QQONLINE_RECORDADMIN_LAST_DAY_RANK' => '更新昨天的统计排名',
+  'QQONLINE_RECORDADMIN_LAST_MONTH_RANK' => '更新上月排名统计',
+  'QQONLINE_RECORDADMIN_PER_DAY_RANK' => '每天统计排名',
+  'QQONLINE_RECORDADMIN_PER_MONTH_RANK' => '当月统计排名',
+  'QQONLINE_RECORDADMIN_RANK_NULL' => '排名更新',
+);

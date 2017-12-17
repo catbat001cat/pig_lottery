@@ -1,0 +1,79 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<form class="well form-search" method="post" action="{:U('Channeldataadmin/all_channel_day_incomes')}">
+			<div class="search_type cc mb10">
+				<div class="mb10">
+						日期： 
+						<input type="text" name="ymd" style="width: 200px;" value="{$filter.ymd}" placeholder="请输入日期,2017-06-05...">
+						&nbsp;筛选： 
+						<select id="type" name="type">
+						<option value="0">全部</option>
+						<option value="1">子渠道</option>
+						</select>
+						<script>
+						document.getElementById('type').value = {$filter.type};
+						</script>
+						<input type="submit" class="btn btn-primary" value="搜索" />
+					</span>
+				</div>
+			</div>
+		</form>
+		<form class="js-ajax-form" action="" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">ID</th>
+						<th width="50">上级渠道ID</th>
+						<th width="150">渠道名</th>
+						<th width="150">渠道收入</th>
+						<th width="150">渠道收入(分成后)</th>
+						<empty name="channel">
+						<th width="150">渠道总收入(扣量)</th>
+						</empty>
+						<th width="150">渠道总分成</th>
+						<th width="70">操作</th>
+					</tr>
+				</thead>
+				<foreach name="lists" item="vo">
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}"></td>
+                    <td><b>{$vo.id}</b></td>
+					<td>{$vo.parent_id}</td>
+					<td>{$vo.name}</td>
+					<td><a href="{:U('Channeldataadmin/channel_day_incomes_more', array('channel_id' => $vo['id'], 'date_month' => $filter['ymd']))}" target="_blank">{$vo.total_incomes|default=0}</a></td>
+					<td>{$vo.total_incomes_divide|default=0}</td>
+					<empty name="channel">
+					<td><a href="{:U('Channeldataadmin/incomes_deduct', array('channel_id' => $vo['id'], 'date_month' => $filter['ymd']))}" target="_blank">{$vo.total_incomes_deduct|default=0}</a></td>
+					</empty>
+					<td>{$vo.divide_ratio}</td>					
+					<td>
+					</td>
+				</tr>
+				</foreach>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location = "{:U('Channeladmin/index',$formget)}";
+			}
+		}
+		setInterval(function() {
+			refersh_window();
+		}, 2000);
+		$(function() {
+			setCookie("refersh_time", 0);
+			Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
+				//批量移动
+			});
+		});
+	</script>
+</body>
+</html>

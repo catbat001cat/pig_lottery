@@ -1,0 +1,39 @@
+<html>
+<head>
+<script type="text/javascript" src="themes/simplebootx_video/Public/js/jquery.min.js"></script>
+</head>
+<title>{$site_name}</title>
+<body>
+<!-- 标题 -->
+<img id="channel_img" src="" width="128px" height="128px"/>
+
+<span>一级用户:<a href="{:U('Agent/Channel/users', array('level'=>1))}">{$level1_childusers}</a></span>
+<span>二级用户:<a href="{:U('Agent/Channel/users', array('level'=>2))}">{$level2_childusers}</a></span>
+<span>三级用户:<a href="{:U('Agent/Channel/users', array('level'=>3))}">{$level3_childusers}</a></span>
+</body>
+<script>
+function gen()
+{
+	$.ajax({
+		url: 'index.php?g=Agent&m=channelads&a=gen',
+		type: "get",
+		dataType: "json",
+		data: {
+			id:1
+		},
+		success: function (data) {
+			if (data.code == 0)
+			{
+				document.getElementById('channel_img').src = data.img;
+			}
+			else
+			{
+				alert(data.msg);
+			}
+		}
+	});
+}
+
+gen();
+</script>
+</html>

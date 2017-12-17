@@ -1,0 +1,593 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--<meta charset="UTF-8">-->
+<!--<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">-->
+<!--<title>QQ在线人数</title>-->
+<!--<link rel="stylesheet" href="css/bootstrap.min.css"/>-->
+<link rel="stylesheet" href="__TMPL__Public/css/common.css">
+<link rel="stylesheet" href="__TMPL__Public/css/index.css?10003">
+<script>
+var caiji_delay = {$caiji_delay};
+</script>
+<style>
+.modal-content{
+            background: #953dbb;
+            color: #000;
+            height: 200px;
+        }
+        .modal-dialog{
+            position: fixed;
+            width: 80%;
+            left: 10%;
+            margin: 0 auto;
+            top: 32%;
+            padding: 10px;
+            border-radius: 10px;
+            background: #662483;
+        }
+        .modal-dialog .modal-less{
+            font-size: 16px;
+            margin: 25px auto;
+            color: #fff;
+            padding: 15px;
+        }
+        .modal-less+div{
+            color: #fff;
+            width: 140px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 21px;
+            text-align: center;
+            background: url(__TMPL__Public/img/30.png) no-repeat;
+            background-size: 100% 100%;
+        }
+</style>
+<!--</head>-->
+<!--<body>-->
+<!--<div id="header"></div>-->
+<!--<div class="main-container">-->
+<div class="row toolbar" id="toolbar">
+	<div id="method0" class="col-xs-4 col-sm-4 active"
+		onclick="select_method(0)">
+		<span>龙虎场</span>
+	</div>
+	<div id="method1" class="col-xs-4 col-sm-4" onclick="select_method(1)">
+		<span class="borderRight">数组场</span>
+	</div>
+	<div id="method2" class="col-xs-4 col-sm-4" onclick="select_method(2)">
+		<span>精确场</span>
+	</div>
+</div>
+<div class="row btn-box qq-box">
+	<div class="col-xs-3 col-sm-3">
+		<span class="btn1" id="openPrev">往期</span>
+	</div>
+	<div class="col-xs-5 col-sm-5"></div>
+	<div class="col-xs-4 col-sm-4 ">
+		<span class="btn1" id="openGame">玩法说明</span>
+	</div>
+</div>
+<div class="time">
+	<div class="num">
+		<span class="line"></span><span class="nowNum"><span
+			id="openNum">201707041138</span>期</span><span class="line"></span>
+	</div>
+	<div class="time-bar row">
+		<div class="col-xs-6 col-xm-6 font-bg"></div>
+		<!--<span class="font-bg"></span>-->
+		<div class="col-xs-3 col-xm-3" id="time-up">-</div>
+		<div class="col-xs-3 col-xm-3" id="time-low">-</div>
+		<!--<span id="time-up">5</span><span id="time-low">6</span>-->
+	</div>
+</div>
+<div class="content">
+	<div class="content-num">
+		<span id="percentNum">201707041137</span>期
+	</div>
+	<div class="row content-play">
+		<div class="col-xs-8 col-sm-8 row">
+			<div class="num num1 col-xs-1">
+				<div class="num-con num-con1">
+					<div class="num-img" style="background-position-y: 0px;"></div>
+					<!--<div class="num-img"></div>-->
+				</div>
+			</div>
+			<div class="num num2 col-xs-1">
+				<div class="num-con num-con2">
+					<div class="num-img" style="background-position-y: 0px;"></div>
+					<!--<div class="num-img"></div>-->
+				</div>
+			</div>
+			<div class="num num3 col-xs-1">
+				<div class="num-con num-con3">
+					<div class="num-img" style="background-position-y: 0px;"></div>
+					<!--<div class="num-img"></div>-->
+				</div>
+			</div>
+			<div class="num no col-xs-1">,</div>
+			<div class="num num4 col-xs-1">
+				<div class="num-con num-con4">
+					<div class="num-img" style="background-position-y: 0px;"></div>
+					<!--<div class="num-img"></div>-->
+				</div>
+			</div>
+			<div class="num num5 col-xs-1">
+				<div class="num-con num-con5">
+					<div class="num-img" style="background-position-y: 0px;"></div>
+					<!--<div class="num-img"></div>-->
+				</div>
+			</div>
+			<div class="num num6 col-xs-1">
+				<div class="num-con num-con6">
+					<div class="num-img" style="background-position-y: 0px;"></div>
+					<!--<div class="num-img"></div>-->
+				</div>
+			</div>
+			<div class="num no col-xs-1">,</div>
+			<div class="num num7 openNum col-xs-1">
+				<div class="num-con num-con7">
+					<div class="num-img" style="background-position-y: 1453.08px;"></div>
+					<!--<div class="num-img"></div>-->
+				</div>
+			</div>
+			<div class="num num8 openNum col-xs-1">
+				<div class="num-con num-con8">
+					<div class="num-img" style="background-position-y: 1535.36px;"></div>
+					<!--<div class="num-img"></div>-->
+				</div>
+			</div>
+			<div class="num num9 openNum col-xs-1">
+				<div class="num-con num-con9">
+					<div class="num-img" style="background-position-y: 1471.26px;"></div>
+					<!--<div class="num-img"></div>-->
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-4 col-sm-4">
+			<span class="red-bg " id="ball1">-</span> <span class="red-bg "
+				id="ball2">8</span> <span class="red-bg " id="ball3">龙</span>
+		</div>
+	</div>
+	
+	<!-- 历史记录 -->
+	<div id="history_lottery_template" style="display:none">
+		<div class="row">
+			<div class="col-xs-6 col-sm-6">{no}期</div>
+			<div class="col-xs-3 col-sm-3">
+				<span>{num3_0}</span><span>{num3_1}</span><span>{num3_2}</span>
+			</div>
+			<div class="col-xs-3 col-sm-3">
+				{result}
+			</div>
+		</div>
+		<div class="row line"></div>
+	</div>
+	
+	<div class="content-opened" id="history_lottery_container">
+		<!-- <div class="row">
+			<div class="col-xs-6 col-sm-6">201707041136期</div>
+			<div class="col-xs-3 col-sm-3">
+				<span>3</span><span>3</span><span>8</span>
+			</div>
+			<div class="col-xs-3 col-sm-3">
+				<span class="red">大</span>小合
+			</div>
+		</div>
+		<div class="row line"></div>
+		<div class="row">
+			<div class="col-xs-6 col-sm-6">201707041135期</div>
+			<div class="col-xs-3 col-sm-3">
+				<span>2</span><span>4</span><span>2</span>
+			</div>
+			<div class="col-xs-3 col-sm-3">
+				大<span class="red">小</span>合
+			</div>
+		</div>
+		<div class="row line"></div>-->
+	</div>
+</div>
+<div class="play-box" id="play-box">
+	<div class="play-num">
+		<span class="now-num">201707041150</span>期 投注
+	</div>
+	<div class="play-content">
+		<div class="play-btn row max-min" id="method0_panel">
+			<div class="col-xs-4 col-sm-4 active" id="method0_tag2" onclick="select_tag(1)">
+				<p class="type">龙</p>
+				<p>
+					1赔<span class="odds" id="big_ratio">1.9</span>
+				</p>
+			</div>
+			<div class="col-xs-4 col-sm-4" id="method0_tag0" onclick="select_tag(-1)">
+				<p class="type">虎</p>
+				<p>
+					1赔<span class="odds" id="small_ratio">1.9</span>
+				</p>
+			</div>
+			<div class="col-xs-4 col-sm-4" id="method0_tag1" onclick="select_tag(0)">
+				<p class="type">合</p>
+				<p>
+					1赔<span class="odds" id="mid_ratio">7</span>
+				</p>
+			</div>
+		</div>
+		
+		<div class="play-btn row array" id="method1_panel" style="display:none">
+			<div class="col-xs-2 col-sm-2" id="method1_tag0" onclick="select_tag(0)">
+				<p class="type">0 1</p>
+			</div>
+			<div class="col-xs-2 col-sm-2" id="method1_tag1" onclick="select_tag(1)">
+				<p class="type">2 3</p>
+			</div>
+			<div class="col-xs-2 col-sm-2" id="method1_tag2" onclick="select_tag(2)">
+				<p class="type">4 5</p>
+			</div>
+			<div class="col-xs-2 col-sm-2" id="method1_tag3" onclick="select_tag(3)">
+				<p class="type">6 7</p>
+			</div>
+			<div class="col-xs-2 col-sm-2" id="method1_tag4" onclick="select_tag(4)">
+				<p class="type">8 9</p>
+			</div>
+			<div class="col-xs-12 col-sm-12">
+				1赔<span class="odds" id="num2_ratio">3.5</span>
+			</div>
+			<div class="col-xs-4 col-sm-4" id="method1_tag10" onclick="select_tag(10)">
+				<p class="type">0 1 2</p>
+			</div>
+			<div class="col-xs-4 col-sm-4" id="method1_tag11" onclick="select_tag(11)">
+				<p class="type">3 4 5</p>
+			</div>
+			<div class="col-xs-4 col-sm-4" id="method1_tag12" onclick="select_tag(12)">
+				<p class="type">6 7 8</p>
+			</div>
+			<div class="col-xs-12 col-sm-12">
+				1赔<span class="odds" id="num3_ratio">2.5</span>
+			</div>
+		</div>
+		
+		<div class="play-btn row exact" id="method2_panel" style="display:none">
+			<div class="col-xs-2 col-sm-2" id="method2_tag0" onclick="select_tag(0)">
+				<p class="type">0</p>
+			</div>
+			<div class="col-xs-2 col-sm-2" id="method2_tag1" onclick="select_tag(1)">
+				<p class="type">1</p>
+			</div>
+			<div class="col-xs-2 col-sm-2" id="method2_tag2" onclick="select_tag(2)">
+				<p class="type">2</p>
+			</div>
+			<div class="col-xs-2 col-sm-2" id="method2_tag3" onclick="select_tag(3)">
+				<p class="type">3</p>
+			</div>
+			<div class="col-xs-2 col-sm-2" id="method2_tag4" onclick="select_tag(4)">
+				<p class="type">4</p>
+			</div>
+			<div class="col-xs-2 col-sm-2" id="method2_tag5" onclick="select_tag(5)">
+				<p class="type">5</p>
+			</div>
+			<div class="col-xs-2 col-sm-2" id="method2_tag6" onclick="select_tag(6)">
+				<p class="type">6</p>
+			</div>
+			<div class="col-xs-2 col-sm-2" id="method2_tag7" onclick="select_tag(7)">
+				<p class="type">7</p>
+			</div>
+			<div class="col-xs-2 col-sm-2" id="method2_tag8" onclick="select_tag(8)">
+				<p class="type">8</p>
+			</div>
+			<div class="col-xs-2 col-sm-2" id="method2_tag9" onclick="select_tag(9)">
+				<p class="type">9</p>
+			</div>
+			<div class="col-xs-12 col-sm-12">
+				1赔<span class="odds" id="num_ratio">7</span>
+			</div>
+		</div>
+	</div>	
+
+</div>
+<div class="row xia-box" id="xia-box">
+	<div class="xia-btn col-xs-2 max" onclick="max()">MAX</div>
+	<div class="xia-btn col-xs-2 jian" onclick="sub_count()"></div>
+	<div class="xia-btn col-xs-3 num" id="money">5</div>
+	<div class="xia-btn col-xs-2 jia" onclick="add_count()"></div>
+	<div class="xia-btn col-xs-3 sure" onclick="submit()">下注</div>
+</div>
+<!--押注-->
+<div class="full-buy" id="full-buy">
+	<div class="order">
+		<div class="order-title">押注</div>
+		<div class="order-box">
+			<div class="order-close" id="buy-close"></div>
+			<div class="buy-head">
+				<span class="buy-num">201707041138</span>期
+			</div>
+			<div class="order-list" id="buy-list">
+				<div class="clearfix">
+					<div class="pull-left">本次竞猜</div>
+					<div class="pull-right ball">
+						<span class="roll">龙</span>
+					</div>
+				</div>
+				<div class="clearfix">
+					<div class="pull-left">本次投注</div>
+					<div class="pull-right">
+						<span class="money">5</span>金币
+					</div>
+				</div>
+				<div class="clearfix">
+					<div class="pull-left">本次赔率</div>
+					<div class="pull-right">
+						1赔<span class="odds">1.9</span>
+					</div>
+				</div>
+				<div class="clearfix">
+					<div class="pull-left">预期收益</div>
+					<div class="pull-right">
+						<span class="fucture-money">9.50</span>金币
+					</div>
+				</div>
+			</div>
+			<div class="buy-btn" id="payConfirm">确定</div>
+		</div>
+	</div>
+</div>
+<!--往期-->
+<div class="full-record" id="full-record">
+	<div class="record">
+		<div class="row tool" id="tool">
+			<div class="col-xs-4 active" id="record0" onclick="select_record(0)">龙虎场</div>
+			<div class="col-xs-4" id="record1" onclick="select_record(1)">精确</div>
+			<div class="col-xs-4" id="record2" onclick="select_record(2)">往期</div>
+		</div>
+		<div class="record-content">
+			<div class="big-small active">
+				<table>
+					<thead>
+						<tr>
+							<th>期号</th>
+							<th>龙</th>
+							<th>虎</th>
+							<th>合</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--<tr>-->
+						<!--<td>201705260647</td>-->
+						<!--<td><span class="active"></span></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+						<!--<td>201705260646</td>-->
+						<!--<td><span></span></td>-->
+						<!--<td><span class="active"></span></td>-->
+						<!--<td></td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+						<!--<td>201705260645</td>-->
+						<!--<td><span></span></td>-->
+						<!--<td><span></span></td>-->
+						<!--<td><span class="active"></span></td>-->
+						<!--</tr>-->
+					</tbody>
+				</table>
+			</div>
+			<div class="record-exact">
+				<table>
+					<thead>
+						<tr>
+							<th>期号</th>
+							<th>1</th>
+							<th>2</th>
+							<th>3</th>
+							<th>4</th>
+							<th>5</th>
+							<th>6</th>
+							<th>7</th>
+							<th>8</th>
+							<th>9</th>
+							<th>0</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--<tr>-->
+						<!--<td>201705260647</td>-->
+						<!--<td><span class="active"></span></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+						<!--<td>201705260646</td>-->
+						<!--<td><span></span></td>-->
+						<!--<td><span class="active"></span></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+						<!--<td>201705260645</td>-->
+						<!--<td><span></span></td>-->
+						<!--<td><span></span></td>-->
+						<!--<td><span class="active"></span></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--<td></td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+						<!--<td>遗漏</td>-->
+						<!--<td>4</td>-->
+						<!--<td>5</td>-->
+						<!--<td>11</td>-->
+						<!--<td>3</td>-->
+						<!--<td>2</td>-->
+						<!--<td>12</td>-->
+						<!--<td>7</td>-->
+						<!--<td>9</td>-->
+						<!--<td>21</td>-->
+						<!--<td>31</td>-->
+						<!--</tr>-->
+					</tbody>
+				</table>
+			</div>
+			<div class="record-prev">
+				<table>
+					<thead>
+						<tr>
+							<th>期号</th>
+							<th colspan="2">开奖结果</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--<tr>-->
+						<!--<td>201705260647</td>-->
+						<!--<td><span>1</span><span>1</span><span class="bg-red">8</span></td>-->
+						<!--<td><span>大</span><span>小</span><span class="bg-red">合</span></td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+						<!--<td>201705260646</td>-->
+						<!--<td><span>1</span><span>1</span><span class="bg-red">8</span></td>-->
+						<!--<td><span>大</span><span>小</span><span class="bg-red">合</span></td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+						<!--<td>201705260645</td>-->
+						<!--<td><span>1</span><span>1</span><span class="bg-red">8</span></td>-->
+						<!--<td><span>大</span><span>小</span><span class="bg-red">合</span></td>-->
+						<!--</tr>-->
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="record-foot row">
+			<span></span>最佳投资项目统计<span></span>
+		</div>
+	</div>
+	<div class="record-close row">
+		<div class="close-btn" style="background: url(__TMPL__Public/img/30.png) 50% 50% no-repeat;background-size: 90%;width: 30%;font-weight: bold;text-align: center;padding: 10px 0;height: 100%;line-height: 2.4rem;font-size: 1.63rem;">关闭</div>
+	</div>
+</div>
+<!--游戏说明-->
+<div class="full-game" id="full-game">
+	<div class="gameExplain">
+		<div class="game-title">游戏说明</div>
+		<div class="game-content">
+			<p>数据提取比利时时时彩实时数据，以电脑数据为准，手机数据端有延误  <a href="https://www.caipiaokong.com/lottery/blsffc.html">查看官网地址</a></p>
+			<p>合：未位（个位 十位）最后两位数字相同时为&nbsp;&nbsp;合，当开奖为合时 本期结果不算是大小单双</p>
+			<p>大：当未位（个位）是5,6,7,8,9,时 本期为&nbsp;&nbsp;大。</p>
+			<p>小：当未位（个位）是0,1,2,3,4,时 本期为&nbsp;&nbsp;小。</p>
+			<p>单：当未位（个位）是1,3,5,7,9时 本期为&nbsp;&nbsp;单。</p>
+			<p>双：当未位（个位）是0,2,4,6,8时 本期为&nbsp;&nbsp;双。</p>
+			<p>数组场：当尾号出现的数字与你投注的数字中有任1个相同时算中奖</p>
+			<p>精确场：当未位数字与您投注的数字相同时算中奖{$ratio['num_ratio']}倍</p>
+		</div>
+	</div>
+	<div class="game-close row">
+		<div class="close-btn" style="background: url(__TMPL__Public/img/30.png) 50% 50% no-repeat;background-size: 90%;width: 30%;font-weight: bold;text-align: center;padding: 10px 0;height: 100%;line-height: 2.4rem;font-size: 1.63rem;">关闭</div>
+	</div>
+</div>
+<!--等待开奖-->
+<div class="full-waite" id="full-waite" style="display: none;">
+	<div class="order">
+		<div class="">结束投注，等待开奖...</div>
+		<div class="">
+			<span id="time">-1</span>S
+		</div>
+	</div>
+</div>
+
+<div class="full-waite" id="delay_panel" style="display: none;">
+	<div class="order">
+		<div class="">整理投注结果中,请等待...</div>
+	</div>
+</div>
+
+<!--开奖结果-->
+<div class="full-result" id="full-result">
+	<div class="order">
+		<div class="order-title">恭喜您</div>
+		<div class="order-box">
+			<!--<div class="order-close" id="result-close"></div>-->
+			<div class="buy-head">
+				<span class="result-num"></span>期
+			</div>
+			<div class="order-list" id="result-list">
+				<div class="clearfix">
+					<div class="pull-left">开奖号码</div>
+					<div class="pull-right ball">
+						<span class="openBall1 roll"></span> <span class="openBall2 roll"></span>
+						<span class="openBall3 red-bg roll"></span>
+					</div>
+				</div>
+				<div class="clearfix">
+					<div class="pull-left">开奖结果</div>
+					<div class="pull-right openResult">
+						<span class="roll"></span>
+					</div>
+				</div>
+				<div class="clearfix">
+					<div class="pull-left">本次竞猜</div>
+					<div class="pull-right buy-balls">
+						<span class="buy roll"></span>
+					</div>
+				</div>
+				<div class="clearfix">
+					<div class="pull-left">本次投注</div>
+					<div class="pull-right">
+						<span class="money"></span>金币
+					</div>
+				</div>
+				<div class="clearfix">
+					<div class="pull-left">本次收益</div>
+					<div class="pull-right">
+						<span class="fucture-money"></span>金币
+					</div>
+				</div>
+			</div>
+			<div class="buy-btn" id="resultConfirm" onclick="$('#full-result').hide()">确定</div>
+		</div>
+	</div>
+</div>
+<div id="modal" class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+
+                <div class="modal-less text-center title">兑换金额不能小于1元</div>
+
+                <div class="btnSure center-block" onclick="closeModal()"> 确定</div>
+
+            </div>
+        </div>
+    </div>
+<!-- 
+<div id="modal" class="modal bs-example-modal-sm" style="display:block" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+
+                <div class="modal-less text-center title">服务器维护中</div>
+            </div>
+        </div>
+    </div>
+    -->
+    
+<!--<div id="footer"></div>-->
+<!--<script src="js/jquery-3.1.1.min.js"></script>-->
+<!--<script src="js/bootstrap.min.js"></script>-->
+<script src="__TMPL__Public/js/easing.js"></script>
+<script src="__TMPL__Public/js/index.app.js?10071"></script>
+
+<!--</body>-->
+<!--</html>-->

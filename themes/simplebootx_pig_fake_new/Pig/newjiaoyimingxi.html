@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="user-scalable=no, width=320">
+    <title>交易明细</title>
+    <link rel="stylesheet" href="__TMPL__Public/cssdb/index.css?v=10000">
+    <script src="__TMPL__Public/jsdb/jquery.min.js" type="application/javascript"></script>
+    <script src="__TMPL__Public/jsdb/jquery.cookie.js" type="application/javascript"></script>
+</head>
+<body align="center">
+    <div class="all">
+        <div class="content" style="width: 94%;">
+            <div style="width: 100%; margin-top: 10px;">
+                <a href="{:U('index/newjiaoyimingxi')}">
+                    <div style="background: #337AB7; color: white; width: 141px; height: 40px; float: left;
+                        padding-top: 6px; border-radius: 4px; font-size: 16px; line-height: 34px;">
+                        夺宝记录</div>
+                </a><a href="{:U('index/newzijinmingxi')}">
+                    <div style="background: white; color: #A8A8A8; width: 141px; height: 38px; float: left;
+                        padding-top: 6px; margin-left: 11px; border-radius: 4px; border: #EEEEEE 1px solid;
+                        font-size: 16px; line-height: 32px;">
+                        夺宝资金</div>
+                </a>
+            </div>
+            <div class="clear">
+            </div>
+            <div id="jiaoyimingxi">
+                <!--
+                <div style="width:100%; border:1px solid #F0F0F0; padding-bottom:12px;box-sizing: border-box;margin-top:10px;background:white;border-radius:4px; float:left">
+                    <div style="margin-top:10px; margin-left:10px;"><span style="float:left; font-size:16px;">比特币</span><span style="float:right; margin-right:10px; color:#EB1B2B; margin-top:1px;">盈利 18.00 元</span>
+                    </div>
+                    <div class="clear"></div>
+                    <div style="margin-top:13px; margin-left:10px; color:#A8A8A8;"><span style="float:left;">平台单号：</span><span style="float:right; margin-right:10px;">718902</span>
+                    </div>
+                    <div class="clear"></div>
+                    <div style=" margin-left:10px; color:#A8A8A8;"><span style="float:left;">手续费：</span><span style="float:right; margin-right:10px;">20.00 元</span>
+                    </div>
+                    <div class="clear"></div>
+                    <div style=" margin-left:10px; color:#A8A8A8;"><span style="float:left;">周期：</span><span style="float:right; margin-right:10px;">30 秒 90% 夺宝盈利</span>
+                    </div>
+                    <div class="clear"></div>
+                    <div style=" margin-left:10px; color:#A8A8A8;"><span style="float:left;">判断方向：</span><span style="float:right; margin-right:10px;">看涨</span>
+                    </div>
+                    <div class="clear"></div>
+                    <div style="margin-left:10px; color:#A8A8A8;"><span style="float:left;">下单：</span><span style="float:right; margin-right:10px;">10.16 - 03:22:34 - 4044.39</span>
+                    </div>
+                    <div class="clear"></div>
+                    <div style=" margin-left:10px; color:#A8A8A8;"><span style="float:left;">平台时间：</span><span style="float:right; margin-right:10px;">10.17 - 03:22:34 - 4044.39</span>
+                    </div>
+                </div>
+                <div class="clear"></div>
+             -->
+            </div>
+            <!--
+            <div style="width:100%; border:1px solid #F0F0F0; padding-bottom:12px;box-sizing: border-box;margin-top:10px;background:white;border-radius:4px; float:left">
+                <div style="margin-top:13px; margin-left:10px; color:#A8A8A8;"><span style="float:left;">平台单号：</span><span style="float:right; margin-right:10px;">718902</span>
+                </div>
+                <div class="clear"></div>
+                <div style=" margin-left:10px; color:#A8A8A8;"><span style="float:left;">手续费：</span><span style="float:right; margin-right:10px;">20.00 元</span>
+                </div>
+                <div class="clear"></div>
+            </div>
+            -->
+            <div style="text-align: center; margin-top: 10px; font-size: 12px; color: #A8A8A8;">
+                只显示最近 10 次交易结果</div>
+        </div>
+    </div>
+    <!--footer-->
+    <div style="border-top: #F0F0F0 0px solid; height: 45px; width: 100%; line-height: 44px;
+        background: #272727; position: fixed; bottom: 0px; text-align: center; font-size: 16px;color:white"
+        onclick="location.href='index.php?g=Pig&m=index&a=index'">
+        返回首页
+    </div>
+    <script>
+        var html = '';
+        var gross = '';
+        var create_time = '';
+        var yue = parseFloat($.cookie('user_money')) + parseFloat($.cookie('user_reward_money'));
+        $.ajax({
+            type: 'get',
+            dataType: 'json',
+            url: 'index.php?g=Qqonline&m=record&a=get_records',
+            data: { 'type': 'all', 'is_moni': 0, 'start': 0, 'limit': 30, 'status': [2, 3], 'is_read': 'all' },
+            success: function (data) {
+                if (data.ret == 1) {
+                    for (var i=0; i<data.list.length; i++) {
+                        	var type = '结果';
+                            if (data.list[i].buy_type == 1) {
+                                var trend = '猜大';
+                            }
+                            else if (data.list[i].buy_type == -1) {
+                                var trend = '猜小';
+                            } else if (data.list[i].buy_type == 10) {
+                                var trend = '猜单';
+                            } else if (data.list[i].buy_type == 11) {
+                                var trend = '猜双';
+                            } else if (data.list[i].buy_type == 0) {
+                                var trend = '猜合';
+                            }
+                            var xiadandaoqi = '';
+                            if (data.list[i].win > 0) {
+                            	var mon = data.list[i].win;
+                                var money = '<span style="float:right; margin-right:10px; color:#EB1B2B; margin-top:1px;font-size:14px;">盈利 ' + mon + ' 元</span>';
+                                var title = '盈利';
+                                var trans = '<span style="float:right; margin-right:10px;">+ ' + data.list[i].win + ' 元</span>';
+                            }
+                            else {
+                            	var mon = data.list[i].price;
+                                var money = '<span style="float:right; margin-right:10px; color:#1DBBA4; margin-top:1px;font-size:14px;">亏损 ' + mon + ' 元</span>';
+                                var title = '亏损';
+                                var trans = '<span style="float:right; margin-right:10px;">- ' + data.list[i].price + ' 元</span>';
+                            }
+
+                            var persent = '100%';
+
+                            html += '<div style="width:100%; border:1px solid #F0F0F0; padding-bottom:12px;box-sizing: border-box;margin-top:10px;background:white;border-radius:4px; float:left;font-size:12px;">' +
+									'<div style="margin-top:10px; margin-left:10px;">' +
+										'<span style="float:left; font-size:16px;">' + type + '</span>' +
+										money +
+									'</div>' +
+									'<div class="clear"></div>' +
+									'<div style="margin-top:13px; margin-left:10px; color:#A8A8A8;">' +
+										'<span style="float:left;">平台单号：</span>' +
+										'<span style="float:right; margin-right:10px;">' + data.list[i].no + '</span>' +
+									'</div>' +
+									'<div class="clear"></div>' +
+									'<div style=" margin-left:10px; color:#A8A8A8;">' +
+										'<span style="float:left;">下单：</span>' +
+										'<span style="float:right; margin-right:10px;">' + data.list[i].price + ' 元</span>' +
+									'</div>' +
+									'<div class="clear"></div>' +
+									'<div style=" margin-left:10px; color:#A8A8A8;">' +
+										'<span style="float:left;">判断方向：</span>' +
+										'<span style="float:right; margin-right:10px;">' + trend + '</span>' +
+									'</div>' +
+									'<div class="clear"></div>' +
+									'<div style=" margin-left:10px; color:#A8A8A8;">' +
+										'<span style="float:left;">微信单号：</span>' +
+										'<span style="float:right; margin-right:10px;">' + data.list[i].number + '</span>' +
+									'</div>' +
+									'<div class="clear"></div>' +
+									'<div style=" margin-left:10px; color:#A8A8A8;">' +
+										'<span style="float:left;">' + title + '：</span>' +
+										trans +
+									'</div>' +
+									'<div class="clear"></div>' +
+									xiadandaoqi +
+									'<div style=" margin-left:10px; color:#A8A8A8;">' +
+										'<span style="float:left;">平台时间：</span>' +
+										'<span style="float:right; margin-right:10px;">' + data.list[i].open_time + '</span>' +
+									'</div>' +
+               				'</div>' +
+                			'<div class="clear"></div>';
+                            html += '<div style="width:100%; border:1px solid #F0F0F0; padding-bottom:12px;box-sizing: border-box;margin-top:10px;background:white;border-radius:4px; float:left;font-size:12px;">' +
+							'<div style="margin-top:13px; margin-left:10px; color:#A8A8A8;">' +
+										'<span style="float:left;">平台单号：</span>' +
+										'<span style="float:right; margin-right:10px;">' + data.list[i].no + '</span>' +
+							'</div>' +
+							'<div class="clear"></div>' +
+									'<div style=" margin-left:10px; color:#A8A8A8;">' +
+										'<span style="float:left;">手续费：</span>' +
+										'<span style="float:right; margin-right:10px;">- ' + data.list[i].discount_price + ' 元</span>' +
+									'</div>' +
+							'</div>' +
+							'<div class="clear"></div>';
+                    }
+                    $("#jiaoyimingxi").html(html);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

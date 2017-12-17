@@ -1,0 +1,287 @@
+<link rel="stylesheet" href="__TMPL__Public/css/common.css">
+<link rel="stylesheet" href="__TMPL__Public/css/index.css?10029">
+<script>
+var caiji_delay = {$caiji_delay};
+var base_price = {$lottery_single_price};
+var price_mul = [{$lottery_price_mul}];
+var price_ratio = '{$lottery_price_ratio}';
+var cur_ratio = {
+	big_ratio:{$ratio.big_ratio},
+	mid_ratio:{$ratio.mid_ratio},
+	small_ratio:{$ratio.small_ratio},
+	odd_ratio:{$ratio.odd_ratio},
+	event_ratio:{$ratio.event_ratio}
+}; 
+</script>
+<style>
+
+	.modal-content{
+            /*background: #953dbb;*/
+            color: #000;
+            height: 200px;
+		    background: url(__TMPL__Public/img2/di_12png.png) no-repeat;
+			background-size:100% 100%;
+        }
+        .modal-dialog{
+            position: fixed;
+            width: 80%;
+            left: 10%;
+            margin: 0 auto;
+            top: 32%;
+            padding: 2px;
+            border-radius: 10px;
+            /*background: #662483;*/
+        }
+        .modal-dialog .modal-less{
+            font-size: 16px;
+            margin: 25px auto;
+            color: #fff;
+            padding: 15px;
+        }
+        .modal-less+div{
+            color: #fff;
+            width: 140px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 21px;
+            text-align: center;
+            background: url(__TMPL__Public/img2/k_3.png) no-repeat;
+            background-size: 100% 100%;
+        }
+
+</style>
+<div class="banner">
+	<img src="__TMPL__Public/img2/banner.jpg?10002">	
+</div>
+
+<div class="QMDB_top_box">
+	<div class="QMDB_top_box_top">
+		<div class="QMDB_top_box_top_div active" style="margin-left:0.2rem;"id="method0_tag2" onclick="select_tag(1)">
+			<p>大</p>
+			<p id="big_ratio">1/2</p>
+		</div>
+		<div class="QMDB_top_box_top_div" id="method0_tag0" onclick="select_tag(-1)">
+			<p>小</p>
+			<p id="small_ratio">1/2</p>
+		</div>
+		<div class="QMDB_top_box_top_div" id="method0_tag1" onclick="select_tag(0)">
+			<p>合</p>
+			<p id="mid_ratio">1/4</p>
+		</div>
+		<div class="QMDB_top_box_top_div" id="method0_tag11" onclick="select_tag(10)">
+			<p>单</p>
+			<p id="odd_ratio">1/2</p>
+		</div>
+		<div class="QMDB_top_box_top_div" id="method0_tag12" onclick="select_tag(11)" style="margin-right:0px">
+			<p>双</p>
+			<p id="event_ratio">1/2</p>
+		</div>
+	</div>
+	
+	<div class="QMDB_top_box_middle">
+		<p>数量</p>
+			<img src="__TMPL__Public/img2/zx.png" onclick="min()">
+			<img src="__TMPL__Public/img2/jian.png" onclick="sub_count()">
+			<img src="__TMPL__Public/img2/sr.png">
+			<img src="__TMPL__Public/img2/jia.png" onclick="add_count()">
+			<img src="__TMPL__Public/img2/zd.png" class="max" onclick="max()"/>
+			<div class="" style="position:absolute;top:205px;text-align:center;margin-left:47%;width:20%">
+				<span class="num" id="money">1</span><span> 手</span>
+			</div> 
+	</div>
+	
+	
+	<div class="QMDB_top_box_bottom">
+		<div class="QMDB_top_box_bottom_div">
+			<span class="QMDB_top_box_bottom left">可用余额</span>
+			<span class="QMDB_top_box_bottom right"><span id="user-money">0.00</span>元</span>
+		</div>
+		<div class="QMDB_top_box_bottom_div">
+			<span class="QMDB_top_box_bottom left">预期收益</span>
+			<span class="QMDB_top_box_bottom right"><span id="future-money">0.00</span>元</span>
+		</div>
+		<div class="QMDB_top_box_bottom_div">
+			<span class="QMDB_top_box_bottom left">手续费</span>
+			<span class="QMDB_top_box_bottom right"><span id="price_ratio">0.00</span>元</span>
+		</div>
+	</div>
+</div>
+
+<div class="QMDB_middle_box">
+		<span id="percentNum" style="display:none">201707041138</span>
+		<span><span id="openNum">201707041138</span>期</span>
+		<div class="QMDB_buy_btn" onclick="submit()">购买(<font class="time-up">-</font><font class="time-low">-</font>s)</div>
+	</div>	
+
+<div class="QMDB_middle_box">
+		<span>本期开奖号码</span>
+		<div class="QMDB_middle_box_middle num1" style="display:none"><div class="num-img" style="background-position-y: 0px;"></div></div>
+		<div class="QMDB_middle_box_middle num2" style="display:none"><div class="num-img" style="background-position-y: 0px;"></div></div>
+		<div class="QMDB_middle_box_middle num3" style="display:none"><div class="num-img" style="background-position-y: 0px;"></div></div>
+		<div class="QMDB_middle_box_middle num4" style="display:none"><div class="num-img" style="background-position-y: 0px;"></div></div>
+		
+		<div class="QMDB_middle_box_middle num5"><div class="num-img" style="background-position-y: 0px;"></div></div>
+		<div class="QMDB_middle_box_middle num6"><div class="num-img" style="background-position-y: 0px;"></div></div>
+		<div class="QMDB_middle_box_middle num7"><div class="num-img" style="background-position-y: 0px;"></div></div>
+		<div class="QMDB_middle_box_middle num8"><div class="num-img" style="background-position-y: 0px;"></div></div>
+		<div class="QMDB_middle_box_middle num9"><div class="num-img" style="background-position-y: 0px;"></div></div>
+		<div class="QMDB_middle_box_right col-xs-4 col-sm-4"><span class="red-bg2" id="ball1">-</span> <span class="red-bg2"
+					id="ball2">8</span> <span class="red-bg2" id="ball3">龙</span></div>	
+	</div>
+	
+<div class="QMDB_bottom_box">
+	<p>每次猜大、小、合、单、双，玩法简单、公平、公正、公开信息</p>
+	<p>大小：尾号5-9为大，尾号0-4为小，押中赔率1赔{$ratio.big_ratio}</p>
+	<p>单双：尾号1 3 5 7 9为单，尾号0 2 4 6 8 位双，1赔{$ratio.odd_ratio}</p>
+	<p>合：尾号最后两位数相同的为合，赔率1赔{$ratio.mid_ratio}</p>
+	<div class="QMDB_bottom_box_bottom">
+		<p>倒计时：<span class="time-up">-</span><span class="time-low">-</span>秒</p>
+		<div class="QMDB_prev_btn" id="openPrev">往期</div>
+		<img src="__TMPL__Public/img2/kj.png" style="float:right" onclick="location.href='https://www.caipiaokong.com/lottery/blsffc.html'">
+	</div>
+</div>
+
+<div class="full-record" id="full-record">
+	<div class="record">
+		<div class="row tool" id="tool">
+			<div class="col-xs-4 active" id="record0" onclick="select_record(0)">大小</div>
+			<div class="col-xs-4" id="record1" onclick="select_record(1)">精确</div>
+			<div class="col-xs-4" id="record2" onclick="select_record(2)">往期</div>
+		</div>
+		<div class="record-content">
+			<div class="big-small active">
+				<table>
+					<thead>
+						<tr>
+							<th>期号</th>
+							<th>大</th>
+							<th>小</th>
+							<th>合</th>
+							<th>单</th>
+							<th>双</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div class="record-exact">
+				<table>
+					<thead>
+						<tr>
+							<th>期号</th>
+							<th>1</th>
+							<th>2</th>
+							<th>3</th>
+							<th>4</th>
+							<th>5</th>
+							<th>6</th>
+							<th>7</th>
+							<th>8</th>
+							<th>9</th>
+							<th>0</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div class="record-prev">
+				<table>
+					<thead>
+						<tr>
+							<th>期号</th>
+							<th colspan="2">开奖结果</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="record-foot row">
+			<span></span>最佳投资项目统计<span></span>
+		</div>
+	</div>
+	<div class="record-close row">
+		<div class="close-btn" style="background: url(__TMPL__Public/img/30.png) 50% 50% no-repeat;background-size: 90%;width: 30%;font-weight: bold;text-align: center;padding: 10px 0;height: 100%;line-height: 2.4rem;font-size: 1.63rem;">关闭</div>
+	</div>
+</div>
+
+<!--等待开奖-->
+<div class="full-waite" id="full-waite" style="display: none;">
+	<div class="order" style="color:white">
+		<div class="">结束投注，等待开奖...</div>
+		<div class="">
+			<span id="time">-1</span>S
+		</div>
+	</div>
+</div>
+
+<div class="full-waite" id="delay_panel" style="display: none;">
+	<div class="order" style="color:white">
+		<div class="">整理投注结果中,请等待...</div>
+	</div>
+</div>
+
+<!--开奖结果-->
+<div class="full-result" id="full-result">
+	<div class="order">
+		<div class="order-title">恭喜您</div>
+		<div class="order-box">
+			<!--<div class="order-close" id="result-close"></div>-->
+			<div class="buy-head">
+				<span class="result-num"></span>期
+			</div>
+			<div class="order-list" id="result-list">
+				<div class="clearfix">
+					<div class="pull-left">开奖号码</div>
+					<div class="pull-right ball">
+						<span class="openBall1 roll"></span> <span class="openBall2 roll"></span>
+						<span class="openBall3 red-bg roll"></span>
+					</div>
+				</div>
+				<div class="clearfix">
+					<div class="pull-left">开奖结果</div>
+					<div class="pull-right openResult">
+						<span class="roll"></span>
+					</div>
+				</div>
+				<div class="clearfix">
+					<div class="pull-left">本次竞猜</div>
+					<div class="pull-right buy-balls">
+						<span class="buy roll"></span>
+					</div>
+				</div>
+				<div class="clearfix">
+					<div class="pull-left">本次投注</div>
+					<div class="pull-right">
+						<span class="money"></span>金币
+					</div>
+				</div>
+				<div class="clearfix">
+					<div class="pull-left">本次收益</div>
+					<div class="pull-right">
+						<span class="fucture-money"></span>金币
+					</div>
+				</div>
+			</div>
+			<div class="buy-btn" id="resultConfirm" onclick="$('#full-result').hide()">确定</div>
+		</div>
+	</div>
+</div>
+<div id="modal" class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+
+                <div class="modal-less text-center title">兑换金额不能小于1元</div>
+
+                <div class="btnSure center-block" onclick="closeModal()"> 确定</div>
+
+            </div>
+        </div>
+    </div>
+
+<script src="__TMPL__Public/js/easing.js"></script>
+<script src="__TMPL__Public/js/index.app.js?10112"></script>
+<script src="__TMPL__Public/js/md5.js"></script>

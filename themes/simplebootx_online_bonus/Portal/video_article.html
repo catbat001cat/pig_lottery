@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$post_title}</title>
+<tc_include file="Public:head" />
+<script type="text/javascript" src="__TMPL__Public/js/jquery.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/kl.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/qrcode.min.js"></script>
+<style>
+body {
+	padding: 0;
+	margin: 0;
+	background: #fff;
+}
+
+.video-tousu-button {
+	position: fixed;
+	right: 20px;
+	top: 30px;
+	z-index: 200;
+	width: 35px;
+	height: 35px;
+	line-height: 35px;
+	color: red;
+	border-radius: 50%;
+	border: 1px solid red;
+}
+</style>
+</head>
+<php>
+$user = sp_get_current_user(); function randomFloat($min = 0, $max = 1) 
+{
+ return $min + mt_rand() / mt_getrandmax() * ($max - $min);
+}
+ 
+$price1 = 24.9;//round(randomFloat(18, 19), 2);
+$price2 = 49.9;//round(randomFloat(38, 39), 2); 
+</php>
+<body>
+	<input id="userid" name="userid" value="" type="hidden">
+	<input id="pid" name="pid" value="" type="hidden">
+	<input id="uid" name="uid" value="" type="hidden">
+	<input id="rt" name="rt" value="{$need_coins-$has_coins}" type="hidden">
+	<input id="id" name="id" value="{$id}" type="hidden">
+	<!-- 加载 -->
+	<div
+		style="width: 100%; height: 100%; position: fixed; background: #333; opacity: 0.8; z-index: 9999999; display: none;"
+		class="loading">
+		<div
+			style="width: 100%; height: 200px; line-height: 200px; text-align: center; position: absolute; margin: auto; top: 0; bottom: 0; color: darkred; z-index: 99999999;">
+			<img src="__TMPL__Public/images/loding.gif"
+				style="margin: 0 auto; width: 45px; vertical-align: middle;">正在跳转支付,请稍等..
+		</div>
+	</div>
+	<div id="wxPayPanel"
+		style="background: url(__TMPL__Public/images/gp.png) no-repeat; background-size: contain; width: 300px; height: 200px; position: absolute; margin: auto; left: 0; right: 0; top: 0; bottom: 0; z-index: 99999999999; margin-top:250px; display: none;"
+		class="wxPay">
+		<img src="__TMPL__Public/images/dxclose.png"
+			style="width: 20px; position: relative; top: -38px; right: -272px; z-index: 999999999999;"
+			class="closeWxPay">
+		<div
+			style="display: inline-block; width: 80%; margin-top: 55px; height: 30px; margin-left: 8px; font-weight: 900; border-bottom: 1px solid #ccc;"
+			class="bc">
+			本场 <span
+				style="color: red; display: inline-block; margin-left: 15px;">{$price1}元</span>
+			<span
+				style="display: inline-block; float: right; background: darkred; color: #fff; border-radius: 5px; width: 50px; text-align: center; padding: 5px 5px 5px 5px; position: relative; top: -5px;">购买</span>
+		</div>
+		<div
+			style="display: inline-block; width: 80%; margin-top: 10px; margin-left: 30px; height: 30px; font-weight: 900;"
+			class="yp">
+			月票 <span
+				style="color: red; display: inline-block; margin-left: 15px;">{$price2}元</span>
+			<span
+				style="display: inline-block; float: right; background: darkred; color: #fff; border-radius: 5px; width: 50px; text-align: center; padding: 5px 5px 5px 5px; position: relative; top: -5px;">购买</span>
+		</div>
+		<span style="color: red;display: block;width: 90%;margin-top:0px;margin-left: 20px;ght: 30px;font-size: 15px;">点击购买,可继续观看(月票不限场次),支付有延迟,支付完请隔几秒刷新</span>
+	</div>
+	<div class="video-tousu-button" data-anchor="1"
+		onclick="location.href='{:U('user/center/compaint')}'">投诉</div>
+	<div
+		style="width: 250px; height: 250px; padding: 0; background: url('__TMPL__Public/images/bg_paysuccess_bill.png') no-repeat; background-size: contain; position: fixed; margin: auto; left: 0; right: 0; top: 0; bottom: 0; font-size: 13px; font-weight: 500; display: none; z-index: 999999999999"
+		id="ticketContent">
+		<img src="__TMPL__Public/images/bg_info_export.png"
+			style="width: 280px; position: relative; margin: auto; left: -15px; right: 0; top: -7px; bottom: 0;">
+		<!-- <img src="__TMPL__Public/images/gou2x.png"
+			style="width: 30px; display: block; margin: 0px auto;">-->
+		<img id="avatar_icon" src=""
+			style="width: 30px; display: block; margin: 0px auto;"> <span
+			style="color: #00ff00; display: block; text-align: center;">出票成功</span>
+		<span style="display: block; text-align: left; margin: 5px 0 5px 30%;"
+			id="ticketId">票号: XC65194657</span> <span
+			style="display: block; text-align: left; margin: 5px 0 5px 30%;"
+			id="ticketType">单程: 19.9元</span> <span
+			style="display: block; text-align: left; margin: 0 0 0 30%;"
+			id="ticketName">乘客: 987迷失</span>
+	</div>
+	<!-- 支付二维码 -->
+	<div id="qrcode_panel"
+		onclick="$('#qrcode_panel').hide();$('.loading').hide()"
+		style="background: url(__TMPL__Public/images/gb.png) no-repeat; background-size: contain; width: 300px; height: 350px; position: absolute; margin: auto; left: 0; right: 0; top: 0; bottom: 0; z-index: 99999999999; display: none;">
+		<!--<img src="__TMPL__Public/images/dxclose.png"
+			style="width: 20px; position: relative; top: -282px; right: -279px; z-index: 999999999999;"
+			onclick="$('#qrcode_panel').hide();$('.loading').hide()"/>-->
+		<div
+			style="display: inline-block; width: 80%; margin-top: 65px; height: 30px; margin-left: 28px; font-weight: 900; border-bottom: 1px solid #ccc;"
+			class="bc">
+			<div id="qrcode"></div>
+		</div>
+		<span
+			style="position: fixed; color: black; display: block; width: 300px; margin-top: -65px; text-align: center; height: 30px; font-size: 18px;">请长按二维码扫码支付</span>
+	</div>
+	<div style="display: none">
+		<img src="__TMPL__Public/images/yp.png"
+			style="position: fixed; left: 10px; right: 0; top: 10px; z-index: 900; display: none; width: 150px;"
+			id="yupiao-ico">
+		<div
+			style="position: fixed; left: 80px; right: 0; top: 28px; z-index: 900; display: none; font-size: 1em; color: #fff;"
+			id="yupiao-text" onclick="$('.wxPay').css('display', 'block');">
+			余票 <span style="color: darkorange" id="yupiao-num">17</span>
+		</div>
+	</div>
+	<if condition="($user.level egt $level) or ($is_payed eq 1)"> <else />
+	<div style="display: block">
+		<img src="__TMPL__Public/images/mp.png"
+			style="position: fixed; margin: auto; left: 0px; right: 0px; bottom: 100px; z-index: 900; display: none; width: 20%;"
+			id="maipiao" />
+	</div>
+	</if>
+	<div
+		style="width: 100%; height: 100%; position: fixed; text-align: center; font-size: 60px; background: #333; opacity: 0.5;"
+		id="mask">
+		<img src="__TMPL__Public/images/player.png"
+			style="position: fixed; margin: auto; left: 0; right: 0; top: 0; bottom: 0; z-index: 999;"
+			id="playerPro">
+	</div>
+	{$post_content}
+	<script type="text/javascript" src="__TMPL__Public/js/fastclick.js"></script>
+	<script type="text/javascript" src="__TMPL__Public/js/jquery.cookie.js"></script>
+	<script>
+	function setCookie(c_name,value,expiredays)
+	{
+	var exdate=new Date()
+	exdate.setDate(exdate.getDate()+expiredays)
+	document.cookie=c_name+ "=" +escape(value)+
+	((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
+	}
+
+	//取回cookie
+	function getCookie(c_name)
+	{
+	if (document.cookie.length>0)
+	  {
+	  c_start=document.cookie.indexOf(c_name + "=")
+	  if (c_start!=-1)
+		{ 
+		c_start=c_start + c_name.length+1 
+		c_end=document.cookie.indexOf(";",c_start)
+		if (c_end==-1) c_end=document.cookie.length
+		return unescape(document.cookie.substring(c_start,c_end))
+		} 
+	  }
+	return ""
+	}
+	
+		//禁止上拉下拉
+		document.querySelector('body').addEventListener('touchmove',
+				function(e) {
+					e.preventDefault();
+				})
+		var mask = $('#mask');
+		var playerPro = $('#playerPro');
+		var v = document.getElementById('v');
+		var bodyHeight = document.body.scrollHeight;
+		var bodyWidth = document.body.scrollWidth;
+		v.style.height = Math.max(bodyHeight, bodyWidth) + 'px';
+		var u = navigator.userAgent;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
+		if (isAndroid) {
+			document.getElementById("maipiao").style.bottom = '100px';
+		}
+		var vType = '4';
+		var id = $("#id").val();
+		function in_array(search, array) {
+			for ( var i in array) {
+				if (array[i] == search) {
+					return true;
+				}
+			}
+			return false;
+		}
+		$(function() {
+			//初始化
+			var id1 = $("#id").val();
+			var rt = $("#rt").val();
+			if (rt && rt != null) {
+				$('#yupiao-num').html(rt);
+			}
+			$('#maipiao').click(function() {
+				$('.wxPay').css('display', 'block');
+				return false;
+			});
+			$('.closeWxPay').click(function() {
+				if (v.currentTime >= {$seconds_buy})
+					return false;
+				$('.wxPay').css('display', 'none');
+				return false;
+			});
+			$('.bc').click(function() {
+				$('.wxPay').css('display', 'none');
+				$('.loading').css('display', 'block');
+				buy(0,{$price1});
+				return false;
+			});
+			$('.yp').click(function() {
+				$('.wxPay').css('display', 'none');
+				$('.loading').css('display', 'block');
+				buy(1,{$price2});
+				return false;
+			});
+			$('.loading').click(function() {
+				if (v.paused == true)
+					v.play();
+			});
+			FastClick.attach(document.body);
+			mask.click(function() {
+				
+				if (document.getElementById('wxPayPanel').style.display == 'block')
+					return;
+				
+				setInterval(setAlert, 1000);
+				if (v.paused == true)
+					v.play();
+				mask.hide();
+				playerPro.hide();
+				$('#maipiao').show();
+				$('#yupiao-ico').show();
+				$('#yupiao-text').show();
+			});
+			$('#v').click(function() {
+				if (document.getElementById('wxPayPanel').style.display == 'block')
+					return;
+				
+				setInterval(setAlert, 1000);
+				if (v.paused == true)
+					v.play();
+				mask.hide();
+				playerPro.hide();
+				$('#maipiao').show();
+				$('#yupiao-ico').show();
+				$('#yupiao-text').show();
+			});
+			var ticketArr = {$ticket_users};
+			var ticketArr2 = {
+				"44" : {
+					"type" : 0,
+					"name" : "\u767d\u5929\u4e0d\u61c2\u7237\u7684\u9ed1",
+					"number" : 21
+				},
+				"66" : {
+					"type" : 1,
+					"name" : "\u7ecd\u5174\u8d75\u5b50\u9f99",
+					"number" : 22
+				},
+				"206" : {
+					"type" : 0,
+					"name" : "\u65b0\u53f8\u673a",
+					"number" : 23
+				},
+				"236" : {
+					"type" : 1,
+					"name" : "\u85cf\u4f20\u4e09\u5343\u5e74",
+					"number" : 24
+				},
+				"291" : {
+					"type" : 1,
+					"name" : "\u8001\u8239\u957f1987",
+					"number" : 25
+				},
+				"351" : {
+					"type" : 0,
+					"name" : "\u65b0\u53f8\u673a",
+					"number" : 26
+				}
+			};
+			var ticketTime = [ {$tickets_arr} ];
+			function setAlert() {
+				if (in_array(parseInt(v.currentTime), ticketTime)) {
+					var one = ticketArr[parseInt(v.currentTime)];
+					var num = Math.floor(Math.random() * 100000000);
+					$('#ticketId').html('票号: XC' + num);
+					if (one['type'] == 0) {
+						$('#ticketType').html('本场: {$price1}元');
+					} else {
+						$('#ticketType').html('月票: {$price2}元');
+					}
+					$('#avatar_icon').attr('src', one['avatar']);
+					var rt1 = parseInt($("#yupiao-num").html());
+					var rt2 = rt1 - 1;
+					$('#yupiao-num').html(rt2);
+					/*
+					if (rt2 == 0) {
+						$('#yupiao-num').html("0");
+						$.cookie('remainTicket-' + id1, 0, {
+							expires : 30,
+							path : '/'
+						});
+						
+						//setCookie('remainTicket-' + id1, 0, 365);
+						
+						if ({$level} < {$user['level']})
+							return;
+						
+						if ({$is_payed})
+							return;
+						
+						alert('房间已关闭');
+						ubourl('index.php?m=list&a=index&id=6');
+						return false;
+					}
+					*/
+					$('#ticketName').html('乘客: ' + one['name']);
+					if (vType == 3) {
+						
+						$.cookie('remainTicket-' + id1, 0, {
+							expires : 30,
+							path : '/'
+						});
+						
+						//setCookie('remainTicket-' + id1, 0, 365);
+					} else {
+						
+						$.cookie('remainTicket-' + id1, rt1 - 1, {
+							expires : 30,
+							path : '/'
+						});
+						
+						//setCookie('remainTicket-' + id1, rt1 - 1, 365);
+					}
+					$("#ticketContent").fadeToggle(1000);
+					setTimeout('$("#ticketContent").fadeToggle(1000)', 3000);
+				}
+			}
+			v.addEventListener("playing", function() {
+				
+				if ($.cookie("bp" + id) != 'null'
+						&& $.cookie("bp" + id) != undefined) {
+					setTimeout(setCurrentTime, 200); //
+					//setTimeout(setCurrentTime, 1000); //
+				}
+				/*
+				console.log("bp" + id + "=" + getCookie("bp" + id));
+				if (getCookie("bp" + id) != null && getCookie("bp" + id) != '') {
+					console.log('[[' + getCookie("bp" + id) + ']]');
+					var arr = getCookie("bp" + id).split('|');
+					var timestamp = new Date().getTime();
+					var curTimeStamp = parseInt(arr[0])
+							+ parseInt(((timestamp - arr[1]) / 1000));
+					v.currentTime = curTimeStamp;
+					setTimeout(setCurrentTime, 1000);
+				}
+				*/
+			}, false);
+			function setCurrentTime2() {
+				v.pause();
+				//var arr = $.cookie("bp" + id).split('|');
+				var arr = getCookie("bp" + id).split('|');
+				var timestamp = new Date().getTime();
+				var det = parseInt(((timestamp - arr[1]) / 1000));
+				if (det > 5)
+					det = 5;
+				var curTimeStamp = parseInt(arr[0])
+						+ det;
+				if (v.duration != 0 && curTimeStamp >= v.duration) {
+					$.cookie('remainTicket-' + $("#id").val(), 0, {
+						expires : 30,
+						path : '/'
+					});
+					
+					//setCookie('remainTicket-' + $("#id").val(), 0, 365);
+					alert('房间已关闭!');
+					ubourl('index.php?m=list&a=index&id=6');
+				} else {
+					v.currentTime = curTimeStamp;
+					
+					$.cookie("bp" + id, null, {
+						expires : 30,
+						path : '/'
+					});
+					
+					//setCookie("bp" + id, null, 365);
+					v.play();
+					$('#maipiao').show();
+					$('#yupiao-ico').show();
+					$('#yupiao-text').show();
+				}
+			}
+			function setCurrentTime() {
+				var arr = getCookie("bp" + id).split('|');
+				var timestamp = new Date().getTime();
+				var det = parseInt(((timestamp - arr[1]) / 1000));
+				//if (det > 5)
+					//det = 5;
+				var curTimeStamp = parseInt(arr[0])
+						+ det;
+				
+				console.log(curTimeStamp +',' + {$seconds_buy} + ',' + getCookie("bp" + id));
+				
+				if (curTimeStamp >= {$seconds_buy})
+				{
+					if ({$level} > {$user['level']})
+					{
+						if ({$is_payed})
+						{
+							if (curTimeStamp >= v.duration)
+							{
+								curTimeStamp = {$seconds_buy};
+							}
+						}
+						else
+						{
+							curTimeStamp = {$seconds_buy};
+						}
+					}
+					else
+					{
+						if ({$is_payed})
+						{
+							if (curTimeStamp > v.duration)
+							{
+								curTimeStamp = {$seconds_buy};
+							}
+						}
+						else
+						{
+							//curTimeStamp = {$seconds_buy};
+						}
+					}
+				}
+				
+				if (v.duration != 0 && curTimeStamp >= v.duration) {
+					/*$.cookie('remainTicket-' + $("#id").val(), 0, {
+						expires : 30,
+						path : '/'
+					});
+					*/
+					v.pause();
+					setCookie('remainTicket-' + $("#id").val(), 0, 365);
+					alert('房间已关闭');
+					ubourl('index.php?m=list&a=index&id=6');
+				} else {
+					v.currentTime = curTimeStamp;
+					/*
+					$.cookie("bp" + id, null, {
+						expires : 30,
+						path : '/'
+					});
+					*/
+					setCookie("bp" + id, v.currentTime + '|' + timestamp, 365);
+					$('#maipiao').show();
+					$('#yupiao-ico').show();
+					$('#yupiao-text').show();
+				}
+			}
+			playerPro.click(function() {
+			});
+			window.onunload = function onEnd() {
+				if (v.currentTime != 'NaN' && v.currentTime != 0) {
+					var timestamp = new Date().getTime();
+					
+					$.cookie("bp" + id, v.currentTime + '|' + timestamp, {
+						expires : 30,
+						path : '/'
+					});
+					//setCookie("bp" + id, v.currentTime + '|' + timestamp, 365);
+				}
+			}
+		});
+		function ubourl(url) {
+			window.location.href = url;
+		}
+		
+		function buy(type, price)
+		{
+			//price *= 100;
+			//$('#qrcode').html('');
+			// 打开跳转链接
+			pay_wx(type, {$id}, price, function(data) {
+				if (data.status == 1)
+					location.href = data.msg;
+				else
+				{
+					alert('支付失败,请联系客服');	
+				}
+			});
+			/*
+			pay_code(type, {$id}, price, function(data) {
+				// 显示支付二维码
+				new QRCode(document.getElementById("qrcode"), data.code_img_url);  // 设置要生成二维码的链接
+				$('#qrcode_panel').show();
+			});
+			*/
+		}
+		function check_time() {
+			//console.log(v.currentTime + ',' + {$seconds_buy});
+			if (v.currentTime >= {$seconds_buy})
+			{
+				if ({$level} <= {$user['level']})
+					return;
+				
+				if ({$is_payed})
+					return;
+			
+				v.pause();
+				
+				$('.wxPay').css('display', 'block');
+			}
+		}
+		
+		if ($.cookie("bp" + id) != null && $.cookie("bp" + id) != 'null' && $.cookie("bp" + id) != '')
+		{
+			var arr = $.cookie("bp" + id).split('|');
+			if (arr.length > 1)
+			{
+				var timestamp = new Date().getTime();
+				var det = parseInt(((timestamp - arr[1]) / 1000));
+				//if (det > 5)
+					//det = 5;
+				var curTimeStamp = parseInt(arr[0])
+						+ det;
+				//v.currentTime = arr[0] + curTimeStamp;
+				v.currentTime = curTimeStamp;
+				
+				if ({$level} > {$user['level']} && {$is_payed} != true)
+				{
+					if (v.currentTime >= {$seconds_buy})
+						v.currentTime = {$seconds_buy};
+				}
+			}
+		}
+		else
+		{
+			var timestamp = new Date().getTime();
+			$.cookie("bp" + id, '0|' + timestamp);
+		}
+
+		setInterval("check_time()", 500);
+	</script>
+</body>
+</html>

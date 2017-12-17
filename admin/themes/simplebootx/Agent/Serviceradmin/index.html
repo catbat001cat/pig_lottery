@@ -1,0 +1,61 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Serviceradmin/index')}">客服二维码列表</a></li>
+			<li><a href="{:U('Serviceradmin/add')}" target="_self">添加客服二维码</a></li>
+		</ul>
+		<form class="js-ajax-form" action="" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="50">ID</th>
+						<th width="80">类型</th>
+						<th width="200">模板图片</th>
+						<th width="70">操作</th>
+					</tr>
+				</thead>
+				<php>
+				$type_arr = array('客服','公众号','不死二维码');
+				</php>
+				<foreach name="lists" item="vo">
+				<tr>
+					<php>
+						$smeta=json_decode($vo['smeta'],true);
+					</php>
+                    <td><b>{$vo.id}</b></td>
+                    <td>{$type_arr[$vo['type']]}</td>
+					<td>
+					<img id="img_{$vo.id}" src="{:sp_get_asset_upload_path($smeta['thumb'])}" width="200"/>
+					</td>
+					<td>
+						<a href="{:U('Serviceradmin/edit',array('id'=>$vo['id']))}">编辑</a> | 
+						<a href="{:U('Serviceradmin/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">删除</a>
+					</td>
+				</tr>
+				</foreach>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location = "{:U('Serviceradmin/index',$formget)}";
+			}
+		}
+		setInterval(function() {
+			refersh_window();
+		}, 2000);
+		$(function() {
+			setCookie("refersh_time", 0);
+			Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
+				//批量移动
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<html>
+<head>
+<tc_include file="Public:scripts" />
+</head>
+<title>{$site_name}</title>
+<body>
+
+<div id="item_template" style="display:none">
+<div>
+<span>{no}</span>
+<span>{number}</span>
+<span>{num3}</span>
+<span>{type}</span>
+<span>{open_time}</span>
+</div>
+</div>
+
+<div id="container">
+</div>
+
+</body>
+
+<script>
+function append_item(item)
+{
+	var item_template = $('#item_template').html();
+	
+	var type_arr = ['虎', '合', '龙'];
+	
+	item_template = item_template.replace(/{no}/g, item.no)
+		.replace(/{number}/g, item.number)
+		.replace(/{num3}/g, item.num3)
+		.replace(/{type}/g, type_arr[parseInt(item.type)+1])
+		.replace(/{open_time}/g, item.open_time);
+	
+	$('#container').append(item_template);
+}
+
+$.ajax({
+	url: 'index.php?g=Qqonline&m=index&a=ajax_get_lotterys',
+	type: "get",
+	dataType: "json",  
+	data: {
+	},
+	success: function (data) {
+		if (data.ret == 1)
+		{
+			$('#container').html('');
+			
+			for (var i=0; i<data.lottery_history.length; i++)
+				append_item(data.lottery_history[i]);
+		}
+	}
+});
+</script>
+
+</html>

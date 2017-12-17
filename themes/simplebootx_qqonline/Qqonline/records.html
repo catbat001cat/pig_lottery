@@ -1,0 +1,55 @@
+<html>
+<head>
+<tc_include file="Public:scripts" />
+</head>
+<title>{$site_name}</title>
+<body>
+
+<div id="item_template" style="display:none">
+<div>
+<span>{no}</span>
+<span>{price}</span>
+<span>{win}</span>
+<span>{status}</span>
+</div>
+</div>
+
+<div id="container">
+</div>
+
+</body>
+
+<script>
+function append_item(item)
+{
+	var item_template = $('#item_template').html();
+	
+	var status_arr = ['未开奖', '中奖', '没中'];
+	
+	item_template = item_template.replace(/{no}/g, item.no)
+		.replace(/{price}/g, item.price)
+		.replace(/{win}/g, item.win)
+		.replace(/{status}/g, status_arr[item.status]);
+	
+	$('#container').append(item_template);
+}
+
+$.ajax({
+	url: 'index.php?g=QQOnline&m=record&a=get_records',
+	type: "get",
+	dataType: "json",  
+	data: {
+	},
+	success: function (data) {
+		if (data.ret == 1)
+		{
+			$('#container').html('');
+			
+			for (var i=0; i<data.info.length; i++)
+				append_item(data.info[i]);
+		}
+	}
+});
+</script>
+
+</html>

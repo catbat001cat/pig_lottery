@@ -1,0 +1,51 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<form class="js-ajax-form" action="" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="150">日期</th>
+						<th width="150">充值金额</th>
+						<empty name="channel">
+						<th width="150">充值金额(扣量)</th>
+						</empty>
+						<th width="70">操作</th>
+					</tr>
+				</thead>
+				<foreach name="lists" item="vo">
+				<tr>
+					<td>{$vo.date_month}</td>
+					<td><a href="{:U('channeldataadmin/day_incomes_more', array('date_month' => $vo['date_month']))}" target="_blank">{$vo.total_incomes}</a></td>
+					<empty name="channel">
+					<td>{$vo.total_incomes_deduct}</td>
+					</empty>
+					<td>
+					</td>
+				</tr>
+				</foreach>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location = "{:U('Channeldataadmin/index',$formget)}";
+			}
+		}
+		setInterval(function() {
+			refersh_window();
+		}, 2000);
+		$(function() {
+			setCookie("refersh_time", 0);
+			Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
+				//批量移动
+			});
+		});
+	</script>
+</body>
+</html>

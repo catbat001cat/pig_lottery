@@ -1,0 +1,96 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<form class="well form-search" method="post" action="{:U('Moneyadmin/stat')}">
+			<div class="search_type cc mb10">
+				<div class="mb10">
+						开始日期： 
+						<input type="date" name="start_ymd" style="width: 200px;" value="{$filter.start_ymd}" placeholder="请输入开始日期,2017-06-02">
+						&nbsp;结束日期： 
+						<input type="date" name="end_ymd" style="width: 200px;" value="{$filter.end_ymd}" placeholder="请输入结束日期,2017-06-02">
+						<input type="submit" class="btn btn-primary" value="搜索" />
+				</div>
+			</div>
+		</form>
+		<h4 class="well">财务数据</h4>
+		<div class="home_info">
+			<ul>
+				<li><em>收入(夺宝):</em> <span>{$total_income|default=0}</span></li>
+				<li><em>收入(转盘):</em> <span>{$total_income_zp|default=0}</span></li>
+				<li><em>支出(夺宝):</em> <span>{$total_outcome|default=0}</span></li>
+				<li><em>支出(转盘):</em> <span>{$total_outcome_zp|default=0}</span></li>
+				<li><em>利润:</em> <span>{$total_result|default=0}</span></li>
+				<li><em>利润率:</em> <span>{$total_result_ratio|default=0}%</span></li>
+			</ul>
+		</div>
+		<h4 class="well">用户数据</h4>
+		<div class="home_info">
+			<ul>
+				<li><em>新增用户数:</em> <span>{$new_users_count|default=0}</span></li>
+				<li><em>被黑次数:</em> <span>{$hack_times|default=0}</span></li>
+			</ul>
+		</div>
+		<h4 class="well">投注数据</h4>
+		<div class="home_info">
+			<ul>
+				<li><em>总开奖次数:</em> <span>{$lottery_stat['total_no']|default=0}</span></li>
+				<li><em>总投注金额:</em> <span>{$lottery_stat['total_price']|default=0}</span></li>
+				<li><em>总中奖金额:</em> <span>{$lottery_stat['total_win']|default=0}</span></li>
+			</ul>
+		</div>
+		<h4 class="well">转盘投注数据</h4>
+		<div class="home_info">
+			<ul>
+				<li><em>总开奖次数:</em> <span>{$lottery_stat_zp['total_no']|default=0}</span></li>
+				<li><em>总投注金额:</em> <span>{$lottery_stat_zp['total_price']|default=0}</span></li>
+				<li><em>总中奖金额:</em> <span>{$lottery_stat_zp['total_win']|default=0}</span></li>
+			</ul>
+		</div>		
+		<h4 class="well">佣金数据</h4>
+		<div class="home_info">
+			<ul>
+				<li><em>佣金金额(夺宝):</em> <span>{$total_commission|default=0}</span></li>
+				<li><em>佣金金额(转盘):</em> <span>{$total_commission_zp|default=0}</span></li>
+			</ul>
+		</div>
+		<h4 class="well">充值数据</h4>
+		<div class="home_info">
+			<ul>
+				<li><em>总充值金额:</em> <span>{$total_recharge_price|default=0}</span></li>
+				<li><em>充值次数(已支付):</em> <span>{$total_completed_recharge_count|default=0}</span></li>
+				<li><em>充值次数(未支付):</em> <span>{$total_incompleted_recharge_count|default=0}</span></li>
+				<li><em>渠道支付已支付金额:</em> <span>{$total_ch_recharge_price|default=0}</span></li>
+				<li><em>渠道支付已支付实际金额:</em> <span>{$total_real_ch_recharge_price|default=0}</span></li>
+			</ul>
+		</div>
+		<h4 class="well">提现数据</h4>
+		<div class="home_info">
+			<ul>
+				<li><em>申请:</em> <span>{$total_apply_drawcash|default=0}</span></li>
+				<li><em>通过:</em> <span>{$total_passed_drawcash|default=0}</span></li>
+				<li><em>打款:</em> <span>{$total_completed_drawcash|default=0}</span></li>
+				<li><em>发起打款:</em> <span>{$total_completed_drawcash_tx|default=0}</span></li>
+			</ul>
+		</div>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location = "{:U('Rechargeadmin/index',$formget)}";
+			}
+		}
+		setInterval(function() {
+			refersh_window();
+		}, 2000);
+		$(function() {
+			setCookie("refersh_time", 0);
+			Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
+				//批量移动
+			});
+		});
+	</script>
+</body>
+</html>

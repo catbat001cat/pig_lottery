@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{$seo_title} {$site_name}</title>
+	<meta name="keywords" content="{$seo_keywords}" />
+	<meta name="description" content="{$seo_description}">
+    <tc_include file="Public:head" />
+    <script type="text/javascript" src="__TMPL__Public/js/jquery.min.js"></script>
+    <script type="text/javascript" src="__TMPL__Public/js/kl.js"></script>
+    <style>
+
+body {margin: 0 auto;width: 100%;}
+ul {list-style: none;margin: 0;padding: 0;}
+.header {width: 100%;height: 40px;position: fixed;top: 0;left: 0;background: #FA5B5B;z-index: 999;}
+.header ul {width: 100%;}
+.header ul li {float: left;width: 25%;height: 40px;display: block;}
+.header ul li a {text-align: center;display: block;height: 40px;line-height: 40px;color: #ccc;}
+.header ul li a.active {color: #fff;}
+.header .header-hot {position: fixed;z-index: 999;right: 6%;top: 8px;width: 15px;}
+.footer {width: 100%;height: 40px;position: fixed;bottom: 0;left: 0;border-top:1px solid #dc143c;display:box;display:-webkit-box;display:-moz-box;}
+.footer .footer-left {box-flex:1;-webkit-box-flex:1;text-align: center;}
+.footer .footer-center {box-flex:1;-webkit-box-flex:1;text-align: center;}
+.footer .footer-right {box-flex:1;-webkit-box-flex:1;text-align: center;}
+.footer .footer-left img {width: 40px;}
+.footer .footer-center img {width: 60px;position: fixed;left: 0;right: 0;bottom: 0;margin: auto;}
+.footer .footer-right img {width: 40px;}
+.content {width: 100%;margin-top: 0px;}
+</style>
+</head>
+<body onload="loaded()" style="padding-top:45px;padding-left:0px">
+	<div class="header">
+	     <?php
+			$effected_id="main-menu";
+		  	$filetpl="<a id='menu_\$id' href='\$href' target='\$target'>\$label</a>";
+		  	$foldertpl="<a id='menu_\$id' href='\$href' target='\$target'>\$label </a>";
+		  	$ul_class="" ;
+		  	$li_class="" ;
+		  	$style="";
+		  	$showlevel=6;
+		  	$dropdown='active';
+		  	echo sp_get_menu("main",$effected_id,$filetpl,$foldertpl,$ul_class,$li_class,$style,$showlevel,$dropdown);
+			$cur_id = $_GET["id"];
+
+			$user = sp_get_current_user();
+	?>
+	<script>
+	$('#menu_{$cur_id}').addClass('active');
+	</script>
+	<img src="__TMPL__Public/images/ic_big_authenticate.png" class="header-hot">
+	</div>
+		<div class="content">
+			<ul>
+				<php>
+					$lists = sp_sql_posts_paged("cid:$cat_id;order:post_date DESC;",10);
+					quickSort($lists['posts'], 0, count($lists['posts']) - 1, 'count');
+				</php>
+				<volist name="lists['posts']" id="vo">
+				<php>
+					$smeta=json_decode($vo['smeta'], true);
+				</php>
+				<li style="position: relative;" onclick="open_video({$vo['object_id']}, {$vo['term_id']}, {$vo['level']})">
+					<table style="margin:10px 0 5px 3%;width: 95%;">
+					<tbody>
+					<tr>
+					<td rowspan="2" style="width: 60px;"><img class="am-circle lazy" data-original="{:sp_get_image_preview_url($smeta['thumb'])}" src="{:sp_get_image_preview_url($smeta['thumb'])}" style="display: inline;" height="50" width="50"></td>
+					<td style="">{$vo['post_source']}</td>
+					<td rowspan="2" style="text-align: right;padding-right: 10%;"><span style="color: red;font-size: 16px;">{$vo['count']}</span><span style="color: #999;font-size: 13px;">在看</span></td>
+					</tr>
+					<tr>
+					<td style="font-size: 12px;color: #999;"></td>
+					</tr>
+					</tbody>
+					</table>
+					<img class="lazy" data-original="{:sp_get_image_preview_url($smeta['thumb'])}" style="width: 100%; display: inline;" src="{:sp_get_image_preview_url($smeta['thumb'])}">
+					<img src="__TMPL__Public/images/live_live.png" style="position: absolute;width: 70px;right: 10px;top: 70px;">
+					</li>
+				</volist>
+				
+			</ul>
+		</div>
+		<div class="pagination"><ul>{$lists['page']}</ul></div>
+		
+				<div class="footer-page">
+			<div class="navs">
+				<div class="nav zb active">
+					<div class="inner" onclick="">
+						<div class="pic"></div>
+					</div>
+				</div>
+				<div class="nav main">
+					<div class="inner" onclick="">
+						<div class="pic"></div>
+					</div>
+				</div>
+			</div>
+			<div class="nav mine">
+				<div class="inner" onclick="location.href='index.php?g=user&m=center&a=index'">
+					<div class="pic"></div>
+				</div>
+			</div>
+			<div class="xui-clear-block"></div>
+		</div>
+    <tc_include file="Public:footer" />
+
+    
+<!-- JavaScript -->
+<tc_include file="Public:scripts" />
+<script>
+function open_video(id, cid, level)
+{
+	if (level >= {$user['level']})
+	{
+		if (confirm('当前内容只允许VIP观看,请先充值'))
+		{
+			location.href = 'index.php?g=user&m=coin&a=index';
+		}
+	}
+	else
+	{
+		location.href = "{:leuu('article/index')}&id=" + id + "&cid=" + cid;	
+	}
+}
+</script>
+</body>
+</html>

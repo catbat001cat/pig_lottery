@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>{$site_name}</title>
+    <link rel="stylesheet" href="__TMPL__Public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__TMPL__Public/css/main.css?10034">
+
+</head>
+<style>
+/* header{
+	width:100%;
+	height:40px;
+}
+div.icon{height:30px;width:30px;overflow: hidden;margin:0 auto;	margin-left:18px;}
+.icon .icon{
+	width: 30px;height: 30px;display:block;position: relative;left:-25px;border-right: 30px solid transparent;
+                background: url("__TMPL__Public/img/73_1.png");background-size:30px 30px;-webkit-filter: drop-shadow(#fef303 30px 0);filter: drop-shadow(#fef303 30px 0);           
+}
+ */
+</style>
+<body>
+
+<!--头部-->
+
+<!-- <div class="head clearfix">
+	<a class="head_link" href="index.php?g=Qqonline&m=index&a=main">
+        ＜ 返回
+     </a>
+     <span class="head_title">全民夺宝</span>
+    <span class="more">…</span>
+</div> -->
+
+<!-- 信息栏 -->
+<div class="info">
+	<div class="pull-left">
+	    我的ID：<span id="userID">{$id}</span>
+	</div>
+	<div class="pull-right">
+	    <!-- <span>余额:￥<em id="user-money">{$wallet['money']}</em><img src="__TMPL__Public/img/btn1.png" id="chargeBtn" onclick="openCharge()" alt=""></span> -->
+	    <div class="dh-btn">
+			<img src="__TMPL__Public/img2/cz.png" onclick="openCharge()">
+			<img src="__TMPL__Public/img2/dx.png" id="exchange_btn">
+		</div>
+	    <!-- <a href="{:U('user/center/compaint')}" class="dh-btn">投诉</a> -->
+	</div> 
+</div>
+
+<!--a h体内容---->
+<div id="main-content">
+
+</div>
+<!--底部-->
+<nav id="nav" class="navbar navbar-default navbar-fixed-bottom">
+    <div class=" row">
+        <div class="col-xs-3 col-sm-3 active">
+            <div class="clearfix">
+                <img  alt="" data-unactive="__TMPL__Public/img/75.png" data-active="__TMPL__Public/img/75_2.png" src="__TMPL__Public/img/75_2.png">
+                <span class="active">游戏</span>
+            </div>
+        </div>
+        <div class="col-xs-3 col-sm-3">
+            <div>
+                <img data-unactive="__TMPL__Public/img/jl_1.png" data-active="__TMPL__Public/img/jl_2.png"src="__TMPL__Public/img/jl_1.png" alt="">
+                <span>记录</span>
+            </div>
+        </div>
+        <div class="col-xs-3 col-sm-3">
+            <div>
+                <img data-unactive="__TMPL__Public/img/73_1.png" data-active="__TMPL__Public/img/73_2.png" src="__TMPL__Public/img/73_1.png" alt="">
+                <span>查询</span>
+            </div>
+        </div>
+        <div class="col-xs-3 col-sm-3">
+            <div>
+                <img  data-unactive="__TMPL__Public/img/72_1.png" data-active="__TMPL__Public/img/72_2.png" src="__TMPL__Public/img/72_1.png" alt="">
+                <span>代理赚钱</span>
+            </div>
+        </div>
+        <div class="col-xs-3 col-sm-3">
+            <div>
+         <!--    	<div class="icon">
+            	<span class="icon"></span>
+            	</div> -->
+                <img  data-unactive="__TMPL__Public/img/71_1.png" data-active="__TMPL__Public/img/71_2.png" src="__TMPL__Public/img/71_1.png" alt="">
+                 <span>客服</span>
+            </div>
+        </div>
+    </div>
+</nav>
+<!--账户充值-->
+<div class="full-frame" id="full-frame" style="display: none;">
+    <div class="order">
+        <div class="order-title">账户充值</div>
+        <div class="order-box">
+            <div class="order-close" id="order-close"></div>
+            <!--<div style="padding: 25px 25px 0 25px ">-->
+                <!--<p for="">请输入银行卡号：</p>-->
+                <!--<input id="bankNo" type="number" style="height: 25px;color: #000">-->
+            <!--</div>-->
+            <div class="order-list" id="order-list"><div class="clearfix"><div class="pull-left">账户充值<span>2</span>币<div class="pull-left">账户充值<span>5</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>10</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>20</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>50</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>100</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>200</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>300</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>500</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>1000</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>2000</span>币</div><div class="pull-right">充值</div></div><div class="close-btn" style="background: url(__TMPL__Public/img/30.png) 50% 50% no-repeat;background-size: 90%;width: 30%;font-weight: bold;text-align: center;padding: 10px 0;height: 100%;line-height: 2.4rem;font-size: 1.63rem;" onclick="$('.full-frame').hide()">关闭</div></div>
+        	<div class="record-close row" style="margin-top: -30px;">
+				<div class="close-btn" style="background: url(__TMPL__Public/img/30.png) 50% 50% no-repeat;background-size: 90%;width: 30%;font-weight: bold;text-align: center;padding: 10px 0;height: 100%;line-height: 2.4rem;font-size: 1.63rem;" onclick="$('.full-frame').hide()">关闭</div>
+			</div>
+        </div>
+    </div>
+	</div>
+</div>
+<!--充值成功-->
+<div class="full-success" id="full-success">
+    <div class="order">
+        <div class="full-msg">
+            <h4>充值成功</h4>
+            <p>成功入账5元</p>
+        </div>
+        <div class="buy-btn" id="successConfirm">确定</div>
+    </div>
+</div>
+<script src="__TMPL__Public/js/jquery-3.1.1.min.js"></script>
+<script src="__TMPL__Public/js/bootstrap.min.js"></script>
+<script src="__TMPL__Public/js/config.js?10038"></script>
+<script src="__TMPL__Public/js/md5.js"></script>
+<php>
+echo '<script>orderNum=[' . $recharge_prices . '];init_recharges();</script>';
+</php>
+<script>
+    $(function () {
+        getUser();
+        $('#main-content').html('');
+        $('#main-content').load("index.php?g=Qqonline&m=index&a=index");
+        window.location.href = "#1147144";
+        $('#exchange_btn').click(function () {
+            $('#main-content').load("{:U('index.php?g=Qqonline&m=index&a=searching')}");
+            window.location.href = "#1147146";
+            $('#nav .row>div.active').removeClass('active');
+            $('#nav .row>div>div>span.active').removeClass('active');
+            $('#nav .row>div:eq(0)>div>img').attr("src",$('#nav .row>div:eq(0)>div>img').attr("data-unactive")); 
+
+            $('#nav .row>div:eq(2)').addClass('active');
+            $('#nav .row>div:eq(2)>a>span').addClass('active');
+            $('#nav .row>div:eq(2)>div>img').attr("src",$('#nav .row>div:eq(2)>div>img').attr("data-active")); 
+        })
+    })
+    $('#nav').on('click','div div div', function (e) {
+        e.preventDefault();
+        /*
+        console.log(gameTimer);
+        clearInterval(gameTimer);
+        gameTimer = null;
+        console.log(gameTimer);
+        */
+        $(this).parent().siblings('.active').find('img').attr('src',$(this).parent().siblings('.active').find('img').attr('data-unactive'));
+        $(this).parent().siblings('.active').removeClass('active');
+        $(this).parent().addClass('active');
+        
+        $(this).find('img').attr('src',$(this).find('img').attr('data-active'));
+        $(this).parent().siblings().children().children('.active').removeClass('active');
+        $(this).children('span').addClass('active');
+       
+        
+
+        var index = $(this).parent().index();
+
+        $('#main-content').html('');
+        if(index == 0){
+            window.location.href = "{:U('index.php?g=Qqonline&m=index&a=main')}";
+        }else if(index == 1){
+            $('#main-content').load("{:U('index.php?g=Qqonline&m=index&a=record')}");
+            window.location.href = "#1147145";
+        }else if(index == 2){
+            $('#main-content').load("{:U('index.php?g=Qqonline&m=index&a=searching')}");
+            window.location.href = "#1147146";
+        }else if(index == 3){
+            $('#main-content').load("{:U('index.php?g=Qqonline&m=index&a=proxy')}");
+            window.location.href = "#1147147";
+        }else if(index == 4){
+            $('#main-content').load("{:U('index.php?g=Qqonline&m=index&a=service')}");
+            window.location.href = "#1147148";
+        }
+    })
+</script>
+</body></html>

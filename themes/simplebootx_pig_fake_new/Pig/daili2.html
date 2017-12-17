@@ -1,0 +1,238 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="user-scalable=no, width=320">
+    <title>代理赚钱</title>
+    <link rel="stylesheet" href="__TMPL__Public/cssdb/index.css" />
+    <script src="__TMPL__Public/jsdb/jquery.min.js" type="application/javascript"></script>
+    <script src="__TMPL__Public/jsdb/jquery.cookie.js" type="application/javascript"></script>
+    <style>
+        .adltx
+        {
+            text-align: left;
+        }
+        .adltx span
+        {
+            display: block;
+            padding: 10px;
+            font-size: 16px;
+            color: #000;
+            line-height: 20px;
+        }
+        .adltx img
+        {
+            float: right;
+            margin: 0px 10px 0 0;
+        }
+    </style>
+</head>
+<body align="center">
+    <div class="all">
+        <div class="content" style="width: 94%;">
+            <div style="width: 100%; margin-top: 10px;">
+                <a href="{:U('index/daili1')}">
+                    <img src="__TMPL__Public/imgdb/daili_btn.png" style="float: left;padding-top: 6px;" width="91px" height="28px"/>
+                </a><a href="{:U('index/daili2')}">
+                    <img src="__TMPL__Public/imgdb/yongjin_btn_c.png" style="float: left;padding-top: 6px;margin-left: 11px; " width="91px" height="28px"/>
+                </a><a href="{:U('index/daili3')}">
+                    <img src="__TMPL__Public/imgdb/xiaxian_btn.png" style="float: left;padding-top: 6px;margin-left: 11px; " width="91px" height="28px"/>
+                </a>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="adltx" id="dailiyongjintixian_div">
+                <table style="width:99%;">
+                    <tr>
+                        <td>
+                            <span style="border-bottom: 1px solid #eee; border-top: 1px solid #eee;color:#82758e">
+                                代理佣金微信提现</span>
+                        </td>
+                        <td>
+                            <img src="__TMPL__Public/imgdb/icon.png" height="16">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!--****************************************1级-->
+            <div style="width: 100%; border: 1px solid #EEEEEE; margin: 0 auto; margin-top: 10px;
+                background: #232034; float: left; box-sizing: border-box; padding-bottom: 10px;
+                border-radius: 4px;">
+                <div style="height: 25px;" id="jiaoyimingxi">
+                    <div style="margin-top: 10px; float: left; margin-left: 10px; font-size: 16px; color: black;
+                        line-height: 25px;color:#82758e">
+                        (1级)累计注册</div>
+                    <div style="float: right; margin-top: 10px; margin-right: 20px; line-height: 25px;
+                        color: #A8A8A8">
+                        <font id="leiji">{$level1_childusers}</font> 人</div>
+                </div>
+                <div class="clear">
+                </div>
+
+                <div style="height: 25px;" id="jiaoyimingxi">
+                    <div style="margin-top: 10px; float: left; margin-left: 10px; font-size: 16px; color: black;
+                        line-height: 25px;color:#82758e">
+                        (1级)累计佣金</div>
+                    <div style="float: right; margin-top: 10px; margin-right: 20px; line-height: 25px;
+                        color: #aa52a7">
+                        <font id="leijiyongjin">{$total1}</font> 元</div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+
+            <div style="clear: both">
+            </div>
+            <!--****************************************1级-->
+            <!--****************************************2级-->
+            <div style="width: 100%; border: 1px solid #EEEEEE; margin: 0 auto; margin-top: 10px;
+                background: #232034; float: left; box-sizing: border-box; padding-bottom: 10px;
+                border-radius: 4px;">
+                <div style="height: 25px;" id="erjireg_div">
+                    <div style="margin-top: 10px; float: left; margin-left: 10px; font-size: 16px; color: black;
+                        line-height: 25px;color:#82758e">
+                        (2级)累计注册</div>
+                    <div style="float: right; margin-top: 10px; margin-right: 20px; line-height: 25px;
+                        color: #A8A8A8">
+                        <font id="erjireg">{$level2_childusers}</font> 人</div>
+                </div>
+                <div class="clear">
+                </div>
+
+                <div style="height: 25px;" id="erjileijiyongjin_div">
+                    <div style="margin-top: 10px; float: left; margin-left: 10px; font-size: 16px; color: black;
+                        line-height: 8px;color:#82758e">
+                        (2级)累计佣金</div>
+                    <div style="float: right; margin-top: 10px; margin-right: 20px; line-height: 8px;
+                        color: #aa52a7">
+                        <font id="erjileijiyongjin">{$total2}</font> 元</div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+
+            <!--****************************************2级-->
+            <!--****************************************3级-->
+            <div style="width: 100%; border: 1px solid #EEEEEE; margin: 0 auto; margin-top: 10px;
+                background: #232034; float: left; box-sizing: border-box; padding-bottom: 10px;
+                border-radius: 4px;">
+                <div style="height: 25px;" id="tg3reg_div">
+                    <div style="margin-top: 10px; float: left; margin-left: 10px; font-size: 16px; color: black;
+                        line-height: 25px;color:#82758e">
+                        (3级)累计注册</div>
+                    <div style="float: right; margin-top: 10px; margin-right: 20px; line-height: 25px;
+                        color: #A8A8A8">
+                        <font id="tg3reg">{$level3_childusers}</font> 人</div>
+                </div>
+                <div class="clear">
+                </div>
+
+                <div style="height: 25px;" id="tg3yongjin_div">
+                    <div style="margin-top: 10px; float: left; margin-left: 10px; font-size: 16px; color: black;
+                        line-height: 8px;color:#82758e">
+                        (3级)累计佣金</div>
+                    <div style="float: right; margin-top: 10px; margin-right: 20px; line-height: 8px;
+                        color: #aa52a7">
+                        <font id="tg3yongjin">{$total3}</font> 元</div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+
+            <!--****************************************3级-->
+            <!--****************************************4级-->
+            <div style="width: 100%; border: 1px solid #EEEEEE; margin: 0 auto; margin-top: 10px;
+                background: #232034; float: left; box-sizing: border-box; padding-bottom: 10px;
+                border-radius: 4px;">
+                <div style="height: 25px;" id="tg4reg_div">
+                    <div style="margin-top: 10px; float: left; margin-left: 10px; font-size: 16px; color: black;
+                        line-height: 25px;color:#82758e">
+                        (4级)累计注册</div>
+                    <div style="float: right; margin-top: 10px; margin-right: 20px; line-height: 25px;
+                        color: #A8A8A8">
+                        <font id="tg4reg">{$level4_childusers}</font> 人</div>
+                </div>
+                <div class="clear">
+                </div>
+
+                <div style="height: 25px;" id="tg4yongjin_div">
+                    <div style="margin-top: 10px; float: left; margin-left: 10px; font-size: 16px; color: black;
+                        line-height: 8px;color:#82758e">
+                        (4级)累计佣金</div>
+                    <div style="float: right; margin-top: 10px; margin-right: 20px; line-height: 8px;
+                        color: #aa52a7">
+                        <font id="tg4yongjin">{$total4}</font> 元</div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+
+            <!--****************************************4级-->
+            <!--****************************************5级-->
+            <div style="width: 100%; border: 1px solid #EEEEEE; margin: 0 auto; margin-top: 10px;
+                background: #232034; float: left; box-sizing: border-box; padding-bottom: 10px;
+                border-radius: 4px;">
+                <div style="height: 25px;" id="tg5reg_div">
+                    <div style="margin-top: 10px; float: left; margin-left: 10px; font-size: 16px; color: black;
+                        line-height: 25px;color:#82758e;">
+                        (5级)累计注册</div>
+                    <div style="float: right; margin-top: 10px; margin-right: 20px; line-height: 25px;
+                        color: #A8A8A8">
+                        <font id="tg5reg">{$level5_childusers}</font> 人</div>
+                </div>
+                <div class="clear">
+                </div>
+
+                <div style="height: 25px;" id="tg5yongjin_div">
+                    <div style="margin-top: 10px; float: left; margin-left: 10px; font-size: 16px; color: black;
+                        line-height: 8px;color:#82758e">
+                        (5级)累计佣金</div>
+                    <div style="float: right; margin-top: 10px; margin-right: 20px; line-height: 8px;
+                        color: #aa52a7">
+                        <font id="tg5yongjin">{$total5}</font> 元</div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+
+            <!--****************************************5级-->
+            <div style="margin-left: 10px; margin-top: 10px; color: #A8A8A8; text-align: left;
+                font-size: 12px;">
+                佣金实时结算至现金余额账户, 可实时提现;</div>
+        </div>
+        <div style="width: 100%; top: 150px; position: absolute; z-index: 999;">
+            <div style="background: #303031; border-radius: 20px; margin: 0 auto; padding: 11px 22px 11px 22px;
+                color: white; display: none;" id="modal3">
+                操作成功
+            </div>
+        </div>
+        <!--footer-->
+    <div style="border-top: #F0F0F0 0px solid; height: 45px; width: 100%; line-height: 44px;
+        background: #272727; position: fixed; bottom: 0px; text-align: center; font-size: 16px;color:white"
+        onclick="location.href='index.php?g=Pig&m=index&a=index'">
+        返回首页
+    </div>
+    </div>
+    <script>
+        $("#dailiyongjintixian_div").click(function () {
+        	location.href = "{:U('index/dailiyongjintixian')}";
+        });
+
+        $("#d3").click(function () {
+        	location.href = "{:U('index/newjiaoyimingxi')}";
+        });
+        //获取地址栏传参
+        function success(title) {
+            $("#modal3").fadeIn('fast');
+            if (title) {
+                $("#modal3").text(title);
+            }
+            $("#modal3").css('display', 'inline-block');
+            $("#modal3").fadeIn('fast');
+            window.setTimeout(function () {
+                $("#modal3").fadeOut(1000);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

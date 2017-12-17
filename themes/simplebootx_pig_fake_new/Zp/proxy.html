@@ -1,0 +1,193 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">-->
+    <!--<title>代理</title>-->
+    <!--<link rel="stylesheet" href="css/bootstrap.min.css"/>-->
+    <!--<script src="js/jquery-3.1.1.min.js"></script>-->
+    <!--<script src="js/bootstrap.min.js"></script>-->
+    <link rel="stylesheet" href="__TMPL__Public/css_zp/common.css?v=10000">
+    <style>
+        .container-fluid{
+            width: 100%;
+            text-align: center;
+            font-size: 18px;
+        }
+        .center-block{
+            margin: 30px auto;
+        }
+        .center-block span{
+            display: inline-block;
+            width: 130px;
+            /*height: 40px;*/
+            line-height: 46px;
+            background: url("__TMPL__Public/img/30.png") no-repeat;
+            -webkit-background-size: 100%;
+            background-size: 100%;
+        }
+
+        .row ul li{
+            margin-bottom: 20px;
+        }
+        #imgInfo .modal-dialog{
+            margin: 0;
+        }
+        #focusWin .modal-dialog{
+            top: 35%;
+        }
+        #focusWin .modal-content{
+            color: #000;
+            text-align: center;
+        }
+        #focusWin .modal-content p{
+            margin: 10px 0 10px;
+        }
+        #focusWin .modal-content .close{
+            padding-right: 20px;
+        }
+        #QRcode .modal-dialog{
+            margin: 0;
+            /*top: 50px;*/
+        }
+        .modal {
+            top:50px;
+        }
+        .modal-content span.closeBtn {
+            content: "";
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            top:10px;
+            right: 10px;
+            background: url("__TMPL__Public/img/31.png");
+            background-size:cover;
+        }
+        #attentCode{
+            width: 128px;
+            height: 128px;
+        }
+        .loading{
+            width: 32px;
+            height: 32px;
+            position: absolute;
+            left: 50%;
+            top:50%;
+            margin-top: -16px;
+            margin-left: -16px;
+        }
+    </style>
+<!--</head>-->
+<!--<body>-->
+<!--<div id="header"></div>-->
+<div class="main-container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="center-block">
+                <span id="focusUs">关注我们</span>
+            </div>
+            <div>
+                <p><span>生成二维码后长按保存图片到手机</span></p>
+                <p>并分享给好友获取佣金（<u id="CMInfo">佣金说明</u>）</p>
+            </div>
+            <div class="center-block">
+                <span id="createQR" onclick="getCode()">生成二维码</span>
+            </div>
+            <ul class="list-unstyled">
+                <li>一级用户：<span id="count1">{$level1_childusers}</span>人</li>
+                <li>二级用户：<span id="count2">{$level2_childusers}</span>人</li>
+                <li>三级用户：<span id="count3">{$level3_childusers}</span>人</li>
+                <li>四级用户：<span id="count4">{$level4_childusers}</span>人</li>
+                <li>五级用户：<span id="count5">{$level5_childusers}</span>人</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--隐藏窗口-->
+<div id="focusWin" class="modal fade" tabindex="-2" role="dialog" aria-describedby="focus">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <p>
+                <span>关注我们：第一时间获取最新消息</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </p>
+            <img id="attentCode" src="{$servicer_qr}" alt="二维码">
+            <p>长按图片识别二维码关注公众号</p>
+        </div>
+    </div>
+</div>
+<div id="imgInfo" class="modal fade" tabindex="-1" role="dialog" aria-describedby="img">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <img id="proxyImg" src="__TMPL__Public/img/121.png" alt="" width="320" height="468">
+            <span class="closeBtn"></span>
+        </div>
+    </div>
+</div>
+<div id="QRcode" class="modal fade" tabindex="-3" role="dialog" aria-describedby="qrcode">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 320px; height: 468px;">
+            <img id="QR" src="__TMPL__Public/img/loading.gif" class="loading" style="vertical-align: middle;margin: 0px" alt="我的二维码">
+            <span class="closeBtn"></span>
+        </div>
+    </div>
+</div>
+<!--<div id="footer"></div>-->
+<!--</body>-->
+<script>
+    $(function () {
+        $("#proxyImg")[0].width = window.innerWidth;
+        $("#proxyImg")[0].height = window.innerHeight- 100;
+
+        $('#QRcode .modal-content').css('width',window.innerWidth);
+        $("#QRcode .modal-content").css('height', window.innerHeight- 100);
+
+    });
+    $("#CMInfo").on("click",function () {
+        $("#imgInfo").modal("show")
+    });
+//    $("#imgInfo").on("click",function () {
+//        $("#imgInfo").modal("hide")
+//    });
+    $("#focusUs").on("click",function () {
+        $("#focusWin").modal("show");
+        getAttentionCode();
+    });
+    $("#focusWin").on("click",function () {
+        $("#focusWin").modal("hide")
+    });
+    $(".center-block").on("click",'#createQR',function () {
+        getCode();
+    });
+    $(".closeBtn").on("click",function () {
+        $("#QRcode").modal("hide");
+        $("#imgInfo").modal("hide");
+    });
+    function getCode(){
+        $("#QRcode").modal("show");
+        
+        $.ajax({
+    		url: 'index.php?g=Agent&m=channelads&a=gen',
+    		type: "get",
+    		dataType: "json",
+    		data: {
+    			id:1
+    		},
+    		success: function (data) {
+    			if (data.code == 0)
+    			{
+                    $('#QR').attr('src', data.img);
+                    $('#QR').removeClass('loading');
+                    $("#QR")[0].width = window.innerWidth;
+                    $("#QR")[0].height = window.innerHeight - 100;
+    			}
+    			else
+    			{
+    				alert(data.msg);
+    			}
+    		}
+    	});
+    }
+
+</script>
+<!--</html>-->

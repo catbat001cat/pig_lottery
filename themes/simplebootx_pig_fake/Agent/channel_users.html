@@ -1,0 +1,11 @@
+<html>
+<head>
+<tc_include file="Public:scripts" />
+</head>
+<title>{$site_name}</title>
+<body>
+<foreach name="users" item="vo">
+<span>ID:{$vo.id},昵称:{$vo.user_nicename},注册时间:{$vo.create_time},总充值金额:{$vo.total_recharge},总投注金额:{$vo.total_lottery_price}/{$vo.total_lottery_win},获取佣金:{$vo.total_commision|default=0}</span><br>
+</foreach>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- start _meta.html-->
+<!-- 在移动浏览器上显示的更好 -->
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<!-- 忽略页面中的数字识别为电话，忽略email识别 -->
+<meta name="format-detection" content="telephone=no, email=no" />
+<!--启用360浏览器的极速模式(webkit)-->
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<!--百度手机打开网页时 禁止转码-->
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--添加到主屏后的标题（iOS 6 新增）-->
+<meta name="apple-mobile-web-app-title" content="沐益清">
+<!--是否启用 WebApp 全屏模式-->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<!-- 设置苹果工具栏颜色，只有在 `"apple-mobile-web-app-capable" content="yes"` 时生效 -->
+<meta name="apple-mobile-web-app-status-bar-style"
+	content="black-translucent" />
+<!--author-->
+<meta name="author" content="frag,411919647@qq.com,guangzhou">
+<!-- 避免IE使用兼容模式 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+<meta name="HandheldFriendly" content="true">
+<!-- 微软的老式浏览器 -->
+<meta name="MobileOptimized" content="320">
+<!-- uc强制竖屏 -->
+<meta name="screen-orientation" content="portrait">
+<!-- QQ强制竖屏 -->
+<meta name="x5-orientation" content="portrait">
+<!-- UC强制全屏 -->
+<meta name="full-screen" content="yes">
+<!-- QQ强制全屏 -->
+<meta name="x5-fullscreen" content="true">
+<!-- UC应用模式 -->
+<meta name="browsermode" content="application">
+<!-- QQ应用模式 -->
+<meta name="x5-page-mode" content="app">
+<!-- windows phone 点击无高光 -->
+<meta name="msapplication-tap-highlight" content="no">
+<!-- end _meta.html-->
+
+<link rel="stylesheet" type="text/css"
+	href="__TMPL__Public/css/style.css" />
+<link rel="stylesheet" type="text/css"
+	href="__TMPL__Public/css/mui.min.css" />
+<title>{$name}</title>
+
+<style>
+
+ul, li { 
+	list-style: none; 
+	margin: 0; 
+	padding: 0;
+	13
+}
+
+#wrap { 
+	width: 100%; 
+	height: 225px; 
+	margin: 0 auto; 
+	position: relative; 
+	overflow: hidden;
+    border: solid 1px #cecece;
+}
+
+
+li { 
+	float: left;
+}
+
+
+#tips li { 
+	margin: 5px; 
+	border: 1px solid #f60; 
+	width: 20px; 
+	height: 20px; 32
+	line-height: 20px; 
+	text-align: center; 
+	color: white; 
+	cursor: pointer;
+}
+
+
+.active { 
+	background: #f60;
+}
+
+
+img { 
+	vertical-align: top; 
+	width: 400px;
+}
+
+
+#content { 
+	width: 2400px; 
+	position: absolute; 
+	left: -1200px;
+	51
+}
+
+#content li { 
+	float: left;
+}
+
+
+#tips { 
+	position: absolute; 
+	right: 20px; 
+	bottom: 5px;
+
+}
+</style>
+</head>
+
+<!-- 获取所有产品 -->
+
+<php> $home_slides=sp_getslide('Product_Banner_' . $term_id);
+$lists = sp_sql_posts_paged("cid:$cat_id;order:post_date DESC;",10); </php>
+
+<body style="background-color: #ededed;" onload="loaded()">
+	<div class="box_nr5" style="margin-top: 40px; float:left; padding: 10px;width: 94%;">
+	<div style="width: 30%; margin: 0 auto; text-align: center; padding: 15px 0">产品</div>
+	<div id="wrap">
+		<ul id="content">
+		<foreach name="home_slides" item="vo"> 
+			<li><img src="{:sp_get_image_preview_url($vo['slide_pic'])}" /></li>
+		</foreach>
+		</ul>
+		<ul id="tips">
+		<foreach name="home_slides" item="vo" key="index"> 
+			<li>{$index+1}</li>
+		</foreach>
+		</ul>
+	</div>
+	<div style="width: 30%; margin: 0 auto; text-align: center; padding: 15px 0">使用场景</div>
+	<volist name="lists['posts']" id="vo"> <php>$smeta=json_decode($vo['smeta'],true);</php>
+	<a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}">
+		<div style="width: 100px; height: 100px; float: left; margin: 0 10px 0 0; text-align: center;">
+			<if condition="empty($smeta['thumb'])"> <img style="width: 100%"
+				src="__TMPL__Public/assets/images/default_tupian4.png"
+				class="img-responsive" alt="{$vo.post_title}" /> <else /> <img
+				src="{:sp_get_asset_upload_path($smeta['thumb'])}"
+				class="img-responsive img-thumbnail" alt="{$vo.post_title}" /> </if>
+			{$vo['post_title']}
+		</div>
+	</a>
+	</volist>
+	<div style="height: 20px;float: left;width: 100%;"></div>
+	</div>
+	<script type="text/javascript">
+		function getStyle(obj, name) {
+			if (obj.currentStyle) {
+				return obj.currentStyle[name];
+			} else {
+				return getComputedStyle(obj, false)[name];
+			}
+		}
+
+		function startMove(obj, json, fnEnd) {
+			clearInterval(obj.timer);
+			obj.timer = setInterval(
+					function() {
+						var bStop = true;
+						for ( var attr in json) {
+							var cur = 0;
+							if (attr == "opacity") {
+								cur = Math
+										.round(parseFloat(getStyle(obj, attr)) * 100);
+							} else {
+								cur = parseInt(getStyle(obj, attr))
+							}
+							var speed = (json[attr] - cur) / 10;
+							speed = speed > 0 ? Math.ceil(speed) : Math
+									.floor(speed);
+							if (cur !== json[attr]) {
+								bStop = false;
+							}
+							;
+							if (attr == "opacity") {
+								obj.style.opacity = (speed + cur) / 100;
+								obj.style.filter = 'alpha(opacity:'
+										+ (speed + cur) + ')';
+							} else {
+								obj.style[attr] = cur + speed + 'px';
+							}
+						}
+						if (bStop) {
+							clearInterval(obj.timer);
+							if (fnEnd)
+								fnEnd();
+						}
+					}, 30)
+		}
+
+		var wrap = document.getElementById('wrap');
+		var content = document.getElementById('content');
+		var tips = document.getElementById('tips');
+		var aLi = tips.getElementsByTagName('li');
+		var now = 0;
+		//var 
+		for ( var i = 0; i < aLi.length; i++) {
+			aLi[0].className = 'active'; //把初始状态定义好
+			content.style.left = 0 + 'px';
+			aLi[i].index = i; //自定义属性
+			aLi[i].onclick = function() {
+				now = this.index;
+				play();
+			}
+		}
+
+		function play() {
+			for ( var j = 0; j < aLi.length; j++) {
+				aLi[j].className = '';
+			}
+			aLi[now].className = 'active';
+
+			//this.index = now;                         //反过来写就不对了大兄弟
+			//content.style.left = -400 * this.index + 'px';
+			startMove(content, {
+				left : -400 * now, //你还真别说，json格式就是这么写的
+			});
+		}
+
+		function autoPlay() {
+			now++;
+			if (now == aLi.length) {
+				now = 0;
+			}
+			play();
+		}
+
+		var timer = setInterval(autoPlay, 2000);
+		wrap.onmouseover = function() { //这里如果把事件绑定到ul上的话，那么鼠标移入，下面对饮的li会不起作用，
+			clearInterval(timer); //因为li的层级比较高，所以应该把事件绑定到大的div上
+		}
+		wrap.onmouseout = function() {
+			timer = setInterval(autoPlay, 2000);
+			//setInterval(autoPlay,2000);   不能这么写，凡是开的定时器，必须得赋值，要不然总会多开一个定时器，导致速度加快
+		}
+	</script>
+</body>
+</html>

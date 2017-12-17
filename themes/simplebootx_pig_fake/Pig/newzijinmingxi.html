@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="user-scalable=no, width=320">
+    <title>明细</title>
+    <link rel="stylesheet" href="__TMPL__Public/cssdb/index.css">
+    <script src="__TMPL__Public/jsdb/jquery.min.js" type="application/javascript"></script>
+    <script src="__TMPL__Public/jsdb/jquery.cookie.js" type="application/javascript"></script>
+</head>
+<body align="center">
+    <div class="all">
+        <div class="content" style="width: 94%;">
+            <div style="width: 100%; margin-top: 10px;">
+                <a href="{:U('index/newjiaoyimingxi')}">
+                    <div style="background: white; color: #A8A8A8; width: 141px; height: 38px; float: left;
+                        padding-top: 6px; border-radius: 4px; font-size: 16px; border: #EEEEEE 1px solid;
+                        line-height: 32px;">
+                        夺宝记录</div>
+                </a><a href="{:U('index/newzijinmingxi')}">
+                    <div style="background: #ED5758; color: white; width: 141px; height: 40px; float: left;
+                        padding-top: 6px; margin-left: 11px; border-radius: 4px; font-size: 16px; line-height: 34px;">
+                        夺宝资金</div>
+                </a>
+            </div>
+            <div class="clear">
+            </div>
+            <div id="zijinmingxi">
+                <!--
+                <div style="width:100%; border:1px solid #F0F0F0; padding-bottom:10px;box-sizing: border-box;margin-top:10px;background:white;border-radius:4px; float:left">
+                    <div style="margin-top:10px; margin-left:10px;"><span style="float:left; font-size:16px;">充值</span>
+                    </div>
+                    <div class="clear"></div>
+                    <div style="margin-top:10px; margin-left:10px; color:#A8A8A8;"><span style="float:left;">余额 50.00 元</span><span style="float:right; margin-right:10px; color:#DE2F3B">+ 50.00 元</span>
+                    </div>
+                    <div class="clear"></div>
+                    <div style="margin-top:5px; margin-left:10px; color:#A8A8A8;"><span style="float:left; font-size:12px;">时间： 2016.08.01-12:31-03.22.44</span>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div style="width:100%; border:1px solid #F0F0F0; padding-bottom:10px;margin-top:10px;box-sizing: border-box;background:white;border-radius:4px; float:left">
+                    <div style="margin-top:10px; margin-left:10px;"><span style="float:left; font-size:16px;">充值</span>
+                    </div>
+                    <div class="clear"></div>
+                    <div style="margin-top:10px; margin-left:10px; color:#A8A8A8;"><span style="float:left;">余额 50.00 元</span><span style="float:right; margin-right:10px; color:#DE2F3B">+ 50.00 元</span>
+                    </div>
+                    <div class="clear"></div>
+                    <div style="margin-top:5px; margin-left:10px; color:#A8A8A8;"><span style="float:left; font-size:12px;">时间： 2016.08.01-12:31-03.22.44</span>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div style="width:100%; border:1px solid #F0F0F0; padding-bottom:10px;margin-top:10px;box-sizing: border-box;background:white;border-radius:4px; float:left">
+                    <div style="margin-top:10px; margin-left:10px;"><span style="float:left; font-size:16px;">交易</span>
+                    </div>
+                    <div class="clear"></div>
+                    <div style="margin-top:10px; margin-left:10px; color:#A8A8A8;"><span style="float:left;">余额 50.00 元</span><span style="float:right; margin-right:10px; color:#1DBBA4">- 50.00 元</span>
+                    </div>
+                    <div class="clear"></div>
+                    <div style="margin-top:5px; margin-left:10px; color:#A8A8A8;"><span style="float:left; font-size:12px;">时间： 2016.08.01-12:31-03.22.44</span>
+                    </div>
+                </div>
+                <div class=”clear“></div>
+                <div style="width:100%; border:1px solid #F0F0F0; padding-bottom:10px;margin-top:10px;box-sizing: border-box;background:white;border-radius:4px; float:left">
+                    <div style="margin-top:10px; margin-left:10px;"><span style="float:left; font-size:16px;">手续费</span>
+                    </div>
+                    <div class="clear"></div>
+                    <div style="margin-top:10px; margin-left:10px; color:#A8A8A8;"><span style="float:left;">余额 50.00 元</span><span style="float:right; margin-right:10px; color:#1DBBA4">- 50.00 元</span>
+                    </div>
+                    <div class="clear"></div>
+                    <div style="margin-top:5px; margin-left:10px; color:#A8A8A8;"><span style="float:left; font-size:12px;">时间： 2016.08.01-12:31-03.22.44</span>
+                    </div>
+                </div>
+                <div class="clear"></div>
+             -->
+            </div>
+            <div style="text-align: center; margin-top: 10px; font-size: 12px; color: #A8A8A8;">
+                只显示最近 30 次资金明细</div>
+        </div>
+    </div>
+    <!--footer-->
+    <div style="border-top: #F0F0F0 1px solid; height: 45px; width: 100%; line-height: 44px;
+        background: white; position: fixed; bottom: 0px; text-align: center; font-size: 16px;"
+        onclick="location.href='index.php?g=Pig&m=index&a=index'">
+        返回首页
+    </div>
+    <script>
+        var html = '';
+        var gross = '';
+        var create_time = '';
+        var type_arr = ['充值', '下注', '盈利', '提现', '佣金', '新手赠送', '签到奖励','手续费'];
+        var yue = parseFloat($.cookie('user_money')) + parseFloat($.cookie('user_reward_money'));
+        $.ajax({
+            type: 'post',
+            dataType: 'json',
+            url: 'index.php?g=Qqonline&m=record&a=get_wallet_changes',
+            data: { },
+            success: function (data) {
+                if (data.ret == 1) {
+                	
+                	console.log(JSON.stringify(data));
+                	
+                    for (var i=0; i<data.list.length; i++) {
+
+                            var type = type_arr[data.list[i].type];
+                            if (data.list[i].fee > 0)
+                            	gross = '<span style="float:right; margin-right:10px; color:#DE2F3B">+ ' + data.list[i].fee + ' 元</span>';
+                           	else
+                        		gross = '<span style="float:right; margin-right:10px; color:#1DBBA4">- ' + (-data.list[i].fee) + ' 元</span>';
+                        	create_time = data.list[i].create_time;
+                            
+                            if (type != '' && gross != '' && create_time != '') {
+                                html += '<div style="width:100%; border:1px solid #F0F0F0; padding-bottom:10px;box-sizing: border-box;margin-top:10px;background:white;border-radius:4px; float:left; font-size:12px;">' +
+									'<div style="margin-top:10px; margin-left:10px;"><span style="float:left; font-size:16px;">' + type + '</span>' +
+									'</div>' +
+									'<div class="clear"></div>' +
+									'<div style="margin-top:10px; margin-left:10px; color:#A8A8A8;">' +
+										gross +
+									'</div>' +
+									'<div class="clear"></div>' +
+									/*
+									'<div style="margin-top:3px; margin-left:10px; color:#A8A8A8;">' +
+										'<span style="float:left;">红包余额 ' + data.data[i].remain_reward_money + ' 元</span>' +
+									'</div>' +*/
+									'<div class="clear"></div>' +
+									'<div style="margin-top:5px; margin-left:10px; color:#A8A8A8;">' +
+										'<span style="float:left; font-size:10px;">' + create_time + '</span>' +
+									'</div>' +
+            				  '</div>' +
+							  '<div class="clear"></div>';
+                            }
+                        }
+                    $("#zijinmingxi").html(html);
+            	}
+            }
+        });
+    </script>
+</body>
+</html>

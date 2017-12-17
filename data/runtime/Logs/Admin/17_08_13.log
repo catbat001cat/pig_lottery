@@ -1,0 +1,15 @@
+[ 2017-08-13T22:20:05+08:00 ] ::1 /qqonline_ex/index.php?g=Admin&m=public&a=dologin
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000382s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000480s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000206s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001402s ]
+INFO: [ admin_begin ] --START--
+INFO: Run Common\Behavior\AdminDefaultLangBehavior [ RunTime:0.000584s ]
+INFO: [ admin_begin ] --END-- [ RunTime:0.000643s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0469s ]
+SQL: SELECT * FROM `sp_users` WHERE `user_login` = 'admin' LIMIT 1   [ RunTime:0.0468s ]
+SQL: SHOW COLUMNS FROM `sp_role_user` [ RunTime:0.0451s ]
+SQL: SELECT `role_id` FROM sp_role_user a INNER JOIN sp_role as b on a.role_id =b.id  WHERE `user_id` = '1' AND `status` = 1  [ RunTime:0.0433s ]
+SQL: UPDATE `sp_users` SET `user_login`='admin',`user_pass`='###650193c617de7ee23c1a91add61eddd2',`user_nicename`='admin',`user_email`='kenvi.luo@gmail.com',`user_url`='',`avatar`=NULL,`sex`='0',`birthday`='2000-01-01',`signature`=NULL,`last_login_ip`='0.0.0.0',`last_login_time`='2017-08-13 22:20:05',`create_time`='2017-05-08 07:52:45',`user_activation_key`='',`user_status`='1',`score`='0',`user_type`='1',`coin`='0',`mobile`='0',`level`='0',`last_day_rank`='8',`cur_day_rank`='8',`last_month_rank`='1',`cur_month_rank`='8',`day_rank_update_time`=NULL,`last_day_total_win`='0',`cur_day_total_win`='0',`last_month_total_win`='0',`cur_month_total_win`='0',`openid`=NULL,`user_drawcash_status_disable`='0' WHERE `id` = '1' [ RunTime:0.0496s ]
+

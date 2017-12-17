@@ -1,0 +1,96 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="javascript:;">列表</a></li>
+			<li><a href="{:U('Channeladmin/add')}" target="_self">添加</a></li>
+		</ul>
+		<form class="well form-search" method="post" action="{:U('Channeladmin/channel_index')}">
+			<div class="search_type cc mb10">
+				<div class="mb10">
+						关键字： 
+						<input type="text" name="keyword" style="width: 200px;" value="{$filter.keyword}" placeholder="请输入关键字...">
+						<input type="submit" class="btn btn-primary" value="搜索" />
+					</span>
+				</div>
+			</div>
+		</form>
+		<form class="js-ajax-form" action="" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">ID</th>
+						<th>上级渠道ID</th>
+						<th width="150">联系人</th>
+						<th width="150">联系电话</th>
+						<th width="150">备注</th>
+						<th width="150">扣量</th>
+						<th width="150">渠道用户</th>
+						<!--<th width="150">渠道用户(扣量)</th> -->
+						<th width="150">渠道总收入</th>
+						<th width="150">渠道总收入(分成后)</th>
+						<th width="150">渠道总收入(扣量)</th>
+						<th width="150">渠道分成</th>
+						<th width="150">状态</th>
+						<th width="150">创建时间</th>
+						<th width="70">操作</th>
+					</tr>
+				</thead>
+				<foreach name="lists" item="vo">
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}"></td>
+                    <td><b>{$vo.id}</b></td>
+					<td>{$vo.parent_id}</td>
+					<td>{$vo.contact}</td>
+					<td>{$vo.telephone}</td>
+					<td>{$vo.memo}</td>
+					<td>{$vo.amount_deduct}</td>
+					<td><a href="{:U('Channeldataadmin/users', array('channel_id' => $vo['id']))}" target="_blank">{$vo.user_count}</a></td>
+					<!--<td><a href="{:U('Channeldataadmin/users_deduct', array('channel_id' => $vo['id']))}" target="_blank">{$vo.user_count_deduct}</a></td> -->
+					<td><a href="{:U('Channeldataadmin/incomes', array('channel_id' => $vo['id'], 'orign_price' => 1))}" target="_blank">{$vo.total_income_orign|default=0}</a></td>
+					<td><a href="{:U('Channeldataadmin/incomes', array('channel_id' => $vo['id']))}" target="_blank">{$vo.total_income|default=0}</a></td>
+					<td><a href="{:U('Channeldataadmin/incomes_deduct', array('channel_id' => $vo['id'], 'orign_price' => 1))}" target="_blank">{$vo.total_income_deduct|default=0}</a></td>
+					<td>{$vo.divide_ratio}</td>
+					<td>
+						<switch name="vo.status">
+							<case value="0">
+								未激活
+							</case>
+							<case value="1">
+								已激活
+							</case>
+						</switch>
+					</td>
+					<td>{$vo.create_time}</td>
+					<td>
+						<a href="{:U('Channeladmin/edit',array('id'=>$vo['id']))}">编辑</a> | 
+						<a href="{:U('Channeladmin/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">删除</a>
+					</td>
+				</tr>
+				</foreach>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location = "{:U('Channeladmin/index',$formget)}";
+			}
+		}
+		setInterval(function() {
+			refersh_window();
+		}, 2000);
+		$(function() {
+			setCookie("refersh_time", 0);
+			Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
+				//批量移动
+			});
+		});
+	</script>
+</body>
+</html>

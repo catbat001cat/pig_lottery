@@ -1,0 +1,42 @@
+<html>
+<head>
+<script type="text/javascript" src="themes/simplebootx_video/Public/js/jquery.min.js"></script>
+</head>
+<title>{$site_name}</title>
+<body>
+<!-- 标题 -->
+<span>会员ID:{$id}</span>
+<span>余额:{$wallet['money']}</span>
+<!-- 首页 -->
+
+<!--  -->
+<input type="number" id="money" placeholder="{$wallet['money']}"/>
+<button onclick="submit()">提现</button>
+</body>
+<script>
+function submit()
+{
+	var money = parseFloat($('#money').val());
+	$.ajax({
+		url: 'index.php?g=Qqonline&m=index&a=ajax_apply_drawcash',
+		type: "get",
+		dataType: "json",
+		data: {
+			price:money
+		},
+		success: function (data) {
+			if (data.ret == 1)
+			{
+				alert('提现成功');
+				
+				location.reload();
+			}
+			else
+			{
+				alert(data.msg);
+			}
+		}
+	});
+}
+</script>
+</html>

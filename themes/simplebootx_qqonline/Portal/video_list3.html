@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{$seo_title} {$site_name}</title>
+	<meta name="keywords" content="{$seo_keywords}" />
+	<meta name="description" content="{$seo_description}">
+    <tc_include file="Public:head" />
+    <script type="text/javascript" src="__TMPL__Public/js/jquery.min.js"></script>
+    <script type="text/javascript" src="__TMPL__Public/js/kl.js"></script>
+<style>
+body {margin: 0 auto;width: 100%;}
+ul {list-style: none;margin: 0;padding: 0;}
+.header {width: 100%;height: 40px;position: fixed;top: 0;left: 0;background: #FA5B5B;z-index: 999;}
+.header ul {width: 100%;}
+.header ul li {float: left;width: 25%;height: 40px;display: block;}
+.header ul li a {text-align: center;display: block;height: 40px;line-height: 40px;color: #ccc;}
+.header ul li a.active {color: #fff;}
+.header .header-hot {position: fixed;z-index: 999;right: 6%;top: 8px;width: 15px;}
+.footer {width: 100%;height: 40px;position: fixed;bottom: 0;left: 0;border-top:1px solid #dc143c;display:box;display:-webkit-box;display:-moz-box;}
+.footer .footer-left {box-flex:1;-webkit-box-flex:1;text-align: center;}
+.footer .footer-center {box-flex:1;-webkit-box-flex:1;text-align: center;}
+.footer .footer-right {box-flex:1;-webkit-box-flex:1;text-align: center;}
+.footer .footer-left img {width: 40px;}
+.footer .footer-center img {width: 60px;position: fixed;left: 0;right: 0;bottom: 0;margin: auto;}
+.footer .footer-right img {width: 40px;}
+.content {width: 100%;margin-top: 45px;}
+.content ul  {margin: 0 0 0 1%;padding:0 1%;}
+.content ul li {float: left;width: 49.5%;margin: 0 0 1% 0;}
+.content ul li:nth-child(2n){margin-left: 1%;}
+.content ul li img {width: 100%;height: 154px;}
+</style>
+</head>
+<body onload="loaded()" style="padding-top:10px;padding-left:0px">
+	<div class="header">
+	     <?php
+			$effected_id="main-menu";
+		  	$filetpl="<a id='menu_\$id' href='\$href' target='\$target'>\$label</a>";
+		  	$foldertpl="<a id='menu_\$id' href='\$href' target='\$target'>\$label </a>";
+		  	$ul_class="" ;
+		  	$li_class="" ;
+		  	$style="";
+		  	$showlevel=6;
+		  	$dropdown='active';
+		  	echo sp_get_menu("main",$effected_id,$filetpl,$foldertpl,$ul_class,$li_class,$style,$showlevel,$dropdown);
+			$cur_id = $_GET["id"];
+	?>
+	<script>
+	$('#menu_{$cur_id}').addClass('active');
+	</script>
+	<img src="__TMPL__Public/images/ic_big_authenticate.png" class="header-hot">
+	</div>
+		<div class="content">
+			<ul>
+				<php>
+					$lists = sp_sql_posts_paged("cid:$cat_id;order:post_date DESC;",10);
+				</php>
+				<volist name="lists['posts']" id="vo">
+				<php>
+					$smeta=json_decode($vo['smeta'], true);
+				</php>
+				<li onclick="open_video({$vo['object_id']}, {$vo['term_id']}, {$vo['level']})">
+					<img src="{:sp_get_image_preview_url($smeta['thumb'])}" class="lazy" data-original="{:sp_get_image_preview_url($smeta['thumb'])}" style="height: 199px; display: inline;">
+				</li>
+				</volist>
+				
+			</ul>
+		</div>
+		<div style="height:80px"></div>
+		<!--<div class="pagination"><ul>{$lists['page']}</ul></div>-->
+		
+				<div class="footer-page">
+			<div class="navs">
+				<div class="nav zb active">
+					<div class="inner" onclick="">
+						<div class="pic"></div>
+					</div>
+				</div>
+				<div class="nav main">
+					<div class="inner" onclick="">
+						<div class="pic"></div>
+					</div>
+				</div>
+			</div>
+			<div class="nav mine">
+				<div class="inner" onclick="location.href='index.php?g=user&m=center&a=index'">
+					<div class="pic"></div>
+				</div>
+			</div>
+			<div class="xui-clear-block"></div>
+		</div>
+    <tc_include file="Public:footer" />
+
+    
+<!-- JavaScript -->
+<tc_include file="Public:scripts" />
+<script>
+function open_video(id, cid, level)
+{
+	//location.href = "{:leuu('article/index')}&id=" + id + "&cid=" + cid;
+	if (level >= {$user['level']})
+	{
+		if (confirm('当前内容只允许VIP观看,请先充值)'))
+		{
+			pay_wx(2, 0, 49.9, function(data) {
+				if (data.status == 1)
+					location.href = data.msg;
+				else
+				{
+					alert('支付失败,请联系客服');	
+				}
+			});
+		}
+	}
+	else
+	{
+		location.href = "{:leuu('article/index')}&id=" + id + "&cid=" + cid;	
+	}
+}
+</script>
+<script>
+var imgWidth = $('ul li img:first').width();
+$('ul li img').height(imgWidth);
+$(function() {
+$("img.lazy").lazyload({effect : "fadeIn"});
+});
+
+function ubourl(url){
+window.location.href=url; 
+}
+</script>
+</body>
+</html>

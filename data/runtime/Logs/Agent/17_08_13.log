@@ -1,0 +1,62 @@
+[ 2017-08-13T22:57:20+08:00 ] ::1 /qqonline_ex/index.php?g=Agent&m=channelads&a=gen&id=1
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000272s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000302s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000088s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000888s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0437s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0443s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0432s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0418s ]
+SQL: SHOW COLUMNS FROM `sp_ads_template` [ RunTime:0.0434s ]
+NOTIC: [2] Missing argument 1 for Think\Model::where(), called in /Users/a007/work/qqonline_ex/application/Agent/Controller/ChanneladsController.class.php on line 67 and defined /Users/a007/work/qqonline_ex/simplewind/Core/Library/Think/Model.class.php 第 1797 行.
+NOTIC: [8] Undefined variable: where /Users/a007/work/qqonline_ex/simplewind/Core/Library/Think/Model.class.php 第 1805 行.
+NOTIC: [8] Undefined variable: where /Users/a007/work/qqonline_ex/simplewind/Core/Library/Think/Model.class.php 第 1808 行.
+NOTIC: [8] Undefined variable: where /Users/a007/work/qqonline_ex/simplewind/Core/Library/Think/Model.class.php 第 1816 行.
+SQL: SELECT * FROM `sp_ads_template` ORDER BY id desc LIMIT 1   [ RunTime:0.0755s ]
+SQL: SHOW COLUMNS FROM `sp_channels` [ RunTime:0.0466s ]
+SQL: SELECT * FROM `sp_channels` WHERE ( admin_user_id=232 ) LIMIT 1   [ RunTime:0.0491s ]
+SQL: SHOW COLUMNS FROM `sp_hostnames` [ RunTime:0.0424s ]
+SQL: SELECT * FROM `sp_hostnames` WHERE ( status=1 and `type` in (0,2) ) ORDER BY `type` asc, update_time desc  [ RunTime:0.0423s ]
+NOTIC: [2] file_get_contents(./data/upload/default/20170806/5986e7e3b12fd.jpg): failed to open stream: No such file or directory /Users/a007/work/qqonline_ex/application/Agent/Controller/ChanneladsController.class.php 第 109 行.
+NOTIC: [2] imagecreatefromstring(): Empty string or invalid image /Users/a007/work/qqonline_ex/application/Agent/Controller/ChanneladsController.class.php 第 109 行.
+NOTIC: [2] imagecolorallocate() expects parameter 1 to be resource, boolean given /Users/a007/work/qqonline_ex/application/Agent/Controller/ChanneladsController.class.php 第 111 行.
+NOTIC: [2] imagestring() expects parameter 1 to be resource, boolean given /Users/a007/work/qqonline_ex/application/Agent/Controller/ChanneladsController.class.php 第 113 行.
+NOTIC: [2] imagecopyresampled() expects parameter 1 to be resource, boolean given /Users/a007/work/qqonline_ex/application/Common/Common/function.php 第 2194 行.
+NOTIC: [2] imagejpeg() expects parameter 1 to be resource, boolean given /Users/a007/work/qqonline_ex/application/Common/Common/function.php 第 2197 行.
+NOTIC: [2] imagedestroy() expects parameter 1 to be resource, boolean given /Users/a007/work/qqonline_ex/application/Common/Common/function.php 第 2200 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000700s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000756s ]
+
+[ 2017-08-13T22:58:18+08:00 ] ::1 /qqonline_ex/index.php?g=Agent&m=channelads&a=gen&id=1
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001012s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000414s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000108s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001832s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0473s ]
+SQL: SELECT `user_status` FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0442s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0450s ]
+SQL: SELECT * FROM `sp_users` WHERE `id` = '232' LIMIT 1   [ RunTime:0.0461s ]
+SQL: SHOW COLUMNS FROM `sp_ads_template` [ RunTime:0.0435s ]
+NOTIC: [2] Missing argument 1 for Think\Model::where(), called in /Users/a007/work/qqonline_ex/application/Agent/Controller/ChanneladsController.class.php on line 67 and defined /Users/a007/work/qqonline_ex/simplewind/Core/Library/Think/Model.class.php 第 1797 行.
+NOTIC: [8] Undefined variable: where /Users/a007/work/qqonline_ex/simplewind/Core/Library/Think/Model.class.php 第 1805 行.
+NOTIC: [8] Undefined variable: where /Users/a007/work/qqonline_ex/simplewind/Core/Library/Think/Model.class.php 第 1808 行.
+NOTIC: [8] Undefined variable: where /Users/a007/work/qqonline_ex/simplewind/Core/Library/Think/Model.class.php 第 1816 行.
+SQL: SELECT * FROM `sp_ads_template` ORDER BY id desc LIMIT 1   [ RunTime:0.0461s ]
+SQL: SHOW COLUMNS FROM `sp_channels` [ RunTime:0.0437s ]
+SQL: SELECT * FROM `sp_channels` WHERE ( admin_user_id=232 ) LIMIT 1   [ RunTime:0.0464s ]
+SQL: SHOW COLUMNS FROM `sp_hostnames` [ RunTime:0.0437s ]
+SQL: SELECT * FROM `sp_hostnames` WHERE ( status=1 and `type` in (0,2) ) ORDER BY `type` asc, update_time desc  [ RunTime:0.0443s ]
+NOTIC: [2] file_get_contents(./data/upload/default/20170806/5986e7e3b12fd.jpg): failed to open stream: No such file or directory /Users/a007/work/qqonline_ex/application/Agent/Controller/ChanneladsController.class.php 第 109 行.
+NOTIC: [2] imagecreatefromstring(): Empty string or invalid image /Users/a007/work/qqonline_ex/application/Agent/Controller/ChanneladsController.class.php 第 109 行.
+NOTIC: [2] imagecolorallocate() expects parameter 1 to be resource, boolean given /Users/a007/work/qqonline_ex/application/Agent/Controller/ChanneladsController.class.php 第 111 行.
+NOTIC: [2] imagestring() expects parameter 1 to be resource, boolean given /Users/a007/work/qqonline_ex/application/Agent/Controller/ChanneladsController.class.php 第 113 行.
+NOTIC: [2] imagecopyresampled() expects parameter 1 to be resource, boolean given /Users/a007/work/qqonline_ex/application/Common/Common/function.php 第 2194 行.
+NOTIC: [2] imagejpeg() expects parameter 1 to be resource, boolean given /Users/a007/work/qqonline_ex/application/Common/Common/function.php 第 2197 行.
+NOTIC: [2] imagedestroy() expects parameter 1 to be resource, boolean given /Users/a007/work/qqonline_ex/application/Common/Common/function.php 第 2200 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000666s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000729s ]
+

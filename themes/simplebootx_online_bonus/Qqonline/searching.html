@@ -1,0 +1,292 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">-->
+    <!--<title>查询</title>-->
+    <!--<link rel="stylesheet" href="css/bootstrap.min.css"/>-->
+    <!--<script src="js/jquery-3.1.1.min.js"></script>-->
+    <!--<script src="js/bootstrap.min.js"></script>-->
+    <link rel="stylesheet" href="__TMPL__Public/css/common.css">
+    <style>
+        .row .col-md-4 .col-xs-9{
+            padding-left: 15px;
+            text-align: left;
+        }
+        .container-fluid{
+            padding: 0;
+            height:100%;
+        }
+        .col-md-4{
+            height: 50px;
+            line-height: 50px;
+            border-bottom: 1px solid #5e5e5e;
+        }
+        .col-md-4 .btn{
+            background: url("__TMPL__Public/img/34.png") no-repeat center;
+            -webkit-background-size: 120%;
+            background-size: 120%;
+        }
+        .col-md-4 .btn-group{
+            background: url("__TMPL__Public/img/35.png") no-repeat center;
+            -webkit-background-size: 120%;
+            background-size: 120%;
+            line-height: 0;
+            padding: 16px;
+        }
+        .modal-content{
+            background: #953dbb;
+            color: #000;
+            height: 200px;
+        }
+        .modal-dialog{
+            position: fixed;
+            width: 80%;
+            left: 10%;
+            margin: 0 auto;
+            top: 32%;
+            padding: 10px;
+            border-radius: 10px;
+            background: #662483;
+        }
+        .modal-dialog .modal-less{
+            font-size: 16px;
+            margin: 25px auto;
+            color: #fff;
+            padding: 15px;
+        }
+        .modal-less+div{
+            color: #fff;
+            width: 140px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 21px;
+            text-align: center;
+            background: url(__TMPL__Public/img/30.png) no-repeat;
+            background-size: 100% 100%;
+        }
+        .btn-group-lg>.btn, .btn-lg{
+            font-size: 16px;
+        }
+        .row {
+            height: 100%;
+        }
+        .col-xs-12 {
+            height:3rem;
+            line-height:3rem;
+        }
+        .recordTable{
+            width: 90%;
+            height: 90%;
+            background: url("__TMPL__Public/img/57.png") no-repeat;
+            background-size:100% 100%;
+            margin:  0 15px;
+            padding: 0.5rem;
+            overflow: hidden;
+        }
+        .table>thead>tr>th {
+            border-bottom: none;
+        }
+        .table>tbody>tr>td {
+            border-top: none;
+        }
+        .guess {
+            margin: 0;
+            width:100%;
+        }
+        .guess #recordList{
+            font-size: 12px;
+        }
+    </style>
+<!--</head>-->
+<!--<body>-->
+<!--<div id="header"></div>-->
+
+<div class="main-container">
+    <div class="container-fluid">
+        <div class="row" id="searchList">
+            <div class="col-md-4">
+                <div class="col-xs-9">
+                    <span>您的余额：</span>
+                    ￥<span id="yuMoney">0</span>
+                </div>
+                <!--<div class="col-xs-1">-->
+                    <div class="btn-group" data-toggle="modal" data-target="" onclick="getCash(0)">兑换</div>
+                <!--</div>-->
+            </div>
+            <div class="col-md-4">
+                <div class="col-xs-9">
+                    <span>您的佣金：</span>
+                    ￥<span id="teamMoney">0</span>
+                </div>
+                <div class="btn-group" data-toggle="modal" data-target="" onclick="getCash(1)">兑换</div>
+            </div>
+            <div class="col-md-4 record">
+                <span class="col-xs-9">充值记录</span>
+                <div data-href="{:U('index.php?g=Qqonline&m=index&a=record_charge')}" class="btn btn-lg">查看</div>
+            </div>
+            <div class="col-md-4 record">
+                <span class="col-xs-9">兑换记录</span>
+                <div data-href="{:U('index.php?g=Qqonline&m=index&a=record_cash')}" class="btn btn-lg">查看</div>
+            </div>
+            <div class="col-md-4 record">
+                <span class="col-xs-9">佣金记录</span>
+                <div data-href="{:U('index.php?g=Qqonline&m=index&a=record_money')}" class="btn btn-lg">查看</div>
+            </div>
+            <div class="col-md-4 record">
+                <span class="col-xs-9">竞猜记录</span>
+                <div data-href="{:U('index.php?g=Qqonline&m=index&a=record_guess')}" class="btn btn-lg">查看</div>
+            </div>
+            <div class="col-md-4 record">
+                <span class="col-xs-9">竞猜榜单</span>
+                <div data-href="{:U('index.php?g=Qqonline&m=index&a=guess_list')}" class="btn btn-lg">查看</div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="panel panel-default">-->
+        <!--<div class="panel-body">-->
+            <!--sdf-->
+        <!--</div>-->
+    <!--</div>-->
+</div>
+<!--<div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">-->
+    <div id="modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+
+                <div class="modal-less text-center title">兑换金额不能小于1元</div>
+
+                <div class="btnSure center-block" onclick="closeModal()"> 确定</div>
+
+            </div>
+        </div>
+    </div>
+<!--</div>-->
+<!--<div id="footer"></div>-->
+<!--</body>-->
+<script>
+    $(function () {
+        getWallet();
+        $('#searchList').on('click','.record div',function () {
+            window.location.href = "#15487"+$(this).parent().index();
+            $('.main-container').load($(this).attr('data-href'));
+        })
+    });
+    function closeModal() {
+        $('#modal').hide();
+        $('.modal').css('opacity',0);
+    }
+    function getCash(type) {
+        $('.modal').css('opacity',1);
+        var money ;
+        if(type ==0){
+            money = $('#yuMoney').html();
+        }else{
+            money = $('#teamMoney').html();
+        }
+        console.log(money<1);
+        if(money<1){
+            $('#modal').show();
+            var str = '兑换金额不能小于1元';
+            $('#modal .title').html(str);
+            $('#modal .btnSure').attr('onclick','closeModal()');
+        }else{
+            isTixian(type);
+        }
+    }
+    var isGetting = false;
+    function srueCash(type) {
+        if(isGetting){
+            return;
+        }
+        isGetting = true;
+        
+        /*
+        var url = 'index.php?g=Qqonline&m=index&a=ajax_apply_drawcash2';
+        if (type == 1)
+        	url = 'index.php?g=Qqonline&m=index&a=ajax_apply_drawcash3';
+        */
+        var url = 'index.php?g=Qqonline&m=index&a=apply_drawcash2';
+        if (type == 1)
+        	url = 'index.php?g=Qqonline&m=index&a=apply_drawcash3';
+        
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType : "json",
+            data: {'moneyType':type},
+            success: function (res) {
+                if(res.ret == 1){
+                    isGetting = false;
+                    /*
+                    var str = '兑换成功！';
+                    getWallet();
+                    $('#modal .title').html(str);
+                    $('.modal').css('opacity',1);
+                    $('#modal .btnSure').attr('onclick','closeModal()');
+                    */
+                    // 即将跳转
+
+                    location.href = res.gourl;
+                }else{
+                    var str = res.msg;
+                    getWallet();
+                    $('#modal .title').html(str);
+                    $('.modal').css('opacity',1);
+                    $('#modal .btnSure').attr('onclick','closeModal()');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //alert('请求错误')
+            }
+        })
+    }
+    //    查询可否提现
+    function isTixian(type) {
+        if(isGetting){
+            return;
+        }
+        $.ajax({
+            url: 'index.php?g=Qqonline&m=index&a=check_drawcash',
+            type: 'GET',
+            dataType : "json",
+            data: {},
+            success: function (res) {
+                $('#modal').show();
+                if(res.ret == 1){
+                    var str = '您本日还剩'+res.reset_count+'次余额兑换机会，确定兑换?';
+                    $('#modal .title').html(str);
+                    $('.modal').css('opacity',1);
+                    $('#modal .btnSure').attr('onclick','srueCash('+type+')');
+                }else{
+                    $('#modal .title').html(res.msg);
+                    $('.modal').css('opacity',1);
+                    $('#modal .btnSure').attr('onclick','closeModal()');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //alert('请求错误')
+            }
+        })
+    }
+    var wallet = null;
+    function getWallet() {
+    	$.ajax({
+            url: 'index.php?g=Qqonline&m=index&a=ajax_get_wallet',
+            type: 'GET',
+            dataType : "json",
+            success: function (res) {
+                if(res.ret == 1){
+                	wallet = res.info;
+                	$('#user-money').html(Number(res.info.money).toFixed(2));
+                    $('#yuMoney').html(Number(wallet.money).toFixed(2));
+                    $('#teamMoney').html(Number(wallet.money2).toFixed(2));
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //alert('请求错误')
+            }
+    	});
+    }
+</script>
+<!--</html>-->

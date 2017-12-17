@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$site_name}</title>
+<meta name="keywords" content="{$site_seo_keywords}" />
+<meta name="description" content="{$site_seo_description}">
+<meta name="author" content="ThinkCMF">
+<tc_include file="Public:head" />
+<style>
+.control-label {
+	font-weight: bold;
+	float: left;
+	width: 70px;
+}
+</style>
+</head>
+<body class="body-white" id="top" style="padding-top: 0px">
+
+	<div class="container tc-main" style="margin-top:0px">
+		<div class="row">
+			<!--
+			<div class="span9">
+				<div class="tabs">
+					<div class="tab-content">
+						<div class="tab-pane active" id="one" style="text-align: center">
+							<div class="span2">
+								<a href="{:U('profile/avatar')}"> <if
+										condition="empty($avatar)"> <img
+										src="__TMPL__Public/assets/images/headicon_128.png"
+										class="headicon" /> <else /> <img
+										src="{:sp_get_user_avatar_url($avatar)}" class="headicon" /> </if>
+								</a>
+							</div>
+							<div class="span3">
+								<div class="control-group">
+									<label class="control-label" for="input-user_nicename">昵称</label>
+									<div class="controls">{$user_nicename|default='未填写'}</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>-->
+			<div class="header" style="height: 100px;">
+				<php>
+				$head_icon = rand(1,40);
+				</php>
+				<img src="__TMPL__Public/assets/images/pl/{$head_icon}.jpg" style="width: 70px;height:70px;border-radius: 50%;margin-left: 25px;float: left;margin-top: 15px;">
+				<div style="height:100px;margin-left: 130px;padding-top: 20px;">
+				<span style="font-size: 20px;">昵称</span>{$user['user_nicename']}<br>
+				<span style="font-size: 12px;">ID: {$user['id']}</span>
+				</div>
+			</div>
+			<div class="span3">
+				<tc_include file="Public:usernav" />
+			</div>
+		</div>
+
+		<div class="footer-page">
+			<div class="navs">
+				<div class="nav zb">
+					<div class="inner" onclick="location.href='index.php?m=list&a=index&id=3'">
+						<div class="pic"></div>
+					</div>
+				</div>
+				<div class="nav main">
+					<div class="inner" onclick="">
+						<div class="pic"></div>
+					</div>
+				</div>
+			</div>
+			<div class="nav mine active">
+				<div class="inner" onclick="">
+					<div class="pic"></div>
+				</div>
+			</div>
+			<div class="xui-clear-block"></div>
+		</div>
+		<tc_include file="Public:footer" />
+
+	</div>
+	<!-- /container -->
+
+	<tc_include file="Public:scripts" />
+</body>
+</html>

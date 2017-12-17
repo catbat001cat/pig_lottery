@@ -1,0 +1,191 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="__TMPL__Public/css_zp/jquery.toast.min.css?10003">
+<script src="__TMPL__Public/js_zp/index.app.js?10031"></script>
+<script src="__TMPL__Public/js/md5.js"></script>
+<script src="__TMPL__Public/js_zp/swiper.min.js?10016"></script>
+<script src="__TMPL__Public/js_zp/jquery.rotate.min.js?10003"></script>
+<div id="ui-view">
+	<div id="etDiv" class="all-contents">
+		<div class="wrap">
+			<!--头部中奖记录与规则-->
+			<header>
+				<div class="chance">
+					<div class="tab1">
+						<!--
+						<div class="tab_item_disc little tab_actives" data-type="little">小盘</div>
+						<div class="tab_item_disc middle" data-type="middle">中盘</div>
+						<div class="tab_item_disc big" data-type="big">大盘</div>
+						 -->
+						 <div class="tab_item_disc middle tab_actives" data-type="middle">中盘</div>
+						<div class="tab_item_disc big" data-type="big">大盘</div>
+					</div>
+					<div style="position:absolute;top:55px;left:20px;z-index:999999">
+						<a href="{$game1_url}">
+							<img src="__TMPL__Public/imgdb/1-4.png" width="20" height="20" style="border-radius: 10px;">
+							<span style="font-size:14px;margin-top:5px;color:white;">我要夺宝</span>
+						</a>
+					</div>
+				</div>
+			</header>
+			<!--大转盘抽奖区-->
+			<article>
+				<div class="turnPlate">
+					<div class="disc">
+						<div id="2_little" class="turnPlateBgc star_disc"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); transform: rotate(-90deg); transform-origin: 50% 50% 0px;">
+							<img id="turnPlateImg" style="will-change: transform"
+								src="sysImg/2_rmbn_little.png">
+						</div>
+						<div id="2_middle" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="2_big" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="5_little" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="5_middle" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="5_big" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="10_little" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="10_middle" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="10_big" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="30_little" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="30_middle" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="30_big" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="100_little" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="100_middle" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="100_big" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="300_little" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="300_middle" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="300_big" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="1000_little" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="1000_middle" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="1000_big" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="2000_little" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="2000_middle" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+						<div id="2000_big" class="turnPlateBgc cpm-hide"
+							style="transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85); -webkit-transition-timing-function: cubic-bezier(0.27, 0.62, 0.71, 0.85);">
+							<img id="turnPlateImg" style="will-change: transform" src="">
+						</div>
+					</div>
+					<div class="go">
+						<img id="start" src="__TMPL__Public/img_zp/pointer.png">
+					</div>
+				</div>
+			</article>
+			<div class="public">
+				<div class="banner">
+					<div class="swiper-container swiper-container-vertical">
+						<div class="swiper-wrapper" id="swiper_wrapper"
+							style="transform: translate3d(0px, -200px, 0px); transition-duration: 300ms;">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab_list" style="">
+				<div class="tab2">
+					<!--<div class="tab_item tab2_actives" data-type="2">2</div>  -->
+					<div class="tab_item tab2_actives" data-type="5">5</div>
+					<div class="tab_item" data-type="10">10</div>
+					<div class="tab_item" data-type="30">30</div>
+					<div class="tab_item" data-type="100">100</div>
+					<div class="tab_item" data-type="300">300</div>
+					<div class="tab_item" data-type="1000">1000</div>
+					<div class="tab_item" data-type="2000">2000</div>
+				</div>
+			</div>
+		</div>
+		<!--中奖弹出层-->
+		<div class="prize_box cpm-hide">
+			<div class="shade"></div>
+			<div class="prize_content">
+				<div class="zj">
+					<h5>恭喜您</h5>
+					<p class="prize_txt">
+						恭喜您赢得红包<span class="RMB">0.2</span>金币
+					</p>
+					<p class="goDraw">点击领取</p>
+				</div>
+				<div class="cz cpm-hide">
+					<h5>很遗憾</h5>
+					<p class="prize_txt">
+						本次抽奖需扣除2金币<br>是否立即抽奖？
+					</p>
+					<p class="chongzhi">立即抽奖</p>
+					<p class="qx">取消</p>
+				</div>
+			</div>
+		</div>
+		<div class="mask_blank cpm-hide"></div>
+		<div class="empty_code"></div>
+	</div>
+	<div class="loading" style="display: none;">
+		<img src="sysImg/loading.gif">
+	</div>
+</div>

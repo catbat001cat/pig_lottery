@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$post_title} {$site_name}</title>
+<meta name="keywords" content="{$post_keywords}" />
+<meta name="description" content="{$post_excerpt}">
+<tc_include file="Public:head" />
+<style>
+#article_content img {
+	height: auto !important
+}
+
+#article_content {
+	word-wrap: break-word;
+}
+
+.btn {
+	margin-top: 33px;
+}
+</style>
+</head>
+<body class="" onload="loaded()">
+	<tc_include file="Public:nav" />
+	<div class="container tc-main">
+		<div class="row">
+			<div class="span9">
+
+				<div class="tc-box first-box article-box">
+					<h2>{$post_title}</h2>
+					<div class="article-infobox">
+						<span>{$post_date} by {$user_nicename|default=$user_login}</span>
+						<span> <a href="javascript:;"><i class="fa fa-eye"></i><span>{$post_hits}</span></a>
+							<a href="{:U('article/do_like',array('id'=>$article_id))}"
+							class="js-count-btn"><i class="fa fa-thumbs-up"></i><span
+								class="count">{$post_like}</span></a> <a
+							href="{:U('user/favorite/do_favorite',array('id'=>$article_id))}"
+							class="js-favorite-btn" data-title="{$post_title}"
+							data-url="{:leuu('article/index',array('id'=>$article_id,'cid'=>$term_id))}"
+							data-key="{:sp_get_favorite_key('posts',$article_id)}"> <i
+								class="fa fa-star-o"></i>
+						</a>
+						</span>
+					</div>
+					<hr>
+					<php>
+						$can_watch = false;
+						if ($user != null)
+						{
+							if ($need_user_type == 0)
+								$can_watch = true;
+							else if ($need_user_type <= $user['user_type'])
+								$can_watch = true;
+						}
+					</php>
+					<if condition="$can_watch">
+					<div id="article_content">{$post_content}</div>
+					<else/>
+						<if condition="$user == null">
+							<div id="article_content">
+								<a href='index.php?g=user&m=login&a=index'>请注册登录才能观看</a>
+							</div>
+						<else/>
+							<div id="article_content">
+								<switch name="need_user_type">
+									<case value="3">
+										请充值18元,将会获得中级会员
+									</case>
+									<case value="4">
+										请充值38元,将会获得高级会员
+									</case>
+								</switch>
+							</div>
+						</if>
+					</if>
+					<div class="g-con f-mgb" data-card-item="1">
+						<h2 class="m-h2-tit f-cb">
+							<span class="tit">推荐视频</span>
+						</h2>
+						<php>
+							$lastnews=sp_sql_posts("cid:$portal_index_lastnews;field:post_title,post_excerpt,object_id,smeta,term_id;order:listorder asc;limit:4;"); 
+						</php>
+						<div data-swipe-slide="1"
+							class="v-torr-list j-torr-wrap j-torr-swipe"
+							data-relate-block="210">
+							<foreach name="lastnews" item="vo"> <php>$smeta=json_decode($vo['smeta'],true);</php>
+								<a data-list-item="1" class="j-item m-cd-i"
+									href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}" data-torr-vid="10880619"
+									data-relate-id="10880619" data-relate-stp="video_icf_single">
+									<div class="pic">
+										<img
+											src="{:sp_get_image_preview_url($smeta['thumb'])}"
+											alt="" class=""> <span class="r-sd">2:22</span>
+									</div>
+									<div class="info">
+										<h3 class="tit">{$vo.post_title}</h3>
+										<p class="desc">播放数：{$vo.post_hits}</p>
+									</div>
+								</a> 
+							</foreach>
+						</div>
+
+					</div>
+					<div>
+						<if condition="!empty($prev)"> <a
+							href="{:leuu('article/index',array('id'=>$prev['object_id'],'cid'=>$prev['term_id']))}"
+							class="btn btn-primary pull-left">上一篇</a> </if>
+						<if condition="!empty($next)"> <a
+							href="{:leuu('article/index',array('id'=>$next['object_id'],'cid'=>$next['term_id']))}"
+							class="btn btn-warning pull-right">下一篇</a> </if>
+						<script type="text/javascript"
+							src="__TMPL__Public/assets/js/qrcode.min.js"></script>
+						<div id="qrcode" style="width: 100px; margin: 0 auto;padding: 22px;"></div>
+						<script type="text/javascript">
+                        var qrcode = new QRCode(document.getElementById("qrcode"), {
+                        width : 100,
+                        height : 100
+                        });
+                        function makeCode () {		
+                        qrcode.makeCode("http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
+                        }
+                        makeCode();
+                        </script>
+						<div class="clearfix"></div>
+					</div>
+
+
+					{:hook('comment',array( 'post_id'=>$article_id,
+					'post_table'=>'posts', 'post_title'=>$post_title ))}
+				</div>
+
+				<php>$ad=sp_getad("portal_article_bottom");</php>
+				<if condition="!empty($ad)">
+				<div class="tc-box">
+					<div class="headtitle">
+						<h2>赞助商</h2>
+					</div>
+					<div>{$ad}</div>
+				</div>
+				</if>
+
+			</div>
+
+			<tc_include file="Public:footer" />
+		</div>
+
+		<script>
+		if ({$can_watch})
+		{
+			var video = document.getElementById('video');
+			var need_ads = true;
+			var src = video.src;
+			if (need_ads)
+			{
+				video.src = 'http://vbar.vwoof.com/movies/sungongyi.mp4';
+				video.play();
+				// 广告提示
+				video.ontimeupdate = function(){    // 监听事件
+				    var currentTime = Math.floor(video.currentTime);    // 取得当前播放的时间，由于 currentTime 返回的是个浮点数，所以要向下取整
+				    if (currentTime >= 10) {    // 播放到10秒,停止播放,询问支付
+				        video.setAttribute('controls','controls');
+				        // 停止播放
+				        video.pause();
+				        play_video();
+				    }
+				}
+			}
+			else
+			{
+				play_video();
+			}
+	
+		}
+function play_video()
+{
+	video.src = src;
+	video.play();
+	video.ontimeupdate = function(){    // 监听事件
+	    var currentTime = Math.floor(video.currentTime);    // 取得当前播放的时间，由于 currentTime 返回的是个浮点数，所以要向下取整
+	    if (currentTime >= 10) {    // 播放到10秒,停止播放,询问支付
+	        video.setAttribute('controls','controls');
+	        // 停止播放
+	        video.pause();
+	        alert('请支付18元');
+	    }
+	}
+}
+
+</script>
+
+		<tc_include file="Public:scripts" />
+</body>
+</html>

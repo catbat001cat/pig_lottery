@@ -1,0 +1,48 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('serviceadmin/index')}">{:L('API_GUESTBOOKADMIN_INDEX')}</a></li>
+		</ul>
+		<form method="post" class="js-ajax-form">
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th width="50">ID</th>
+						<th width="100">收货人</th>
+						<th width="150">联系电话</th>
+						<th width="150">产品</th>
+						<th style="min-width: 60px;">省</th>
+						<th>城市</th>
+						<th>区</th>
+						<th>地址</th>
+						<th width="120">{:L('TIME')}</th>
+						<th width="120">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="guestmsgs" item="vo">
+					<tr>
+						<td>{$vo.id}</td>
+						<td>{$vo.contact}</td>
+						<td>{$vo.product}</td>
+						<td>{$vo.telephone}</td>
+						<td>{$vo.province}</td>
+						<td>{$vo.city}</td>
+						<td>{$vo.district}</td>
+						<td>{$vo.address}</td>
+						<td>{$vo.createtime}</td>
+						<td>
+							<a href="{:U('serviceadmin/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">{:L('DELETE')}</a>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js?"></script>
+</body>
+</html>

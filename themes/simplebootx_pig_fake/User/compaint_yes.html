@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$site_name}</title>
+<meta name="keywords" content="{$site_seo_keywords}" />
+<meta name="description" content="{$site_seo_description}">
+<meta name="author" content="ThinkCMF">
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+<link media="all" type="text/css" href="__TMPL__Public/css/m-style.css" rev="stylesheet" rel="stylesheet">
+<title>投诉</title>
+<script type="text/javascript" src="__TMPL__Public/js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$('#complaint-button').bind('tap',function(e){
+		var name=$('input[name=name]').val();
+		var phone=$('input[name=phone]').val();
+		var content=$('textarea[name=content]').val();
+		if(name==""){msg({contents:'请输入姓名'});return false;}
+		if(phone==""){msg({contents:'请输入手机号'});return false;}
+		if(content==""){msg({contents:'请输入投诉内容'});return false;}
+		msg({contents:'投诉成功！管理员察看后会尽快联系您'});
+		//alert('投诉成功！管理员察看后会尽快联系您! ');
+		//location.reload();
+	});
+	
+	$.each($('.tousu_yuanyin li'),function(i,checkbox){
+		$(checkbox).bind('tap',function(){
+			
+				$('.tousu_yuanyin').hide();
+				$('.tijiao_tousu').show();
+		});
+	});
+	
+	
+
+	
+});
+</script><style>
+body{
+    background: #fff;
+}
+.rentme-apply{
+		padding: 0 20px;
+}
+.rentme-apply .text_title{    
+font-size: 18px;
+    margin-top: 20px;
+
+	
+}
+.rentme-apply .text_wx_centent{
+    color: #aaa;   
+	line-height: 20px;
+    margin-top: 10px;
+}
+#submit-button{
+	margin-top:20px;
+}
+</style>
+</head>
+<body class="body-white" id="top" style="padding-top: 0px">
+	<div id="wrapper">
+		<div id="contents">
+						<div class="rentme-apply" style="margin-top:20px;">
+							<img src="__TMPL__Public/images/suessc.png" style="width:90px;">
+							<div class="text_title">投诉已提交</div>
+							<div class="text_wx_centent">微信团队会尽快核实，并通过“微信团队”通知您审核结果。感谢您的支持。</div>
+							<div class="common-lightgreen-button" id="submit-button" style="background:#39B54A" onclick="close_this()">关闭</div>
+						</div>
+
+		</div>
+
+	</div>
+</body>
+<script>
+function close_this()
+{
+	//WeixinJSBridge.call('closeWindow');
+	
+	location.href='index.php?m=list&a=index&id=3';
+}
+</script>
+</html>

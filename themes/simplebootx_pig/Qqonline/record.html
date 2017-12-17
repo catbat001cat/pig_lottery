@@ -1,0 +1,340 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">-->
+    <!--<title>记录</title>-->
+    <!--<link rel="stylesheet" href="css/bootstrap.min.css"/>-->
+    <link rel="stylesheet" href="__TMPL__Public/css/common.css">
+    <style>
+        th{
+            text-align: center;
+        }
+        caption{
+            color: #fff;
+        }
+        .full-record{
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            display: none;
+            background: rgba(51, 51, 51, 0.82);
+        }
+
+        .full-record .buy-head{
+            padding: 20px 25px 0 25px;
+            text-align: center;
+            font-size: 18px;
+        }
+        .full-record .order-list{
+            padding: 5px;
+            margin: 0 25px 0;
+            border:1px solid #f5f5f5;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+        .full-record .pull-right span.roll{
+            display: inline-block;
+            background: #fff;
+            color: rebeccapurple;
+            padding: 2px;
+            width: 20px;
+            height: 20px;
+            line-height: 17px;
+            text-align: center;
+            border-radius: 10px;
+            margin-left: 3px;
+        }
+        .full-record .pull-right span.red-bg{
+            background: red;
+        }
+        .full-record .buy-btn{
+            margin: 0 auto;
+            height: 35px;
+            line-height: 35px;
+            width: 100px;
+        }
+        .order{
+            margin-top: 50px;
+        }
+
+        .order-title{
+            height: 40px;
+            line-height: 43px;
+            background: url("__TMPL__Public/img/38.png") no-repeat;
+            background-size: 100% 100%;
+            text-align: center;
+        }
+        .order-box{
+            width: 90%;
+            margin: 10px auto;
+            margin-top: 0;
+            min-height: 395px;
+            /*background: url("__TMPL__Public/img/39.png") center  no-repeat;*/
+        	background-color:#FFD800;
+            background-size: 100% 100%;
+        	border-radius: 10px;
+            position: relative;
+        }
+        .order-list{
+            padding: 25px;
+        }
+        .order-list>div{
+            border-bottom: 1px solid #c679d0;
+            height:40px;
+            line-height: 40px;
+        }
+        .full-record .buy-btn{
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            margin-top: 5px;
+            text-align: center;
+            /*background: url("__TMPL__Public/img/30.png") center  no-repeat;*/
+        	background: url("__TMPL__Public/img2/k_3.png") center  no-repeat;
+            background-size: 100% 100%;
+            margin: 10px auto;
+        }
+        .roll{
+            display: inline-block;
+            background: #fff;
+            color: rebeccapurple;
+            padding: 2px;
+            width: 20px;
+            height: 20px;
+            line-height: 17px;
+            text-align: center;
+            border-radius: 10px;
+            margin-left: 3px;
+        }
+
+        .container-fluid {
+            padding: 0 10px;
+        }
+        div.content {
+            font-size: 1.2rem;
+        	/*
+            height:2.9rem;
+            line-height:2.9rem;*/
+            background-image: url("__TMPL__Public/img/tbitem.png");
+            background-size:100% 100%;
+            margin: 1rem 0;
+        }
+        .thead {
+            font-size: 1.2rem;
+            height:2.5rem;
+            line-height:2.5rem;
+        }
+        .text-center {
+            margin: 10px 0px 0px 0px;
+        }
+        @media screen and (max-width:320px){
+            .order{
+                margin-top: 20px;
+            }
+            div.content{
+                margin: 0.5rem 0;
+            }
+        }
+        .text-red{
+            color: red;
+        }
+    </style>
+<!--</head>-->
+<!--<body>-->
+<!--<div id="header"></div>-->
+
+<div class="main-container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 text-center">竞猜记录</div>
+        </div>
+        <div class="row thead">
+            <div class="col-xs-4">期号</div><div class="col-xs-2">下注金额</div><div class="col-xs-2">中奖金额</div><div class="col-xs-2">状 态</div><div class="col-xs-2">&nbsp;&nbsp;</div>
+        </div>
+    </div>
+</div>
+
+<!--开奖结果-->
+<div class="full-record" id="full-record">
+    <div class="order">
+        <div class="order-title">详情</div>
+        <div class="order-box">
+            <!--<div class="order-close" id="result-close"></div>-->
+            <div class="buy-head">
+                <p style="margin-bottom: 0">本期开奖号码</p>
+                <p>
+                    <span class="openBall1 roll"></span>
+                    <span class="openBall2 roll"></span>
+                    <span class="openBall3 red-bg roll"></span>
+                </p>
+            </div>
+            <div class="order-list" id="result-list">
+                <div class="clearfix">
+                    <div class="pull-left">本次期号</div>
+                    <div class="pull-right ball">
+                        <span class="buy-num"></span>期
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="pull-left">开奖时间</div>
+                    <div class="pull-right openTime">
+
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="pull-left">开奖结果</div>
+                    <div class="pull-right openResult">
+                        <span class="roll"></span>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="pull-left">本次竞猜</div>
+                    <div class="pull-right buy-balls"><span class="buy roll"></span></div>
+                </div>
+                <div class="clearfix">
+                    <div class="pull-left">本次投注</div>
+                    <div class="pull-right"><span class="money"></span>金币</div>
+                </div>
+                <div class="clearfix">
+                    <div class="pull-left">本次收益</div>
+                    <div class="pull-right"><span class="fucture-money"></span>金币</div>
+                </div>
+            </div>
+            <div class="buy-btn" id="resultConfirm">确定</div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+//        $('#header').load('tpl/head.html');
+        loadRecord();
+        //关闭往期窗口
+        $('#full-record .buy-btn').click(function () {
+            $('#full-record').hide();
+        })
+    });
+    function loadRecord(){
+        $.ajax({
+            url: 'index.php?g=Qqonline&m=record&a=get_records',
+            type: 'GET',
+            dataType : "json",
+            data: {},
+            success: function (res) {
+                if(res.ret == 1){
+                    var str = '';
+                    $.each(res.list,function (k,v) {
+                        if(v.status == 0) {	//还未开奖
+                            str += '<div class="row content"><div class="col-xs-4">'+v.no+'</div><div class="col-xs-2">'+v.price+'</div><div class="col-xs-2">待结算'
+                                +'</div><div class="col-xs-2">还未开奖</div><div class="col-xs-2" onclick="loadDetail(' + v.no + ')">详情</div></div>';
+
+                        }else if(v.status == 1) {
+                            str += '<div class="row content"><div class="col-xs-4">'+v.no+'</div><div class="col-xs-2">'+v.price+'</div><div class="col-xs-2">'
+                                +(v.win)+'</div><div class="col-xs-2  text-red">中奖</div><div class="col-xs-2" onclick="loadDetail(' + v.no + ')">详情</div></div>';
+                        }else{
+                            str += '<div class="row content"><div class="col-xs-4">'+v.no+'</div><div class="col-xs-2">'+v.price+'</div><div class="col-xs-2">'
+                                +0+'</div><div class="col-xs-2">未中奖</div><div class="col-xs-2" onclick="loadDetail(' + v.no + ')">详情</div></div>';
+                        }
+                    })
+                    $('.container-fluid').append(str);
+                }else{
+                    alert(res.msg);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //alert('请求错误')
+            }
+        })
+    }
+    function loadDetail(no) {
+        $('#full-record .buy-num').html('');
+        $('#full-record .openBall1').html('');
+        $('#full-record .openBall2').html('');
+        $('#full-record .openBall3').html('');
+        $('#full-record .openTime').html('');
+        $('#full-record .openResult').html('');//开奖结果
+        $('#full-record .money').html('');
+        $('#full-record .buy-balls').html('');//本次竞猜
+        $('#full-record .fucture-money').html(0);
+
+        $.ajax({
+            url: 'index.php?g=Qqonline&m=index&a=ajax_get_open_lottery_result',
+            type: 'GET',
+            dataType: 'json',
+            data: {no:no},
+            success: function (res) {
+                if(res.ret == 1){
+
+				    var balls = new Array();
+				    for (var i=0; i<res.lottery.number.length; i++)
+				    	balls.push(res.lottery.number.substr(i,1) - '0');
+                	
+                    $('#full-record').show();
+                    $('#full-record .buy-num').html(res.lottery.no);
+                    var openStr = '';
+                    if(res.lottery.status == "2"){
+                        $('#full-record  .openBall1').html(balls[6]);
+                        $('#full-record  .openBall2').html(balls[7]);
+                        $('#full-record  .openBall3').html(balls[8]);
+                        
+                        var is_event = 0;
+                        if (balls[8] % 2 == 0)
+                        	is_event = 1;                        
+
+                        if(balls[7] == balls[8]){
+                            openStr = '<span class="roll">'+balls[7]+'</span>'
+                                + '<span class="roll">'+balls[8]+'</span>'
+                                + '<span class="roll red-bg">合</span>';
+                        }else if(balls[8] >= 5){
+                            openStr =  '<span class="roll">'+balls[8]+'</span>'
+                                +'<span class="roll red-bg">大</span>';
+                                
+                            if (is_event)
+                            	openStr += '<span span class="roll red-bg">双</span>';
+                    		else
+                    			openStr += '<span class="roll red-bg">单</span>';
+                        }else{
+                            openStr = '<span class="roll">'+balls[8]+'</span>'
+                                +'<span class="roll red-bg">小</span>';
+                                
+                            if (is_event)
+                            	openStr += '<span span class="roll red-bg">双</span>';
+                    		else
+                    			openStr += '<span class="roll red-bg">单</span>';
+                        }
+                        $('#full-record .openTime').html(getTime(res.lottery.open_time));
+                        $('#full-record .fucture-money').html(Number(res.result.total_win).toFixed(2));
+                    }else{
+                        $('#full-record .openTime').html('');
+                        $('#full-record .fucture-money').html(0);
+                    }
+ 
+                    var ballsStr='';
+                    for (var i=balls.length-3; i<balls.length; i++)
+                    	 ballsStr += '<span class="roll">'+balls[i]+'</span>';
+                    	 
+                    var total_price = 0;
+                    if (res.result.total_price != null)
+                    	total_price = res.result.total_price;
+
+                    $('#full-record .openResult').html(openStr);//开奖结果
+                    $('#full-record .money').html(total_price);
+                    $('#full-record .buy-balls').html(ballsStr);//本次竞猜
+
+                }else{
+                    alert(res.msg);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //alert('请求错误')
+            }
+        })
+
+    }
+</script>
+<!--</body>-->
+
+<!--</html>-->

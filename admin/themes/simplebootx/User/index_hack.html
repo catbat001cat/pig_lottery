@@ -1,0 +1,77 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a>{:L('USER_INDEXADMIN_INDEX')}</a></li>
+		</ul>
+		<form class="well form-search" method="post" action="{:U('Indexadmin/index_hack')}">
+			用户ID： 
+			<input type="text" name="uid" style="width: 100px;" value="{:I('request.uid')}" placeholder="请输入用户ID">
+			<!--排序
+			<select id="order_type" name="order_type">
+						<option value="" selected>按ID降序</option>
+						<option value="6">按黑次数降序</option>
+						</select>
+						<script>
+						document.getElementById('order_type').value = {$filter.order_type|default=''};
+						</script> -->
+			<input type="submit" class="btn btn-primary" value="搜索" />
+			<a class="btn btn-danger" href="{:U('Indexadmin/index')}">清空</a>
+		</form>
+		<form method="post" class="js-ajax-form">
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th align="center">ID</th>
+						<th>上级用户</th>
+						<th>钱包余额</th>
+						<th>佣金余额</th>
+						<th>红包余额</th>
+						<th>黑次数</th>						
+						<th>{:L('REGISTRATION_TIME')}</th>
+						<th>{:L('LAST_LOGIN_TIME')}</th>
+						<th>{:L('LAST_LOGIN_IP')}</th>
+						<th>{:L('STATUS')}</th>
+						<th>自动提现</th>
+						<th align="center">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<php>$user_statuses=array("0"=>L('USER_STATUS_BLOCKED'),"1"=>L('USER_STATUS_ACTIVATED'),"2"=>L('USER_STATUS_UNVERIFIED'));</php>
+					<php>$disable_drawcash_statuses=array("0" => '开启', '1'=>'关闭')</php>
+					<foreach name="list" item="vo">
+					<tr>
+						<td align="center">{$vo.id}</td>
+						<td>{$vo.parent_channel_user_id}</td>
+						<td>{$vo['wallet']['money']|round=###,2}</td>
+						<td>{$vo['wallet']['money2']|round=###,2}</td>
+						<td>{$vo['wallet']['money3']|round=###,2}</td>
+						<td><a href="{:U('Agent/useractionadmin/index',array('user_id'=>$vo['id'], 'action'=>'hack'))}" target="_blank">{$vo.hack_times}</a></td>
+						<td>{$vo.create_time}</td>
+						<td>{$vo.last_login_time}</td>
+						<td>{$vo.last_login_ip}</td>
+						<td>{$user_statuses[$vo['user_status']]}</td>
+						<td>{$disable_drawcash_statuses[$vo['user_drawcash_status_disable']]}</td>
+						<td align="center">
+							<neq name="vo.id" value="1">
+								<a href="{:U('indexadmin/ban',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="{:L('BLOCK_USER_CONFIRM_MESSAGE')}">{:L('BLOCK_USER')}</a>|
+								<a href="{:U('indexadmin/cancelban',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="{:L('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:L('ACTIVATE_USER')}</a>|
+								<a href="{:U('indexadmin/disable_auto_drawcash_out',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="确定要关闭自动提现功能吗?">关闭自动提现</a>|
+								<a href="{:U('indexadmin/enable_auto_drawcash_out',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="确定要打开自动提现功能吗?">打开自动提现</a>|
+								<a href="{:U('Agent/useractionadmin/index',array('user_id'=>$vo['id']))}" target="_blank">查看操作日志</a>
+							<else/>
+								<a style="color: #ccc;">{:L('BLOCK_USER')}</a>|
+								<a style="color: #ccc;">{:L('ACTIVATE_USER')}</a>
+							</neq>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

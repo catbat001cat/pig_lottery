@@ -1,0 +1,87 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<div class="row-fluid">
+				<div class="span9" style="text-align:center">
+					<h2>禁止代理商和渠道用黄色暴力或其他极端手段宣传，谢谢合作！</h2>
+					<h2>链接推广:{$ads_url}</h2>
+				</div>
+			</div>
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Channeladsadmin/index')}">广告推广模板</a></li>
+			<li><a href="{:U('Channeladsadmin/add')}" target="_self">添加广告推广模板</a></li>
+		</ul>
+		<form class="js-ajax-form" action="" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="50">ID</th>
+						<th width="100">标题</th>
+						<th width="150">备注</th>
+						<th width="50">开始位置</th>
+						<th width="200">模板图片</th>
+						<th width="70">操作</th>
+					</tr>
+				</thead>
+				<foreach name="lists" item="vo">
+				<tr>
+					<php>
+						$smeta=json_decode($vo['smeta'],true);
+					</php>
+                    <td><b>{$vo.id}</b></td>
+					<td>{$vo.title}</td>
+					<td>{$vo.memo}</td>
+					<td>{$vo.add_x},{$vo.add_y}</td>
+					<td>
+					<img id="img_{$vo.id}" src="{:sp_get_asset_upload_path($smeta['thumb'])}" width="200"/>
+					<a href="javascript:gen({$vo['id']})">生成二维码</a>
+					</td>
+					<td>
+						<a href="{:U('Channeladsadmin/edit',array('id'=>$vo['id']))}">编辑</a> | 
+						<a href="{:U('Channeladsadmin/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">删除</a>
+					</td>
+				</tr>
+				</foreach>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location = "{:U('Channeladsadmin/index',$formget)}";
+			}
+		}
+		setInterval(function() {
+			refersh_window();
+		}, 2000);
+		$(function() {
+			setCookie("refersh_time", 0);
+			Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
+				//批量移动
+			});
+		});
+		
+		function gen(id)
+		{
+			$.ajax({
+				url: 'index.php?g=Agent&m=Channeladsadmin&a=gen',
+				type: "get",
+				dataType: "json",  
+				data: {
+					id:id
+				},
+				success: function (data) {
+					if (data.code == 0)
+					{
+						$('#img_' + id).attr('src', data.img);
+					}
+				}
+			});
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+ <link rel="stylesheet" href="__TMPL__Public/css_zp/guessList.css">
+ 
+    <div class="row toolbar" id="toolbar">
+        <div class="col-xs-3 col-sm-3 active" id="date">日榜</div>
+        <div class="col-xs-3 col-sm-3" id="month">月榜</div>
+        <div class="col-xs-3 col-sm-3">昨日榜单</div>
+        <div class="col-xs-3 col-sm-3">上月榜单</div>
+    </div>
+    <div class="content">
+        <div class="content-title">
+            <span class="line"></span>
+            <sapn class="" id="dateUpdata">每小时更新一次</sapn>
+            <span class="hidden" id="monthUpdata">每日更新一次</span>
+            <sapn class="line"></sapn>
+        </div>
+        <div class="content-border">
+            <table class="rankingList">
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>用户ID</th>
+                        <th>金额</th>
+                    </tr>
+                </thead>
+                <tbody class="list"><tr><td>1</td><td>73204</td><td>23275</td></tr><tr><td>2</td><td>27935</td><td>9100</td></tr><tr><td>3</td><td>65038</td><td>6625</td></tr><tr><td>4</td><td>32481</td><td>5887.5</td></tr><tr><td>5</td><td>74746</td><td>3933</td></tr><tr><td>6</td><td>41090</td><td>3800</td></tr><tr><td>7</td><td>2206</td><td>2889.5</td></tr><tr><td>8</td><td>73727</td><td>2505.5</td></tr><tr><td>9</td><td>64953</td><td>2122</td></tr><tr><td>10</td><td>37004</td><td>2087.5</td></tr></tbody>
+            </table>
+            <div class="table-footer">
+                <div class="tit">
+                    <span class="line"></span>
+                    <span class="">我的排名</span>
+                    <sapn class="line"></sapn>
+                </div>
+                <div class="cont">
+                    <div>
+                        <span>当日中奖：<em id="dayMoney"></em></span>
+                        <span>当日排名：<em id="dayNo"></em></span>
+                    </div>
+                    <div>
+                        <span>当月中奖：<em id="monMoney"></em></span>
+                        <span>当月排名：<em id="monNo"></em></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    $(function () {
+        getData("日榜");
+        //标题栏切换
+        $('#toolbar').on('click','div.col-xs-3',function () {
+            $(this).siblings('.active').removeClass('active');
+            $(this).addClass('active');
+            console.log($(this).html());
+            getData($(this).html());
+            // $(".table-footer").addClass("hidden");
+            var index = $(this).index();
+            if(index > 0) {
+                $(".table-footer").addClass("hidden");
+                // $(".rankingList").addClass("hidden");
+            }
+            if(index >1) {
+                $(".content-title").addClass("hidden");
+            }else {
+                $(".content-title").removeClass("hidden");
+            }
+        });
+        $("#date").on("click", function () {
+            $("#dateUpdata").removeClass("hidden");
+            $("#monthUpdata").addClass("hidden");
+            $(".table-footer").removeClass("hidden");
+        });
+        $("#month").on("click", function () {
+            $("#dateUpdata").addClass("hidden");
+            $("#monthUpdata").removeClass("hidden");
+        })
+
+        function getData(tab) {
+            var afterUrl = 'index.php?g=Zp&m=index&a=ajax_get_ranks';
+            var type = '';
+            switch (tab) {
+                case "日榜":
+                    type = 'cur_day';
+                    break;
+                case "月榜":
+                	 type = 'cur_month';
+                    break;
+                case "昨日榜单":
+                	 type = 'last_day';
+                    break;
+                case "上月榜单":
+                	 type = 'last_month';
+                    break;
+            }
+            $('.list').html("");
+            $.ajax({
+                url: afterUrl,
+                type: 'GET',
+                dataType : 'json',
+                data: {type:type},
+                success: function (res) {
+                	console.log(JSON.stringify(res));
+                    if(res.ret == 1){
+                        var str = '';
+                        res.info.length > 15 ? 15:res.info.length;
+                        $.each(res.info,function (k,v) {
+                            str +='<tr><td>'+v.rank+'</td><td>'+v.id+'</td><td>'+v.total_win+'</td></tr>';
+                        })
+                        $('.list').html(str);
+                        
+                        $('#dayMoney').html(res.my.cur_day_total_win);
+                        $('#dayNo').html(res.my.cur_day_rank);
+                        $('#monMoney').html(res.my.cur_month_total_win);
+                        $('#monNo').html(res.my.cur_month_rank);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //alert('请求错误')
+                }
+            });
+        }
+    });
+</script>

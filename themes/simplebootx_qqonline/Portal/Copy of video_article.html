@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$post_title} {$site_name}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta charset="gb2312">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<script type="text/javascript" src="__TMPL__Public/js/jquery.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/kl.js"></script>
+<style>
+body {padding: 0;margin: 0;background: #fff;}
+</style>
+</head>
+<body>
+	<input id="userid" name="userid" value="" type="hidden">
+	<input id="pid" name="pid" value="" type="hidden">
+	<input id="uid" name="uid" value="" type="hidden">
+	<input id="rt" name="rt" value="17" type="hidden">
+	<input id="id" name="id" value="93" type="hidden">
+	<!-- 加载 -->
+	<div
+		style="width: 100%; height: 100%; position: fixed; background: #333; opacity: 0.8; z-index: 9999999; display: none;"
+		class="loading">
+		<div
+			style="width: 100%; height: 200px; line-height: 200px; text-align: center; position: absolute; margin: auto; top: 0; bottom: 0; color: darkred; z-index: 99999999;">
+			<img src="__TMPL__Public/images/loding.gif"
+				style="margin: 0 auto; width: 45px; vertical-align: middle;">正在跳转支付,请稍等..
+		</div>
+	</div>
+	<div
+		style="background: url(__TMPL__Public/images/gp.png) no-repeat; background-size: contain; width: 300px; height: 200px; position: absolute; margin: auto; left: 0; right: 0; top: 0; bottom: 0; z-index: 99999999999; display: none;"
+		class="wxPay">
+		<img src="__TMPL__Public/images/dxclose.png"
+			style="width: 20px; position: relative; top: -38px; right: -272px; z-index: 999999999999;"
+			class="closeWxPay">
+		<div
+			style="display: inline-block; width: 80%; margin-top: 65px; height: 30px; margin-left: 8px; font-weight: 900; border-bottom: 1px solid #ccc;"
+			class="bc">
+			本场 <span
+				style="color: red; display: inline-block; margin-left: 15px;">300元</span>
+			<span
+				style="display: inline-block; float: right; background: darkred; color: #fff; border-radius: 5px; width: 50px; text-align: center; padding: 5px 5px 5px 5px; position: relative; top: -5px;">购买</span>
+		</div>
+		<div
+			style="display: inline-block; width: 80%; margin-top: 10px; margin-left: 30px; height: 35px; font-weight: 900;"
+			class="yp">
+			月票 <span
+				style="color: red; display: inline-block; margin-left: 15px;">990元</span>
+			<span
+				style="display: inline-block; float: right; background: darkred; color: #fff; border-radius: 5px; width: 50px; text-align: center; padding: 5px 5px 5px 5px; position: relative; top: -5px;">购买</span>
+		</div>
+		<span
+			style="color: cadetblue; display: block; width: 70%; margin-left: 30px; height: 30px; font-size: 13px;">(30天不限场次)</span>
+	</div>
+	<div
+		style="width: 250px; height: 250px; padding: 0; background: url('__TMPL__Public/images/bg_paysuccess_bill.png') no-repeat; background-size: contain; position: fixed; margin: auto; left: 0; right: 0; top: 0; bottom: 0; font-size: 13px; font-weight: 500; display: none; z-index: 999999999999"
+		id="ticketContent">
+		<img src="__TMPL__Public/images/bg_info_export.png"
+			style="width: 280px; position: relative; margin: auto; left: -15px; right: 0; top: -7px; bottom: 0;">
+		<img src="__TMPL__Public/images/gou2x.png"
+			style="width: 30px; display: block; margin: 10px auto;"> <span
+			style="color: #00ff00; display: block; text-align: center;">出票成功</span>
+		<span style="display: block; text-align: left; margin: 5px 0 5px 30%;"
+			id="ticketId">票号: XC65194657</span> <span
+			style="display: block; text-align: left; margin: 5px 0 5px 30%;"
+			id="ticketType">单程: 18元</span> <span
+			style="display: block; text-align: left; margin: 0 0 0 30%;"
+			id="ticketName">乘客: 987迷失</span>
+	</div>
+	<img src="__TMPL__Public/images/yp.png"
+		style="position: fixed; left: 10px; right: 0; top: 10px; z-index: 900; display: none; width: 150px;"
+		id="yupiao-ico">
+	<div
+		style="__TMPL__Public/position: fixed; left: 80px; right: 0; top: 28px; z-index: 900; display: none; font-size: 1em; color: #fff;"
+		id="yupiao-text">
+		余票 <span style="color: darkorange" id="yupiao-num">17</span>
+	</div>
+	<img src="__TMPL__Public/images/mp.png"
+		style="position: fixed; margin: auto; left: 0px; right: 0px; bottom: 100px; z-index: 900; display: none; width: 20%;"
+		id="maipiao">
+	<div
+		style="width: 100%; height: 100%; position: fixed; text-align: center; font-size: 60px; background: #333; opacity: 0.5;"
+		id="mask">
+		<img src="__TMPL__Public/images/player.png"
+			style="position: fixed; margin: auto; left: 0; right: 0; top: 0; bottom: 0; z-index: 999;"
+			id="playerPro">
+	</div>
+	{$post_content}
+	<script type="text/javascript" src="__TMPL__Public/js/fastclick.js"></script>
+	<script type="text/javascript" src="__TMPL__Public/js/jquery.cookie.js"></script>
+	<script>
+		//禁止上拉下拉
+		document.querySelector('body').addEventListener('touchmove',
+				function(e) {
+					e.preventDefault();
+				})
+		var mask = $('#mask');
+		var playerPro = $('#playerPro');
+		var v = document.getElementById('v');
+		var bodyHeight = document.body.scrollHeight;
+		var bodyWidth = document.body.scrollWidth;
+		v.style.height = Math.max(bodyHeight, bodyWidth) + 'px';
+		var u = navigator.userAgent;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
+		if (isAndroid) {
+			document.getElementById("maipiao").style.bottom = '100px';
+		}
+		var vType = '4';
+		var id = $("#id").val();
+		function in_array(search, array) {
+			for ( var i in array) {
+				if (array[i] == search) {
+					return true;
+				}
+			}
+			return false;
+		}
+		$(function() {
+			//初始化
+			var id1 = $("#id").val();
+			var rt = $("#rt").val();
+			if (rt && rt != null) {
+				$('#yupiao-num').html(rt);
+			}
+			$('#maipiao').click(function() {
+				$('.wxPay').css('display', 'block');
+				return false;
+			});
+			$('.closeWxPay').click(function() {
+				$('.wxPay').css('display', 'none');
+				return false;
+			});
+			$('.bc').click(function() {
+				$('.wxPay').css('display', 'none');
+				$('.loading').css('display', 'block');
+				pay('18');
+				return false;
+			});
+			$('.yp').click(function() {
+				$('.wxPay').css('display', 'none');
+				$('.loading').css('display', 'block');
+				pay('50');
+				return false;
+			});
+			$('.loading').click(function() {
+				if (v.paused == true)
+					v.play();
+			});
+			FastClick.attach(document.body);
+			mask.click(function() {
+				setInterval(setAlert, 1000);
+				if (v.paused == true)
+					v.play();
+				mask.hide();
+				playerPro.hide();
+				$('#maipiao').show();
+				$('#yupiao-ico').show();
+				$('#yupiao-text').show();
+			});
+			$('#v').click(function() {
+				setInterval(setAlert, 1000);
+				if (v.paused == true)
+					v.play();
+				mask.hide();
+				playerPro.hide();
+				$('#maipiao').show();
+				$('#yupiao-ico').show();
+				$('#yupiao-text').show();
+			});
+			var ticketArr = {
+				"44" : {
+					"type" : 0,
+					"name" : "\u767d\u5929\u4e0d\u61c2\u7237\u7684\u9ed1",
+					"number" : 21
+				},
+				"66" : {
+					"type" : 1,
+					"name" : "\u7ecd\u5174\u8d75\u5b50\u9f99",
+					"number" : 22
+				},
+				"206" : {
+					"type" : 0,
+					"name" : "\u65b0\u53f8\u673a",
+					"number" : 23
+				},
+				"236" : {
+					"type" : 1,
+					"name" : "\u85cf\u4f20\u4e09\u5343\u5e74",
+					"number" : 24
+				},
+				"291" : {
+					"type" : 1,
+					"name" : "\u8001\u8239\u957f1987",
+					"number" : 25
+				},
+				"351" : {
+					"type" : 0,
+					"name" : "\u65b0\u53f8\u673a",
+					"number" : 26
+				}
+			};
+			var ticketTime = [ 44, 66, 206, 236, 291, 351 ];
+			function setAlert() {
+				if (in_array(parseInt(v.currentTime), ticketTime)) {
+					var one = ticketArr[parseInt(v.currentTime)];
+					var num = Math.floor(Math.random() * 100000000);
+					$('#ticketId').html('票号: XC' + num);
+					if (one['type'] == 0) {
+						$('#ticketType').html('单程: 300元');
+					} else {
+						$('#ticketType').html('包月: 990元');
+					}
+					var rt1 = parseInt($("#yupiao-num").html());
+					var rt2 = rt1 - 1;
+					$('#yupiao-num').html(rt2);
+					if (rt2 == 0) {
+						$('#yupiao-num').html("0");
+						$.cookie('remainTicket-' + id1, 0, {
+							expires : 30,
+							path : '/'
+						});
+						alert('房间已关闭');
+						ubourl('dx.php');
+						return false;
+					}
+					$('#ticketName').html('乘客: ' + one['name']);
+					if (vType == 3) {
+						$.cookie('remainTicket-' + id1, 0, {
+							expires : 30,
+							path : '/'
+						});
+					} else {
+						$.cookie('remainTicket-' + id1, rt1 - 1, {
+							expires : 30,
+							path : '/'
+						});
+					}
+					$("#ticketContent").fadeToggle(1000);
+					setTimeout('$("#ticketContent").fadeToggle(1000)', 3000);
+				}
+			}
+			v.addEventListener("playing", function() {
+				if ($.cookie("bp" + id) != 'null'
+						&& $.cookie("bp" + id) != undefined) {
+					setTimeout(setCurrentTime, 1000); //
+				}
+			}, false);
+			function setCurrentTime() {
+				v.pause();
+				var arr = $.cookie("bp" + id).split('|');
+				var timestamp = new Date().getTime();
+				var curTimeStamp = parseInt(arr[0])
+						+ parseInt(((timestamp - arr[1]) / 1000));
+				if (v.duration != 0 && curTimeStamp >= v.duration) {
+					$.cookie('remainTicket-' + $("#id").val(), 0, {
+						expires : 30,
+						path : '/'
+					});
+					alert('房间已关闭!');
+					ubourl('dx.php');
+				} else {
+					v.currentTime = curTimeStamp;
+					$.cookie("bp" + id, null, {
+						expires : 30,
+						path : '/'
+					});
+					v.play();
+					$('#maipiao').show();
+					$('#yupiao-ico').show();
+					$('#yupiao-text').show();
+				}
+			}
+			playerPro.click(function() {
+			});
+			window.onunload = function onEnd() {
+				if (v.currentTime != 'NaN' && v.currentTime != 0) {
+					var timestamp = new Date().getTime();
+					$.cookie("bp" + id, v.currentTime + '|' + timestamp, {
+						expires : 30,
+						path : '/'
+					});
+				}
+			}
+		});
+		function ubourl(url) {
+			window.location.href = url;
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<form class="well form-search" method="post" action="{:U('Drawcashadmin/index')}">
+			<div class="search_type cc mb10">
+				<div class="mb10">
+						用户ID:
+						<input type="text" name="user_id" value="{$filter.user_id}"/>
+						&nbsp;开始日期： 
+						<input type="date" name="start_ymd" style="width: 200px;" value="{$filter.start_ymd}" placeholder="请输入开始日期,2017-06-02">
+						&nbsp;结束日期： 
+						<input type="date" name="end_ymd" style="width: 200px;" value="{$filter.end_ymd}" placeholder="请输入结束日期,2017-06-02">
+						&nbsp;状态
+						<select id="status" name="status">
+						<option value="" selected>全部</option>
+						<option value="0">申请中</option>
+						<option value="1">已通过</option>
+						<option value="2">已打款</option>
+						<option value="3">打款异常</option>
+						<option value="4">返回账户</option>
+						<option value="5">等待打款</option>
+						</select>
+						<script>
+						document.getElementById('status').value = {$filter.status|default=''};
+						</script>
+						<input type="submit" class="btn btn-primary" value="搜索" />
+				</div>
+			</div>
+		</form>
+		<div class="search_type cc mb10">
+				<div class="mb10">
+						要进行下面操作，请先输入安全密码:
+						<input type="password" id="security_password" name="security_password" value=""/>
+						<input type="button" class="btn btn-primary" onclick="submit_security_password()" value="输入安全密码" />
+				</div>
+			</div>
+		<php>
+		$status_arr = array('申请中', '已通过', '已打款', '打款异常', '返回账户', '等待打款');
+		$need_check_arr = array('自动', '需要审核')
+		</php>
+		<form class="js-ajax-form" action="" method="post">
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Drawcashadmin/batch_pass_apply')}" data-subcheck="true" data-msg="您确定批量通过申请吗？">批量通过</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Drawcashadmin/batch_complete_apply')}" data-subcheck="true" data-msg="您确定批量打款吗？">批量打款</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Drawcashadmin/batch_return_apply')}" data-subcheck="true" data-msg="您确定批量返回余额吗？">批量返回余额</button>
+			</div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">ID</th>
+						<th>用户ID</th>
+						<th>申请金额</th>
+						<th>手续费</th>
+						<th>状态</th>
+						<th width="150">打款单号</th>
+						<th width="150">申请时间</th>
+						<th width="150">通过时间</th>
+						<th width="150">打款时间</th>
+						<th>是否需要审核</th>
+						<th>审核提示</th>
+						<th>openid</th>
+						<th width="70">操作</th>
+					</tr>
+				</thead>
+				<foreach name="lists" item="vo">
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}"></td>
+                    <td><b>{$vo.id}</b></td>
+					<td><a href="{:U('Drawcashadmin/index',array('user_id'=>$vo['user_id']))}" target="_blank">{$vo.user_id}</a></td>
+					<td>{$vo.price}</td>
+					<td>{$vo.fee}</td>
+					<if condition="$vo.status eq 3">
+						<td>{$status_arr[$vo['status']]},原因:{$vo.return_msg}</td>
+					<else/>
+					<td>{$status_arr[$vo['status']]}</td>
+					</if>
+					<td>{$vo.trade_no}</td>
+					<td>{$vo.create_time}</td>
+					<td>{$vo.passed_time}</td>
+					<td>{$vo.completed_time}</td>
+					<td>{$need_check_arr[$vo['need_check']]}</td>
+					<td>{$vo.check_tips}</td>
+					<td>{$vo.openid}</td>
+					<td>
+					<if condition="$vo.status eq 0">
+					<a href="{:U('Drawcashadmin/pass_apply',array('id'=>$vo['id']))}" data-msg="确定要通过该申请吗?" class="js-ajax-delete">通过申请</a>
+					</if>
+					<if condition="$vo.status eq 1">
+					<a href="{:U('Drawcashadmin/complete_apply',array('id'=>$vo['id']))}" data-msg="确定要打款吗?" class="js-ajax-delete">完成打款</a>
+					</if>
+					<if condition="$vo.status eq 3">
+					<a href="{:U('Drawcashadmin/complete_apply',array('id'=>$vo['id']))}" data-msg="确定要重新打款吗?" class="js-ajax-delete">重新打款</a>
+					</if>
+					<if condition="$vo.status eq 3">
+					<a href="{:U('Drawcashadmin/return_apply',array('id'=>$vo['id']))}" data-msg="确定要返回账户吗?" class="js-ajax-delete">返回账户</a>
+					</if>
+					</td>
+				</tr>
+				</foreach>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location = "{:U('Drawcashadmin/index',$formget)}";
+			}
+		}
+		setInterval(function() {
+			refersh_window();
+		}, 2000);
+		$(function() {
+			setCookie("refersh_time", 0);
+			Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
+				//批量复制
+				$('.js-articles-copy').click(function(e) {
+					var ids=[];
+					$("input[name='ids[]']").each(function() {
+						if ($(this).is(':checked')) {
+							ids.push($(this).val());
+						}
+					});
+					
+					if (ids.length == 0) {
+						art.dialog.through({
+							id : 'error',
+							icon : 'error',
+							content : '您没有勾选信息，无法进行操作！',
+							cancelVal : '关闭',
+							cancel : true
+						});
+						return false;
+					}
+					
+					ids= ids.join(',');
+					art.dialog.open("__ROOT__/index.php?g=portal&m=AdminPost&a=copy&ids="+ ids, {
+						title : "批量复制",
+						width : "300px"
+					});
+				});
+			});
+		});
+	</script>
+</body>
+<script>
+function submit_security_password()
+{
+	$.ajax({
+		url: 'index.php?g=Agent&m=Drawcashadmin&a=check_security_password',
+		type: "post",
+		dataType: "json",  
+		data: {
+			security_password:$('#security_password').val()
+		},
+		success: function (data) {
+			if (data.code == 0)
+			{
+				alert('安全验证通过,可以进行操作');
+			}
+			else
+			{
+				alert('密码错误');	
+			}
+		}
+	});
+}
+</script>
+</html>

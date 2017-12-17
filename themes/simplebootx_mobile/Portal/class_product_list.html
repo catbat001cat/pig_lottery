@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+<!-- start _meta.html-->
+<!-- 在移动浏览器上显示的更好 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<!-- 忽略页面中的数字识别为电话，忽略email识别 -->
+<meta name="format-detection" content="telephone=no, email=no" />
+<!--启用360浏览器的极速模式(webkit)-->
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<!--百度手机打开网页时 禁止转码-->
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--添加到主屏后的标题（iOS 6 新增）-->
+<meta name="apple-mobile-web-app-title" content="沐益清">
+<!--是否启用 WebApp 全屏模式-->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<!-- 设置苹果工具栏颜色，只有在 `"apple-mobile-web-app-capable" content="yes"` 时生效 -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<!--author-->
+<meta name="author" content="frag,411919647@qq.com,guangzhou">
+<!-- 避免IE使用兼容模式 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+<meta name="HandheldFriendly" content="true">
+<!-- 微软的老式浏览器 -->
+<meta name="MobileOptimized" content="320">
+<!-- uc强制竖屏 -->
+<meta name="screen-orientation" content="portrait">
+<!-- QQ强制竖屏 -->
+<meta name="x5-orientation" content="portrait">
+<!-- UC强制全屏 -->
+<meta name="full-screen" content="yes">
+<!-- QQ强制全屏 -->
+<meta name="x5-fullscreen" content="true">
+<!-- UC应用模式 -->
+<meta name="browsermode" content="application">
+<!-- QQ应用模式 -->
+<meta name="x5-page-mode" content="app">
+<!-- windows phone 点击无高光 -->
+<meta name="msapplication-tap-highlight" content="no">
+<!-- end _meta.html-->
+
+<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/style.css" />
+<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/mui.min.css" />
+<title>{$name}</title>
+
+
+</head>
+
+<!-- 获取所有产品 -->
+
+<php>
+$terms=sp_get_child_terms($term_id);
+</php>
+
+<body style="background-color: #ededed;" onload="loaded()">
+
+	<div class="box_nr3" style="margin-top:30px;" >
+		<p class="nr_bt">产品</p>
+		<foreach name="terms" item="vo" > 
+	        <a href="{:U('list/index',array('id'=>$vo['term_id']))}">
+	        <div class="nr_box">
+	        	<p class="nr_xh">型号：</p>
+	        	<p class="nr_xh2">{$vo.name}</p>
+	        	<p class="nr_ljxq">了解详情》》</p>
+				<php>$smeta=json_decode($vo['smeta'],true);</php>
+				<notempty name="smeta.thumb">				
+					<img src="{:sp_get_image_preview_url($smeta['thumb'])}">
+				</notempty>
+	        </div>
+	        </a>
+	    </foreach>    
+    </div>
+
+
+
+
+
+
+</body>
+</html>

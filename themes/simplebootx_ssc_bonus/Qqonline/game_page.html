@@ -1,0 +1,425 @@
+<tc_include file="Public:scripts" />
+<span>余额:<span id="wallet">0</span></span>
+<div id="game_page">
+	<span onclick="select_method(0)">大小场</span> <span
+		onclick="select_method(1)">数组场</span>
+		 <span onclick="select_method(2)">精确场</span>
+	<br>
+
+	<div>
+		<span class="current_no">XXX</span>期<br>
+		<div id="countdown_panel">
+			<span>倒计时:<span id="countdown">60</span></span>
+		</div>
+		<div id="delay_panel" style="display: none">
+			<span>整理投注结果中,请等待 </span>
+		</div>
+		<div id="close_open_panel" style="display: none">
+			即将开奖，停止投注 <span>倒计时:<span id="countdown2">5</span></span>
+		</div>
+		<div id="compute_panel" style="display: none">
+			结果<span id="lottery_number"></span>
+		</div>
+	</div>
+
+	<!-- 历史数据 -->
+	<div id="history_lottery_template" style="display: none">
+		<span>{no}期</span>&nbsp;<span>{num3}</span>&nbsp;<span>{type}</span><br>
+	</div>
+	<div id="history_lottery_container"></div>
+
+	<br> <span class="current_no">XXX</span>期<br>
+	<div id="method0_panel">
+		<div>买大小</div>
+		<span id="method0_tag2" onclick="select_tag(1)">大1赔<span id="big_ratio">0.0</span></span>
+		<span id="method0_tag0" onclick="select_tag(-1)">小1赔<span id="small_ratio">0.0</span></span>
+		<span id="method0_tag1" onclick="select_tag(0)">合1赔<span id="mid_ratio">0.0</span></span>
+	</div>
+	<div id="method1_panel" style="display:none">
+		<div>买数组</div>
+		<span id="method1_tag0" onclick="select_tag(0)">0,1</span>&nbsp;
+		<span id="method1_tag1" onclick="select_tag(1)">2,3</span>&nbsp;
+		<span id="method1_tag2" onclick="select_tag(2)">4,5</span>&nbsp;
+		<span id="method1_tag3" onclick="select_tag(3)">6,7</span>&nbsp;
+		<span id="method1_tag4" onclick="select_tag(4)">8,9</span>
+		<br>
+		<span id="num2_ratio">0.0</span>
+		<br>
+		<span id="method1_tag10" onclick="select_tag(10)">0,1,2</span>&nbsp;
+		<span id="method1_tag11" onclick="select_tag(11)">3,4,5</span>&nbsp;
+		<span id="method1_tag12" onclick="select_tag(12)">6,7,8</span>
+		<br>
+		<span id="num3_ratio">0.0</span>
+		<br>
+	</div>
+	<div id="method2_panel" style="display:none">
+		<div>买精确数</div>
+		<span id="method2_tag0" onclick="select_tag(0)">0</span>&nbsp;
+		<span id="method2_tag1" onclick="select_tag(1)">1</span>&nbsp;
+		<span id="method2_tag2" onclick="select_tag(2)">2</span>&nbsp;
+		<span id="method2_tag3" onclick="select_tag(3)">3</span>&nbsp;
+		<span id="method2_tag4" onclick="select_tag(4)">4</span>&nbsp;
+		<span id="method2_tag5" onclick="select_tag(5)">5</span>&nbsp;
+		<span id="method2_tag6" onclick="select_tag(6)">6</span>&nbsp;
+		<span id="method2_tag7" onclick="select_tag(7)">7</span>&nbsp;
+		<span id="method2_tag8" onclick="select_tag(8)">8</span>&nbsp;
+		<span id="method2_tag9" onclick="select_tag(9)">9</span>
+		<br>
+		<span id="num_ratio">0.0</span>
+		<br>
+	</div>
+	<div>
+		<button onclick="sub_count()">-</button>
+		<span id="count">1</span>
+		<button onclick="add_count()">+</button>
+		<button onclick="submit()">
+			下注<span id="price">2元</span>
+		</button>
+	</div>
+	<!-- 充值界面 -->
+	<div id="recharge_panel" style="display: none">
+		<span onclick="recharge(5)">充值5元</span> <span onclick="recharge(10)">充值10元</span>
+		<span onclick="recharge(20)">充值20元</span> <span onclick="recharge(50)">充值50元</span>
+		<span onclick="recharge(100)">充值100元</span> <span
+			onclick="recharge(200)">充值200元</span>
+	</div>
+</div>
+<script>
+	var wallet = null;
+	var open_time = null;
+	var wallet_money = 0;
+	var current_lottery = null;
+	var can_lottery = false;
+	function get_wallet() {
+		$.ajax({
+			url : 'index.php?g=QQOnline&m=index&a=ajax_get_wallet',
+			type : "get",
+			dataType : "json",
+			data : {},
+			success : function(data) {
+				if (data.ret == 1) {
+					wallet = data.info;
+					wallet_money = wallet.money;
+					$('#wallet').html(data.info.money);
+				}
+			}
+		});
+	}
+
+	function append_history_lottery_item(item) {
+		var item_template = $('#history_lottery_template').html();
+		item_template = item_template.replace(/{no}/g, item.no).replace(
+				/{num3}/g, item.num3).replace(/{type}/g, item.type);
+
+		$('#history_lottery_container').append(item_template);
+	}
+
+	function get_open_lottery_result() {
+		$
+				.ajax({
+					url : 'index.php?g=QQOnline&m=index&a=ajax_get_open_lottery_result',
+					type : "get",
+					dataType : "json",
+					data : {
+						no : current_lottery.no
+					},
+					success : function(data) {
+						if (data.ret == 1) {
+							if (data.lottery.status != 2) {
+								get_open_lottery_result();
+							} else {
+								$('#lottery_number').html(data.lottery.number);
+								$('#compute_panel').show();
+								$('#close_open_panel').hide();
+								$('#countdown_panel').hide();
+
+								// 显示结果效果
+
+								// 开启新的投票
+								setTimeout(function() {
+									get_lottery_info();
+								}, 3000);
+							}
+						}
+					}
+				});
+	}
+
+	function get_lottery_info() {
+		$.ajax({
+			url : 'index.php?g=QQOnline&m=index&a=ajax_get_lottery_info',
+			type : "get",
+			dataType : "json",
+			data : {},
+			success : function(data) {
+				if (data.ret == 1) {
+					console.log(JSON.stringify(data));
+					$('.current_no').html(data.current_lottery.no);
+					current_lottery = data.current_lottery;
+					$('#big_ratio').html(data.ratio.big_ratio);
+					$('#mid_ratio').html(data.ratio.mid_ratio);
+					$('#small_ratio').html(data.ratio.small_ratio);
+					$('#num_ratio').html(data.ratio.num_ratio);
+					$('#num2_ratio').html(data.ratio.num2_ratio);
+					$('#num3_ratio').html(data.ratio.num3_ratio);
+
+					can_lottery = false;
+
+					// 即将开奖
+					if (data.current_lottery.status == 1) {
+						$('#close_open_panel').show();
+						$('#countdown_panel').hide();
+						$('#delay_panel').hide();
+
+						countdown2(5);
+					} else if (data.current_lottery.status == 2) {
+						$('#lottery_number').html(data.current_lottery.number);
+						$('#compute_panel').show();
+						$('#close_open_panel').hide();
+						$('#countdown_panel').hide();
+						$('#delay_panel').hide();
+					} else {
+						open_time = data.current_lottery.open_time;
+						$('#compute_panel').hide();
+						$('#close_open_panel').hide();
+						$('#countdown_panel').show();
+						$('#delay_panel').hide();
+
+						var current_time = new Date();
+						var end_time = new Date(open_time.replace(/-/g, '/'));
+						var diff = Math
+								.floor((end_time.getTime() - current_time
+										.getTime()) / 1000) - 5;
+
+						if (diff <= 0) {
+							$('#countdown_panel').hide();
+							$('#delay_panel').show();
+
+							setTimeout(function() {
+								get_lottery_info();
+							}, 1000);
+						} else {
+							can_lottery = true;
+
+							countdown(diff);
+						}
+					}
+
+					$('#history_lottery_container').html('');
+
+					for ( var i = 0; i < data.lottery_history.length; i++)
+						append_history_lottery_item(data.lottery_history[i]);
+				}
+			}
+		});
+	}
+
+	function countdown(s) {
+		s--;
+		if (s < 0) {
+			get_lottery_info();
+		} else {
+			$('#countdown').html(s);
+			setTimeout(function() {
+				countdown(s)
+			}, 1000);
+		}
+	}
+
+	function countdown2(s) {
+		s--;
+		if (s == 0) {
+			get_open_lottery_result();
+		} else {
+			$('#countdown2').html(s);
+			setTimeout(function() {
+				countdown2(s)
+			}, 1000);
+		}
+	}
+
+	function sub_count() {
+		var cur_count = parseInt($('#count').html());
+
+		cur_count--;
+
+		if (cur_count < 1)
+			cur_count = 1;
+
+		$('#count').html(cur_count);
+
+		compute_price();
+	}
+
+	function add_count() {
+		var cur_count = parseInt($('#count').html());
+
+		cur_count++;
+
+		if (cur_count > 2000)
+			cur_count = 2000;
+
+		$('#count').html(cur_count);
+
+		compute_price();
+	}
+	
+	var buy_lotterys = new Array();
+
+	function submit() {
+		if (!can_lottery) {
+			alert('请等待结果');
+			return;
+		}
+		
+		if (buy_lotterys.length == 0)
+		{
+			alert('请下注');
+			return;
+		}
+
+		var cur_count = parseInt($('#count').html());
+
+		var price = cur_count * 2 * buy_lotterys.length;
+		
+		var buy_type = '';
+		
+		for (var i=0; i<buy_lotterys.length; i++)
+		{
+			if (i == 0)
+				buy_type = buy_lotterys[i];
+			else
+				buy_type += ',' + buy_lotterys[i];
+		}
+
+		if (price > wallet_money)
+			$('#recharge_panel').show();
+		else {
+			$.ajax({
+				url : 'index.php?g=QQOnline&m=pay&a=create_lottery_order',
+				type : "get",
+				dataType : "json",
+				data : {
+					no : current_lottery.no,
+					price : price,
+					buy_method : choose_method,
+					buy_type : buy_type,
+				},
+				success : function(data) {
+					if (data.ret == 1) {
+						alert('买码成功');
+					}
+				}
+			});
+		}
+	}
+
+	function test_notify(order_id) {
+		$.ajax({
+			url : 'index.php?g=QQOnline&m=pay&a=test_notify',
+			type : "get",
+			dataType : "json",
+			data : {
+				order_id : order_id
+			},
+			success : function(data) {
+				if (data.ret == 1) {
+					alert('测试支付成功');
+
+					location.reload();
+				}
+			}
+		});
+	}
+
+	/*
+	function recharge(price) {
+		$.ajax({
+			url : 'index.php?g=QQOnline&m=pay&a=create_swiftpass_order',
+			type : "get",
+			dataType : "json",
+			data : {
+				price : price
+			},
+			success : function(data) {
+				if (data.ret == 1) {
+					test_notify(data.data.id);
+				}
+			}
+		});
+	}
+	*/
+
+	var choose_method = 0;	// 0-买大小,1-买数组,2-买精确数
+	
+	function select_tag(type) {
+		for (var i=0; i<buy_lotterys.length; i++)
+		{
+			if (buy_lotterys[i] == type)
+				return;
+		}
+		
+		buy_lotterys.push(type);
+		
+		// 选中效果
+		if (choose_method == 0)
+		{
+			for (var i=0; i<3; i++)
+				document.getElementById('method0_tag' + i).style.color="black";
+			
+			for (var i=0; i<buy_lotterys.length; i++)
+			{
+				document.getElementById('method0_tag' + (buy_lotterys[i] + 1)).style.color="red";
+			}
+		}
+		else if (choose_method == 1)
+		{
+			for (var i=0; i<=4; i++)
+				document.getElementById('method1_tag' + i).style.color="black";
+			for (var i=10; i<=12; i++)
+				document.getElementById('method1_tag' + i).style.color="black";
+			
+			for (var i=0; i<buy_lotterys.length; i++)
+			{
+				document.getElementById('method1_tag' + buy_lotterys[i]).style.color="red";
+			}
+		}
+		else if (choose_method == 2)
+		{
+			for (var i=0; i<=9; i++)
+				document.getElementById('method2_tag' + i).style.color="black";
+			
+			for (var i=0; i<buy_lotterys.length; i++)
+			{
+				document.getElementById('method2_tag' + buy_lotterys[i]).style.color="red";
+			}
+		}
+		
+		compute_price();
+	}
+	
+	function compute_price()
+	{
+		var cur_count = parseInt($('#count').html());
+		var total_price = buy_lotterys.length * 2 * cur_count;
+		
+		$('#price').html('' + total_price + '元');
+	}
+
+	function select_method(type)
+	{
+		buy_lotterys = new Array();
+		
+		choose_tag = 0;
+		
+		$('#method' + choose_method + '_panel').hide();
+		choose_method = type;
+		
+		$('#method' + choose_method + '_panel').show();
+		
+		compute_price();
+	}
+	
+	get_wallet();
+	get_lottery_info();
+</script>

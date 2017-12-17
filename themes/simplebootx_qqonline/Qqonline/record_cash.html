@@ -1,0 +1,43 @@
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">兑换记录（总：<span id="totalMoney">0.00</span> 金币）</div>
+            <div class="recordTable">
+                <table class="table text-center">
+                    <thead class="text-center">
+                    <tr>
+                        <th>时间</th>
+                        <th>金额</th>
+                        <th>状态</th>
+                    </tr>
+                    </thead>
+                    <tbody id="recordList"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script>
+    $(function () {
+        $.ajax({
+            url: 'index.php?g=Qqonline&m=record&a=get_drawcashs',
+            type: 'GET',
+            dataType : 'json',
+            success: function (res) {
+                if(res.ret == 1){
+                    $('#totalMoney').html(Number(res.total_money).toFixed(2));
+                    var str = '';
+                    var status_arr = ['已申请', '已通过', '已完成'];
+                    $.each(res.info,function (k,v) {
+                        str +='<tr><td>'+getTime(v.create_time)+'</td><td>'+v.price+'</td>'
+                            +'<td>' + status_arr[v.status] + '</td></tr>';
+                    })
+                    $('#recordList').html(str);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //alert('请求错误')
+            }
+        })
+    })
+</script>

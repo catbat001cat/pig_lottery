@@ -1,0 +1,102 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<form class="well form-search" method="post" action="{:U('Useractionadmin/index')}">
+			<div class="search_type cc mb10">
+				<div class="mb10">
+						用户ID： 
+						<input type="text" name="user_id" style="width: 200px;" value="{$filter.user_id}" placeholder="请输入用户ID...">
+						&nbsp;IP： 
+						<input type="text" name="ip" style="width: 200px;" value="{$filter.ip}" placeholder="请输入IP...">
+						&nbsp;渠道名： 
+						<input type="text" name="channel_name" style="width: 200px;" value="{$filter.channel_name}" placeholder="请输入渠道名...">
+						&nbsp;开始日期： 
+						<input type="text" name="start_ymd" style="width: 200px;" value="{$filter.start_ymd}" placeholder="请输入开始日期,2017-06-02">
+						&nbsp;结束日期： 
+						<input type="text" name="end_ymd" style="width: 200px;" value="{$filter.end_ymd}" placeholder="请输入结束日期,2017-06-02">
+						&nbsp;行为列表
+						<select name="action" id="action">
+							<option value="">全部</option>
+							<option value="login">登录</option>
+							<option value="create_order">充值</option>
+							<option value="buy_lottery">购买</option>
+							<option value="apply_drawcash">余额提现</option>
+							<option value="apply_drawcash2">佣金提现</option>
+							<option value="hack">恶意行为</option>
+						</select>
+						<script>
+						document.getElementById('action').value = '{$filter.action}';
+						</script>
+						<input type="submit" class="btn btn-primary" value="搜索" />
+					</span>
+				</div>
+			</div>
+		</form>
+		<form class="js-ajax-form" action="" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">ID</th>
+						<th width="50">用户ID</th>
+						<th width="150">用户昵称</th>
+						<th width="150">来自渠道</th>
+						<th width="150">行为</th>
+						<th width="150">参数</th>
+						<th width="150">IP地址</th>
+						<th width="150">浏览器</th>
+						<th width="150">行为时间</th>
+						<th width="70">操作</th>
+					</tr>
+				</thead>
+				<foreach name="lists" item="vo">
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}"></td>
+                    <td><b>{$vo.id}</b></td>
+					<td><a href="{:U('Channeldataadmin/day_incomes_more', array('user_id' => $vo['user_id']))}" target="_blank">{$vo.user_id}</a></td>
+					<td>{$vo.user_nicename}</td>
+					<td>{$vo.channel_name}[{$vo.channel_id}]</td>
+					<td>
+					<switch name="vo.action">
+						<case value="login">登录</case>
+						<case value="create_order">充值</case>
+						<case value="buy_lottery">购买</case>
+						<case value="apply_drawcash">余额提现</case>
+						<case value="apply_drawcash2">佣金提现</case>
+					</switch>
+					</td>
+					<td>{$vo.params}</td>
+					<td>{$vo.ip}</td>
+					<td>{$vo.ua}</td>
+					<td>{$vo.create_time}</td>
+					<td>
+						<a href="{:U('agent/rechargeadmin/index', array('user_id' => $vo['user_id'], 'status' => 1))}" target="_blank">充值明细</a>&nbsp;
+						<a href="{:U('Useractionadmin/index', array('user_id' => $vo['user_id']))}" target="_blank">操作明细</a>
+					</td>
+				</tr>
+				</foreach>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location = "{:U('Channeladmin/index',$formget)}";
+			}
+		}
+		setInterval(function() {
+			refersh_window();
+		}, 2000);
+		$(function() {
+			setCookie("refersh_time", 0);
+			Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
+				//批量移动
+			});
+		});
+	</script>
+</body>
+</html>

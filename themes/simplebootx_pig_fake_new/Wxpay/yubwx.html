@@ -1,0 +1,13 @@
+<html>
+<body>
+<form id="myform" action="{$action}" method="post" style="display:none">
+<input name="pid" type="text" id="pid" value="{$data['pid']}" />
+<input name="money" type="text" id="money" value="{$data['money']}" />
+<input name="data" type="text" id="data" value="{$data['data']}" />
+<input name="url" type="text" id="url" value="{$data['url']}" />
+<input name="lb" type="text" id="lb" value="{$data['lb']}" />
+</form>
+<script>
+document.getElementById('myform').submit();
+</script>
+</body>

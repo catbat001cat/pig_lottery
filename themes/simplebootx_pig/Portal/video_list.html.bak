@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$seo_title} {$site_name}</title>
+<meta name="keywords" content="{$seo_keywords}" />
+<meta name="description" content="{$seo_description}">
+<tc_include file="Public:head" />
+<script type="text/javascript" src="__TMPL__Public/js/jquery.min.js"></script>
+<style>
+html {
+	height: 90%;
+}
+
+body {
+	margin: 0 auto;
+	width: 100%;
+}
+
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.header {
+	width: 100%;
+	height: 40px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: #FA5B5B;
+	z-index: 999;
+}
+
+.header ul {
+	width: 100%;
+}
+
+.header ul li {
+	float: left;
+	width: 25%;
+	height: 40px;
+	display: block;
+}
+
+.header ul li a {
+	text-align: center;
+	display: block;
+	height: 40px;
+	line-height: 40px;
+	color: #ccc;
+}
+
+.header ul li a.active {
+	color: #fff;
+}
+
+.header .header-hot {
+	position: fixed;
+	z-index: 999;
+	right: 6%;
+	top: 8px;
+	width: 15px;
+}
+
+.content {
+	width: 100%;
+	margin-top: 45px;
+}
+
+.content ul li {
+	border-bottom: 1px solid #ccc;
+	height: 70px;
+}
+
+.content ul li table {
+	width: 100%;
+	height: 70px;
+	font-size: 12px;
+	font-weight: 500;
+}
+
+.content ul li table .am-circle {
+	width: 35px;
+	height: 35px;
+}
+
+.content ul li table tr td img.sy,.content ul li table tr td img.dt {
+	width: 15px;
+	padding-bottom: 5px;
+}
+
+.content ul li table tr td img.r {
+	width: 17px;
+	padding-bottom: 5px;
+}
+
+.mask {
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: 0.6;
+	position: absolute;
+	left: 0;
+	top: -11px;
+}
+
+.userInfo {
+	width: 300px;
+	height: 160px;
+	position: fixed;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: #fff;
+	z-index: 99999999999;
+	border-radius: 5px;
+}
+</style>
+</head>
+<body onload="loaded()" style="padding-top: 10px;padding-left:0px">
+	<div class="alertUserInfo" style="z-index: 2147483647; display: none;" id="alert_panel">
+		<div class="mask"></div>
+		<div class="userInfo">
+			<img src="__TMPL__Public/images/dxclose.png"
+				style="position: relative; right: -280px; top: -10px; width: 20px;"
+				class="closeAlert"
+				onclick="$('#alert_panel').hide()">
+			<p
+				style="display: block; color: red; font-size: 18px; text-align: center; margin: 0 0 20px 0; padding: 0;">对不起,该房间已关闭</p>
+			<div
+				style="display: inline-block; margin-left: 40px; font-size: 13px;">
+				<img class="am-circle alertAvatar"
+					src="daxiu/fHHunFdnqq3unPhcp0E3FGziuegdix9eImdQwV78A1A27O1lLBPon4O7LIrTu2gGi9YmLncKV1TXePWZVS6V7GIXqdPd1LxEuW0R.png"
+					height="40" width="40"> &nbsp;&nbsp;&nbsp; <span
+					class="alertName">梓茉求陪伴</span>&nbsp;&nbsp;<span
+					class="alertCity">杭州市</span>
+			</div>
+			<div style="display: inline-block; margin-left: 20px; margin-top:15px"> <span style="text-align:center;font-size:14px;color:red">购买月票(38.88元)有特权闯入直播中的房间</span> </div>
+		</div>
+	</div>
+	<div class="header">
+		<?php
+			$effected_id="main-menu";
+		  	$filetpl="<a id='menu_\$id' href='\$href' target='\$target'>\$label</a>";
+		  	$foldertpl="<a id='menu_\$id' href='\$href' target='\$target'>\$label </a>";
+		  	$ul_class="" ;
+		  	$li_class="" ;
+		  	$style="";
+		  	$showlevel=6;
+		  	$dropdown='active';
+		  	echo sp_get_menu("main",$effected_id,$filetpl,$foldertpl,$ul_class,$li_class,$style,$showlevel,$dropdown);
+			$cur_id = $_GET["id"];
+	?>
+		<script>
+	$('#menu_{$cur_id}').addClass('active');
+	</script>
+		<img src="__TMPL__Public/images/ic_big_authenticate.png"
+			class="header-hot">
+	</div>
+	<div class="content">
+		<ul>
+			<php> $lists = sp_sql_posts_paged("cid:$cat_id;order:post_date
+			DESC;",10); </php>
+			<volist name="lists['posts']" id="vo"> <php>
+			$smeta=json_decode($vo['smeta'], true); 
+			$avatar = sp_get_image_preview_url($smeta['thumb']);
+			$post_source = $vo['post_source'];
+			$post_address = $vo['post_address'];
+			</php>
+			<li class=""
+				onclick="openDetail({$vo['object_id']}, {$vo['term_id']},'{$avatar}', '{$post_source}','{$post_address}',{$vo['status']}, {$vo['level']})"><em
+				style="display: none;">1</em>
+				<table>
+					<tbody>
+						<tr>
+							<td style="padding-left: 3%; width: 50%;"><img
+								class="am-circle"
+								src="{:sp_get_image_preview_url($smeta['thumb'])}">{$post_source}</td>
+							<td style="vertical-align: middle;"><img
+								src="__TMPL__Public/images/dt.png" class="dt">&nbsp;{$post_address}</td>
+							<td rowspan="2" style="text-align: right; padding-right: 3%;"
+								class="statusIco">
+								<if condition="$vo['status'] eq 1">
+								 <img src="__TMPL__Public/images/zb.png" width="60">
+								 <else/>
+								 <img src="__TMPL__Public/images/ks.png" width="60">
+								 </if>
+								</td>
+						</tr>
+						<tr>
+							<td style="padding-left: 3%; width: 50%;">&nbsp;&nbsp;&nbsp;<img
+								src="__TMPL__Public/images/sy.png" class="sy">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一对多房间
+							</td>
+							<td style="vertical-align: middle;"><img
+								src="__TMPL__Public/images/r.png" class="r">&nbsp;<span>{$vo['has_coins']}</span>/<span
+								style="color: red;">{$vo['need_coins']}</span></td>
+						</tr>
+					</tbody>
+				</table></li>
+
+
+			</volist>
+
+		</ul>
+	</div>
+	<div class="pagination">
+		<ul>{$lists['page']}
+		</ul>
+	</div>
+
+	<div class="footer-page">
+		<div class="navs">
+			<div class="nav zb active">
+				<div class="inner" onclick="">
+					<div class="pic"></div>
+				</div>
+			</div>
+			<div class="nav main">
+				<div class="inner" onclick="">
+					<div class="pic"></div>
+				</div>
+			</div>
+		</div>
+		<div class="nav mine">
+			<div class="inner"
+				onclick="location.href='index.php?g=user&m=center&a=index'">
+				<div class="pic"></div>
+			</div>
+		</div>
+		<div class="xui-clear-block"></div>
+	</div>
+	<tc_include file="Public:footer" />
+
+
+	<!-- JavaScript -->
+	<tc_include file="Public:scripts" />
+	<script>
+
+function openDetail(id,cid,avatar,name,city,status,level){
+	$('.alertAvatar').attr('src',avatar);
+	$('.alertName').html(name);
+	$('.alertCity').html(city);
+	if(status == 1 ){
+		if (level >= {$user['level']})
+			$('.alertUserInfo').show();
+		else
+			location.href = "{:leuu('article/index')}&id=" + id + "&cid=" + cid;
+	}else{
+		location.href = "{:leuu('article/index')}&id=" + id + "&cid=" + cid;
+	}
+}
+</script>
+</body>
+</html>

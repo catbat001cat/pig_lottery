@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        name="viewport" />
+    <meta name="keywords" content="签到">
+    <meta name="description" content="签到">
+    <meta name="author" content="签到">
+    <title>签到</title>
+    <link href="__TMPL__Public/css/style.css" rel="stylesheet" type="textcss">
+    <link href="__TMPL__Public/css/common.css" rel="stylesheet" type="textcss" />
+    <link href="__TMPL__Public/css/app.css" rel="stylesheet" type="textcss" />
+    <link href="__TMPL__Public/css/lebao.css" rel="stylesheet" type="textcss" />
+    <script src="__TMPL__Public/jsdb/jquery.min.js"></script>
+    <script src="__TMPL__Public/jsdb/jquery.cookie.js"></script>
+    <script src="__TMPL__Public/js/login.js"></script>
+    <script src="__TMPL__Public/js/clipboard.js"></script>
+    <style>
+        .bjbai{
+            background: #ffeed6;
+        }
+        .qdan{
+            margin-top: 10px;
+            text-align: center;
+        }
+        #btnsigned{
+            background: #f25f55;
+            padding: 14px 80px;
+            margin: 0 auto;
+            border-radius: 100px;
+            border: 1px solid #e8463b;
+            color: #fff;
+            font-size: 20px;
+        }
+        .jryqd{
+            background: #ff827a;
+            padding: 14px 80px;
+            margin: 0 auto;
+            border-radius: 100px;
+            border: 1px solid #ff827a;
+            color: #fff;
+            font-size: 20px;
+        }
+        .qdwz{
+            margin-top: 10px;
+            text-align: center;
+            color: #e8463b;
+        }
+        .cu{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bjbai">
+    <div>
+        <img src="__TMPL__Public/img/qiandaobg.jpg" alt="" width="100%">
+    </div>
+    <div class=" container-fluid margin-top-30">
+        <div class="qdan">
+                <button type="button" id="btnsigned" name="btnsigned">
+                <php>
+                $sign_bonus = floatval(C('SIGN_BONUS'));
+                </php>
+                    签到<span class="span1 vw4 hong">￥{$sign_bonus|round=###,2}</span></button>
+        </div>
+        <div class="col-xs-2">
+        </div>
+    </div>
+    <div class="qdwz">
+            <span>您还未签到哦，赶紧签到吧</span>
+    </div>
+    <div style="margin:20px; font-size: 16px; text-align: center;">
+        签到总获得<span style="font-weight: bold;"> {$total_bonus|round=###,2} </span>元
+    </div>
+    <div style="margin:20px; font-size: 12px;">
+        签到说明：每天签到可获得{$sign_bonus}元交易红包<span style=" color: #999">（交易使用，不能直接提现）</span>
+    </div>           
+    <div style="width: 50%; left:25%;top: 150px; position: absolute; z-index: 888;text-align:center">
+        <div style="background: #303031; border-radius: 2px; margin: 0 auto; padding: 11px 22px 11px 22px;
+            color: white; display: none;" id="modal3">
+            操作成功
+        </div>
+    </div>    
+    <script type="text/javascript">
+    function success(title, url) {
+        $("#modal3").fadeIn('fast');
+        if (title) {
+            $("#modal3").text(title);
+        }
+        $("#modal3").css('display', 'inline-block');
+        $("#modal3").fadeIn('fast');
+        window.setTimeout(function () {
+            $("#modal3").fadeOut(1000);
+            location.href = url;
+        }, 2000);
+    }
+    
+        $(function () {
+            $('#btnsigned').on('click', function () {
+                $('#btnsigned').text('签到中……');
+                $.ajax({
+                    type: 'get',
+                    dataType: "json",
+                    url: 'index.php?g=Qqonline&m=index&a=ajax_signin',
+                    async: false,
+                    success: function (data) {
+                        if (data.ret == 0) {
+                        	success('连续签到' + data.signin_day + '天,获取奖励' + data.signin_bonus + '元', "{:U('index/signed')}");
+                        } else if (data.ret == 1){
+                        	success('签到成功,获取奖励' + data.signin_bonus + '元', "{:U('index/signed')}");
+                        } else 
+                        {
+                        	$('#btnsigned').text('已签到');
+                        	success(data.msg, '');
+                        }
+                    }
+                });
+            });
+        })
+    </script>
+                <!--footer-->
+    <div style="border-top: #F0F0F0 0px solid; height: 45px; width: 100%; line-height: 44px;
+        background: #272727; position: fixed; bottom: 0px; text-align: center; font-size: 16px;color:white"
+        onclick="location.href='index.php?g=Pig&m=index&a=index'">
+        返回首页
+    </div>
+</body>
+</html>

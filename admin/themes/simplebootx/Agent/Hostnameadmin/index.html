@@ -1,0 +1,121 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="javascript:;">列表</a></li>
+			<li><a href="{:U('Hostnameadmin/add')}" target="_self">添加</a></li>
+		</ul>
+		<form class="well form-search" method="post" action="{:U('Hostnameadmin/index')}">
+			<div class="search_type cc mb10">
+				<div class="mb10">
+						域名： 
+						<input type="text" name="keyword" style="width: 200px;" value="{$filter.keyword}" placeholder="请输入域名">
+						&nbsp;状态
+						<select id="status" name="status">
+						<option value="">全部</option>
+						<option value="0">未激活</option>
+						<option value="1">已激活</option>
+						<option value="2">失效</option>
+						<option value="-1">被封</option>
+						</select>
+						<script>
+						document.getElementById('status').value = {$filter.status|default=''};
+						</script>
+						&nbsp;类型
+								<select id="type" name="type">
+									<option value="">全部</option>
+									<option value="0">二维码</option>
+									<option value="1">落地</option>
+									<option value="2">通用</option>
+									<option value="3">中转</option>
+									<option value="4">充值</option>
+								</select>
+						<script>
+						document.getElementById('type').value = {$filter.type|default=''};
+						</script>
+						<input type="submit" class="btn btn-primary" value="搜索" />
+				</div>
+			</div>
+		</form>		
+		<form class="js-ajax-form" action="" method="post">
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Hostnameadmin/batch_check_domain')}" data-subcheck="true" data-msg="您确定批量检测吗？">批量检测</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Hostnameadmin/batch_delete')}" data-subcheck="true" data-msg="您确定批量删除吗？">批量删除</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Hostnameadmin/batch_set_status')}&status=2" data-subcheck="true" data-msg="您确定批量设置失效吗？">批量设置失效</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Hostnameadmin/batch_set_status')}&status=1" data-subcheck="true" data-msg="您确定批量设置激活吗？">批量设置激活</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Hostnameadmin/batch_set_status')}&status=-1" data-subcheck="true" data-msg="您确定批量设置被封吗？">批量设置被封</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Hostnameadmin/batch_set_type')}&type=0" data-subcheck="true" data-msg="您确定批量设置为二维码吗？">批量设置为二维码</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Hostnameadmin/batch_set_type')}&type=1" data-subcheck="true" data-msg="您确定批量设置为落地吗？">批量设置为落地</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Hostnameadmin/batch_set_type')}&type=3" data-subcheck="true" data-msg="您确定批量设置为中转吗？">批量设置为中转</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('Hostnameadmin/batch_set_type')}&type=4" data-subcheck="true" data-msg="您确定批量设置为充值吗？">批量设置为充值</button>
+			</div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">ID</th>
+						<th>域名</th>
+						<th width="150">状态</th>
+						<th>类型</th>
+						<th width="150">创建时间</th>
+						<th width="70">操作</th>
+					</tr>
+				</thead>
+				<php>
+				$type_arr = ['二维码','落地', '通用', '中转', '充值'];
+				</php>
+				<foreach name="lists" item="vo">
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}"></td>
+                    <td><b>{$vo.id}</b></td>
+					<td>{$vo.hostname}</td>
+					<td>
+						<switch name="vo.status">
+							<case value="0">
+								未激活
+							</case>
+							<case value="1">
+								已激活
+							</case>
+							<case value="2">
+								失效
+							</case>
+							<case value="-1">
+								被封
+							</case>
+						</switch>
+					</td>
+					<td>{$type_arr[$vo['type']]}</td>
+					<td>{$vo.create_time}</td>
+					<td>
+						<a href="{:U('Hostnameadmin/edit',array('id'=>$vo['id']))}">编辑</a> |
+						<a href="{:U('Hostnameadmin/check_domain',array('id'=>$vo['id']))}" class="js-ajax-delete" data-msg="要检测这个域名吗?">检测域名</a> |
+						<a href="{:U('Hostnameadmin/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">删除</a>
+					</td>
+				</tr>
+				</foreach>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location = "{:U('Hostnameadmin/index',$formget)}";
+			}
+		}
+		setInterval(function() {
+			refersh_window();
+		}, 2000);
+		$(function() {
+			setCookie("refersh_time", 0);
+			Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
+				//批量移动
+			});
+		});
+	</script>
+</body>
+</html>

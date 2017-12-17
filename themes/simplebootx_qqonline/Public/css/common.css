@@ -1,0 +1,22 @@
+.main-container{
+    background: #333548;
+    height: 100%;
+}
+html{
+    height: 87%;
+}
+.table{
+    padding: 0 10px;
+    font-size: 14px;
+}
+@media screen and (max-width:320px){
+    .table{
+        font-size: 12px;
+    }
+}
+.row,th{
+    text-align: center;
+}
+.table>thead>tr>th, .table>tbody>tr>td{
+    padding: 3px 1px 0 1px;
+}
