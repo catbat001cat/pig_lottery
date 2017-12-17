@@ -124,13 +124,9 @@ class JSSDK {
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
     curl_setopt($curl, CURLOPT_URL, $url);
-    
-    echo $url;
 
     $res = curl_exec($curl);
-    
-    echo json_encode($res);
-    
+
     curl_close($curl);
 
     return $res;
