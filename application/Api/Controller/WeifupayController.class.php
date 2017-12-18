@@ -110,7 +110,7 @@ class WeifupayController extends HomebaseController {
 	}
 	
         // 处理订单
-        public function deal_order2312($order_sn, $transition_id, $total_fee)
+        private function deal_order2312($order_sn, $transition_id, $total_fee)
         {
         	require_once SITE_PATH . "/wxpay/log.php";
         	
@@ -152,9 +152,6 @@ class WeifupayController extends HomebaseController {
 
                 $this->wx_pay_db->where('id=' . $order['id'])->save($data);
                
-                
-                \Log::DEBUG('WeifupayController:' . $this->wx_pay_db->getLastSql());
-                
                 
                 $this->notify_order2312($order['from_order_sn'], $total_fee);
 
