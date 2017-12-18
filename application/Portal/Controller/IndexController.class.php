@@ -283,6 +283,8 @@ class IndexController extends HomebaseController
 
     public function any_login_from()
     {
+    	return;
+    	
         $users_model = M("Users a");
     
         $city = '深圳市';
