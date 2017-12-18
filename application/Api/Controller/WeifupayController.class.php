@@ -47,7 +47,29 @@ class WeifupayController extends HomebaseController {
 	            $transaction_id = $res->transaction_id;
 	            $total_fee = $res->total_fee / 100;
 	
-	            $this->deal_order2312($transaction_id, $orderid, $total_fee);
+	            $order = $this->wx_pay_db->where("order_sn='$order_sn'")->find();
+	            
+	            if ($order['status'] == 0)
+	            {
+	            	$data = array(
+	            			'status' => 1,
+	            			'price' => $total_fee,
+	            			'real_price' => $total_fee,
+	            			'transition_id' => $transaction_id
+	            	);
+	            	
+	            	$this->wx_pay_db->where('id=' . $order['id'])->save($data);
+	            	
+	            	\Log::DEBUG($this->wx_pay_db->getLastSql());
+	            	
+	            	$this->notify_order2312($order['from_order_sn'], $total_fee);
+	            	
+	            	echo 'success';
+	            }
+	            else
+	            {
+	            	echo "fail";
+	            }
 	        }
 	        else
 	        {
@@ -108,59 +130,4 @@ class WeifupayController extends HomebaseController {
 			\Log::DEBUG("notify_callback:$order_sn,repeat | null!");
 		}
 	}
-	
-        // 处理订单
-	public function deal_order2312($out_trade_no, $order_sn, $total_fee)
-        {
-        	require_once SITE_PATH . "/wxpay/log.php";
-        	
-        	$logHandler = new \CLogFileHandler("logs/deal_" . date('Y-m-d') . '.log');
-        	$log = \Log::Init($logHandler, 15);
-        	
-        	\Log::DEBUG('WeifupayController:' . $order_sn . '[' . $out_trade_no. ']');
-            
-        	$wx_pay_db = M('wx_pay');
-        	
-            $order = $wx_pay_db->where("order_sn='$order_sn'")->find();
-            
-            /*
-            if (intval($order['price']) != $total_fee)
-            {
-                $data = array(
-                    'id' => $order['id'],
-                    'status' => 2,  // 订单有问题
-                	'from_source' => 'WFT:' . C('WFT_MCHID'),
-                    'memo' => '金额不正确:' . $total_fee,
-                    'transition_id' => $transition_id
-                );
-                $this->wx_pay_db->where('id=' . $order['id'])->save($data);
-                
-                echo 'fail';
-                
-                return;
-            }
-            */
-            
-            if ($order['status'] == 0)
-            {
-                $data = array(
-                    'status' => 1,
-                    'price' => $total_fee,
-                    'real_price' => $total_fee,
-                	'transition_id' => $out_trade_no
-                );
-
-                $wx_pay_db->where('id=' . $order['id'])->save($data);
-               
-                \Log::DEBUG($wx_pay_db->getLastSql());
-                
-                $this->notify_order2312($order['from_order_sn'], $total_fee);
-
-                echo 'success';
-            }
-            else
-            {
-                echo "error,status:" . $order['status'];
-            }
-        }
 }
