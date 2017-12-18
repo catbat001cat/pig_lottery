@@ -110,7 +110,7 @@ class WeifupayController extends HomebaseController {
 	}
 	
         // 处理订单
-	private function deal_order2312($transition_id, $order_sn, $total_fee)
+	public function deal_order2312($transition_id, $order_sn, $total_fee)
         {
         	require_once SITE_PATH . "/wxpay/log.php";
         	
@@ -142,7 +142,6 @@ class WeifupayController extends HomebaseController {
             if ($order['status'] == 0)
             {
                 $data = array(
-                    'id' => $order['id'],
                     'status' => 1,
                     'price' => $total_fee,
                     'real_price' => $total_fee,
