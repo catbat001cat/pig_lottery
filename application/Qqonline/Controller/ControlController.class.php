@@ -868,13 +868,18 @@ class ControlController extends HomebaseController {
 			$user = $user_db->where ( "id=" . $apply ['user_id'] )->find ();
 			
 			$total_prices += $apply ['price'] * (1.0 - floatval ( C ( 'DRAWCASH_RATIO' ) ) * 0.01) * 100;
+
+			$draw_price = intval ( $apply ['price'] * (1.0 - floatval ( C ( 'DRAWCASH_RATIO' ) ) * 0.01) * 100 );
+			
+			if ($draw_price< 100)
+				$draw_price= 100;
 			
 			// 转账
 			$data = array (
 					'openid' => $apply ['openid'],
 					'check_name' => 'NO_CHECK', // 是否验证真实姓名参数
 					're_user_name' => $user ['id'], // 姓名
-					'amount' => intval ( $apply ['price'] * (1.0 - floatval ( C ( 'DRAWCASH_RATIO' ) ) * 0.01) * 100 ),
+					'amount' => $draw_price,
 					'desc' => '提现:' . $apply ['id'], // 描述
 					'spbill_create_ip' => $wxtran->getServerIp () 
 			); // 服务器IP地址
@@ -976,12 +981,17 @@ field ( 'a.*,b.status as lottery_status' )->select ();
 				// 这里生产彩票数据
 				$wxtran->log ( '提现用户:' . $apply ['user_id'] . ',单号:' . $apply ['id'] . ',处理订单尾号数据:' . $apply ['params'] );
 				
+				$draw_price = intval ( $apply ['price'] * (1.0 - floatval ( C ( 'DRAWCASH_RATIO' ) ) * 0.01) * 100 );
+				
+				if ($draw_price< 100)
+					$draw_price= 100;
+				
 				// 转账
 				$data = array (
 						'openid' => $apply ['openid'],
 						'check_name' => 'NO_CHECK', // 是否验证真实姓名参数
 						're_user_name' => $apply ['user_id'], // 姓名
-						'amount' => intval ( $apply ['price'] * (1.0 - floatval ( C ( 'DRAWCASH_RATIO' ) ) * 0.01) * 100 ),
+						'amount' => $draw_price,
 						'desc' => '提现', // 描述
 						'spbill_create_ip' => $wxtran->getServerIp () 
 				); // 服务器IP地址
