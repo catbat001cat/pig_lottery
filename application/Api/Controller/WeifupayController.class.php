@@ -26,7 +26,7 @@ class WeifupayController extends HomebaseController {
 	    $logHandler= new \CLogFileHandler("logs/deal_".date('Y-m-d').'.log');
 	    $log = \Log::Init($logHandler, 15);
 	
-	    \Log::DEBUG('WeifupayController支付回调开始v1.2');
+	    \Log::DEBUG('WeifupayController支付回调开始v1.3');
 	
 	    $resHandler = new \ClientResponseHandler();
 	    $reqHandler = new \RequestHandler();
@@ -43,18 +43,14 @@ class WeifupayController extends HomebaseController {
 	        {
 	            $res = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
 	
-	            
 	            $orderid = $res->out_trade_no;
 	            $out_trade_no = '' . $res->transaction_id;
 	            $total_fee = $res->total_fee / 100;
 	            
-	            \Log::DBEUG('[' . $orderid. '][' . $out_trade_no . '][' . $total_fee . ']');
+	            \Log::DEBUG('[' . $orderid. '][' . $out_trade_no . '][' . $total_fee . ']');
 	
 	            $order = $this->wx_pay_db->where("order_sn='$orderid'")->find();
-	            
-	            \Log::DEBUG($this->wx_pay_db->getLastSql());
-	            
-	            
+
 	            \Log::DBEUG('[[' . json_encode($order). ']]');
 	            
 	            
@@ -70,9 +66,9 @@ class WeifupayController extends HomebaseController {
 	            	
 	            	$this->wx_pay_db->where('id=' . $order['id'])->save($data); 
 	            	
-	            	\Log::DBEUG('[[[' . $out_trade_no . ']]]');
+	            	\Log::DEBUG('[[[' . $out_trade_no . ']]]');
 	            	
-	            	$this->wx_pay_db->where('id=' . $order['id'])->setField('memo', $out_trade_no);
+	            	$this->wx_pay_db->where('id=' . $order['id'])->setField('transition_id', $out_trade_no);
 	            	
 	            	\Log::DEBUG($this->wx_pay_db->getLastSql());
 	            	
