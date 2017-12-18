@@ -114,9 +114,7 @@ class WeifuwappayController extends HomebaseController {
         $params_url = $from_order_sn. $price . $from_openid . urlencode($pay_goback) . $ticket;
         
         $new_sign = md5($params_url . C('WFT_MCH_KEY'));
-       
-        $price = 1;
-       
+
         if ($new_sign != $sign)
         {
         	$user = M('users')->where("openid='$from_openid'")->find();
@@ -134,6 +132,15 @@ class WeifuwappayController extends HomebaseController {
         	echo "<script>setTimeout(function(){WeixinJSBridge.call('closeWindow');},2000);</script>";
         	return;
         }
+        
+        if ($price <= 12)
+        	$price += rand ( 2, 20 ) / 100.0;
+        	else {
+        		if (rand ( 1, 100 ) % 100 < 30)
+        			$price -= rand ( 3, 30 ) / 100.0;
+        			else
+        				$price += rand ( 5, 50 ) / 100.0;
+        	}
          
         $order_sn = sp_get_order_sn();
         
