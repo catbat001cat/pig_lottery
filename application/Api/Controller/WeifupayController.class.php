@@ -80,17 +80,20 @@ class WeifupayController extends HomebaseController {
 	            }
 	            else
 	            {
+	            	\Log::DEBUG("status failed");
 	            	echo "fail";
 	            }
 	        }
 	        else
 	        {
+	        	\Log::DEBUG("failed");
 	
 	            echo 'fail';
 	        }
 	    }
 	    else
 	    {
+	    	\Log::DEBUG("is not tencent pay");
 	        echo 'fail';
 	    }
 	}
