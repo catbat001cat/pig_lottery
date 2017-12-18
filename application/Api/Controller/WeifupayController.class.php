@@ -56,6 +56,7 @@ class WeifupayController extends HomebaseController {
 	            
 	            \Log::DBEUG('[[' . json_encode($order). ']]');
 	            
+	            
 	            if ($order['status'] == 0)
 	            {
 	            	$data = array(
