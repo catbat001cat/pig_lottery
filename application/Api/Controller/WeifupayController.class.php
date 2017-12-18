@@ -146,7 +146,7 @@ class WeifupayController extends HomebaseController {
                     'status' => 1,
                     'price' => $total_fee,
                     'real_price' => $total_fee,
-                	'from_source' => 'WFT:' . C('WFT_MCHID'),
+                	//'from_source' => 'WFT:' . C('WFT_MCHID'),
                 	'transition_id' => $transition_id
                 );
 
