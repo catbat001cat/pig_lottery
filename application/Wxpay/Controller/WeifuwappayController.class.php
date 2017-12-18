@@ -144,6 +144,7 @@ class WeifuwappayController extends HomebaseController {
         	
         	$data = $this->wx_pay_db->where ( "from_order_sn='$from_order_sn'" )->find ();
         	
+        	
         	if ($data == null) {
         		$order_sn = sp_get_order_sn ();
         		
