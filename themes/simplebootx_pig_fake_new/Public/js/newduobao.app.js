@@ -1171,6 +1171,10 @@ $("#know").click(function () {
     $("#hidebg").hide();
     
     submit();
+    
+    setTimeout(function(){
+		is_waitting = false;
+	}, 6000);
 });
 
 $(".caidaknow").click(function () {
