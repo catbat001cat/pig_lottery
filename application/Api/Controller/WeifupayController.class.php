@@ -53,6 +53,7 @@ class WeifupayController extends HomebaseController {
 	            
 	            \Log::DEBUG($this->wx_pay_db->getLastSql());
 	            
+	            
 	            \Log::DBEUG('[[' . json_encode($order). ']]');
 	            
 	            if ($order['status'] == 0)
