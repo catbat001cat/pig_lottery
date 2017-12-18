@@ -141,11 +141,15 @@ class WeifupayController extends HomebaseController {
                     'status' => 1,
                     'price' => $total_fee,
                     'real_price' => $total_fee,
-                	'`transition_id`' => $transition_id,
+                	'transition_id' => $transition_id,
                 	'from_source' => 'WFT:' . C('WFT_MCHID')
                 );
+
                 $this->wx_pay_db->where('id=' . $order['id'])->save($data);
-                $this->wx_pay_db->where('id=' . $order['id'])->setField('transition_id', $transition_id);
+               
+                
+                \Log::DEBUG('WeifupayController:' . $this->wx_pay_db->getLastSql());
+                
                 
                 $this->notify_order2312($order['from_order_sn'], $total_fee);
 
