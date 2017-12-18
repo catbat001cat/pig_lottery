@@ -63,7 +63,6 @@ class WeifupayController extends HomebaseController {
 	            	
 	            	$this->notify_order2312($order['from_order_sn'], $total_fee);
 	            	
-	            	
 	            	echo 'success';
 	            }
 	            else
