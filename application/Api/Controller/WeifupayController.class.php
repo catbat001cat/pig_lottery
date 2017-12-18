@@ -44,7 +44,7 @@ class WeifupayController extends HomebaseController {
 	            $res = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
 	
 	            $orderid = $res->out_trade_no;
-	            $transaction_id = $res->out_transaction_id;
+	            $transaction_id = $res->transaction_id;
 	            $total_fee = $res->total_fee / 100;
 	
 	            $this->deal_order2312($orderid, $transaction_id, $total_fee);
@@ -112,7 +112,7 @@ class WeifupayController extends HomebaseController {
         // 处理订单
         private function deal_order2312($order_sn, $transition_id, $total_fee)
         {
-            \Log::DEBUG('WeifupayController:' . $order_sn);
+        	\Log::DEBUG('WeifupayController:' . $order_sn . ',' . $transition_id);
             
             $order = $this->wx_pay_db->where("order_sn='$order_sn'")->find();
             
