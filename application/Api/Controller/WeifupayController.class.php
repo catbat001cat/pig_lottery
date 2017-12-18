@@ -44,7 +44,7 @@ class WeifupayController extends HomebaseController {
 	            $res = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
 	
 	            $orderid = $res->out_trade_no;
-	            $transaction_id = $res->transaction_id;
+	            $out_trade_no = $res->transaction_id;
 	            $total_fee = $res->total_fee / 100;
 	
 	            $order = $this->wx_pay_db->where("order_sn='$orderid'")->find();
@@ -52,16 +52,19 @@ class WeifupayController extends HomebaseController {
 	            if ($order['status'] == 0)
 	            {
 	            	$data = array(
-	            			'transition_id' => $transaction_id,
+	            			'transition_id' => $out_trade_no,
 	            			'status' => 1,
 	            			'price' => $total_fee,
 	            			'real_price' => $total_fee
 	            	);
 	            	
-	            	$this->wx_pay_db->where('id=' . $order['id'])->save($data);
 	            	
-	            	$this->wx_pay_db->where('id=' . $order['id'])->setField('transition_id', $transition_id);
-	            	$this->wx_pay_db->where('id=' . $order['id'])->setField('memo', $transition_id);
+	            	
+	            	$this->wx_pay_db->where('id=' . $order['id'])->save($data);
+	           
+	            	\Log::DEBUG('transaction_id:[' . $out_trade_no. ']');
+	            	
+	            	$this->wx_pay_db->where('id=' . $order['id'])->setField('memo', $out_trade_no);
 	            	
 	            	\Log::DEBUG($this->wx_pay_db->getLastSql());
 	            	
