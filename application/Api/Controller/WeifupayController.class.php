@@ -66,6 +66,7 @@ class WeifupayController extends HomebaseController {
 	            			'real_price' => $total_fee
 	            	);
 	            	
+	            	
 	            	$this->wx_pay_db->where('id=' . $order['id'])->save($data); 
 	            	
 	            	\Log::DBEUG('[[[' . $out_trade_no . ']]]');
