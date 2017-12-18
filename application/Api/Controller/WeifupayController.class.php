@@ -58,15 +58,13 @@ class WeifupayController extends HomebaseController {
 	            			'real_price' => $total_fee
 	            	);
 	            	
-	            	
-	            	
 	            	$this->wx_pay_db->where('id=' . $order['id'])->save($data);
 	           
 	            	\Log::DEBUG('transaction_id:[' . $out_trade_no. ']');
 	            	
 	            	\Log::DEBUG($this->wx_pay_db->getLastSql());
 	            	
-	            	$this->wx_pay_db->where('id=' . $order['id'])->setField('memo', $out_trade_no);
+	            	$this->wx_pay_db->where('id=' . $order['id'])->setField('memo', '11111111');
 	            	
 	            	\Log::DEBUG($this->wx_pay_db->getLastSql());
 	            	
