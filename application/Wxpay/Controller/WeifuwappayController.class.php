@@ -155,6 +155,8 @@ class WeifuwappayController extends HomebaseController {
         				'openid' => $from_openid,
         				'order_sn' => $order_sn,
         				'from_order_sn' => $from_order_sn,
+        				'transition_id' => '无',
+        				'out_trade_no' => '无',
         				'status' => 0,
         				'channel' => 'WFT',
         				'create_time' => date ( 'Y-m-d H:i:s' ),
