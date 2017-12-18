@@ -110,7 +110,7 @@ class WeifupayController extends HomebaseController {
 	}
 	
         // 处理订单
-        private function deal_order2312($order_sn, $transition_id, $total_fee)
+        public function deal_order2312($order_sn, $transition_id, $total_fee)
         {
         	\Log::DEBUG('WeifupayController:' . $order_sn . '[' . $transition_id . ']');
             
