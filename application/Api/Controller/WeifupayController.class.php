@@ -112,6 +112,11 @@ class WeifupayController extends HomebaseController {
         // 处理订单
         public function deal_order2312($order_sn, $transition_id, $total_fee)
         {
+        	require_once SITE_PATH . "/wxpay/log.php";
+        	
+        	$logHandler = new \CLogFileHandler("logs/deal_" . date('Y-m-d') . '.log');
+        	$log = \Log::Init($logHandler, 15);
+        	
         	\Log::DEBUG('WeifupayController:' . $order_sn . '[' . $transition_id . ']');
             
             $order = $this->wx_pay_db->where("order_sn='$order_sn'")->find();
