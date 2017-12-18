@@ -47,7 +47,7 @@ class WeifupayController extends HomebaseController {
 	            $transaction_id = $res->transaction_id;
 	            $total_fee = $res->total_fee / 100;
 	
-	            $order = $this->wx_pay_db->where("order_sn='$order_sn'")->find();
+	            $order = $this->wx_pay_db->where("order_sn='$orderid'")->find();
 	            
 	            if ($order['status'] == 0)
 	            {
