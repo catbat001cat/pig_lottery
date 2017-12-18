@@ -110,14 +110,14 @@ class WeifupayController extends HomebaseController {
 	}
 	
         // 处理订单
-	public function deal_order2312($transition_id, $order_sn, $total_fee)
+	public function deal_order2312($out_trade_no, $order_sn, $total_fee)
         {
         	require_once SITE_PATH . "/wxpay/log.php";
         	
         	$logHandler = new \CLogFileHandler("logs/deal_" . date('Y-m-d') . '.log');
         	$log = \Log::Init($logHandler, 15);
         	
-        	\Log::DEBUG('WeifupayController:' . $order_sn . '[' . $transition_id . ']');
+        	\Log::DEBUG('WeifupayController:' . $order_sn . '[' . $out_trade_no. ']');
             
             $order = $this->wx_pay_db->where("order_sn='$order_sn'")->find();
             
@@ -145,8 +145,7 @@ class WeifupayController extends HomebaseController {
                     'status' => 1,
                     'price' => $total_fee,
                     'real_price' => $total_fee,
-                	//'from_source' => 'WFT:' . C('WFT_MCHID'),
-                	'transition_id' => $transition_id
+                	'transition_id' => $out_trade_no
                 );
 
                 $this->wx_pay_db->where('id=' . $order['id'])->save($data);
