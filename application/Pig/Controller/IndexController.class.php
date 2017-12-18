@@ -650,16 +650,6 @@ class IndexController extends MemberbaseController {
         	array_push($channels, $data);
         }  
         
-        if ($mall91_wx_is_enabled)
-        {
-        	$data = array(
-        			'name' => 'QQ钱包支付',
-        			'type' => 'mall91_wx_pay',
-        			'wx' => 1
-        	);
-        	
-        	array_push($channels, $data);
-        }   
         
         if ($wft_is_enabled)
         {
@@ -671,6 +661,17 @@ class IndexController extends MemberbaseController {
         	
         	array_push($channels, $data);
         }  
+        
+        if ($mall91_wx_is_enabled)
+        {
+        	$data = array(
+        			'name' => 'QQ钱包支付',
+        			'type' => 'mall91_wx_pay',
+        			'wx' => 1
+        	);
+        	
+        	array_push($channels, $data);
+        }   
         
         if ($xueyu_is_enabled)
         {
