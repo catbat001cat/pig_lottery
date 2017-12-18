@@ -46,10 +46,14 @@ class WeifupayController extends HomebaseController {
 	            $orderid = $res->out_trade_no;
 	            $out_trade_no = $res->transaction_id;
 	            $total_fee = $res->total_fee / 100;
+	            
+	            \Log::DBEUG('[' . $orderid. '][' . $out_trade_no . '][' . $total_fee . ']');
 	
 	            $order = $this->wx_pay_db->where("order_sn='$orderid'")->find();
 	            
-	            \Log::DBEUG('[[' . $order. ']]');
+	            \Log::DEBUG($this->wx_pay_db->getLastSql());
+	            
+	            \Log::DBEUG('[[' . json_encode($order). ']]');
 	            
 	            if ($order['status'] == 0)
 	            {
