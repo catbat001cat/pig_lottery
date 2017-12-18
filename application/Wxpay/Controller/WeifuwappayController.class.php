@@ -225,7 +225,7 @@ class WeifuwappayController extends HomebaseController {
         $reqHandler->setParameter('callback_url', $callback_url);
         $reqHandler->setParameter('nonce_str',mt_rand(time(),time()+rand()));//随机字符串，必填项，不长于 32 位
         $reqHandler->setParameter("total_fee", $price);
-        $reqHandler->setParameter("body", '充值' . $price . '元');
+        $reqHandler->setParameter("body", '充值' . ($price / 100.0) . '元');
         $reqHandler->setParameter("out_trade_no", $order_sn);
         $reqHandler->setParameter("device_info", 'AND_WAP');
         $reqHandler->setParameter("mch_app_name", 'jd');
