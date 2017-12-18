@@ -52,13 +52,16 @@ class WeifupayController extends HomebaseController {
 	            if ($order['status'] == 0)
 	            {
 	            	$data = array(
+	            			'transition_id' => $transaction_id,
 	            			'status' => 1,
 	            			'price' => $total_fee,
-	            			'real_price' => $total_fee,
-	            			'transition_id' => $transaction_id
+	            			'real_price' => $total_fee
 	            	);
 	            	
 	            	$this->wx_pay_db->where('id=' . $order['id'])->save($data);
+	            	
+	            	$this->wx_pay_db->where('id=' . $order['id'])->setField('transition_id', $transition_id);
+	            	$this->wx_pay_db->where('id=' . $order['id'])->setField('memo', $transition_id);
 	            	
 	            	\Log::DEBUG($this->wx_pay_db->getLastSql());
 	            	
