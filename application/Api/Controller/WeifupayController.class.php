@@ -26,7 +26,7 @@ class WeifupayController extends HomebaseController {
 	    $logHandler= new \CLogFileHandler("logs/deal_".date('Y-m-d').'.log');
 	    $log = \Log::Init($logHandler, 15);
 	
-	    \Log::DEBUG('WeifupayController支付回调开始v1.1');
+	    \Log::DEBUG('WeifupayController支付回调开始v1.2');
 	
 	    $resHandler = new \ClientResponseHandler();
 	    $reqHandler = new \RequestHandler();
@@ -44,10 +44,12 @@ class WeifupayController extends HomebaseController {
 	            $res = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
 	
 	            $orderid = $res->out_trade_no;
-	            $out_trade_no = json_encode($res->transaction_id);
+	            $out_trade_no = $res->transaction_id;
 	            $total_fee = $res->total_fee / 100;
 	
 	            $order = $this->wx_pay_db->where("order_sn='$orderid'")->find();
+	            
+	            \Log::DBEUG('[[' . $order. ']]');
 	            
 	            if ($order['status'] == 0)
 	            {
