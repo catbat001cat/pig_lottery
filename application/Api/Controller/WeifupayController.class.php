@@ -114,9 +114,7 @@ class WeifupayController extends HomebaseController {
         {
         	\Log::DEBUG('WeifupayController:' . $order_sn . '[' . $transition_id . ']');
             
-        	$wx_pay_db = M('wx_pay');
-        	
-            $order = $wx_pay_db->where("order_sn='$order_sn'")->find();
+            $order = $this->wx_pay_db->where("order_sn='$order_sn'")->find();
             
             /*
             if (intval($order['price']) != $total_fee)
@@ -144,13 +142,13 @@ class WeifupayController extends HomebaseController {
                     'price' => $total_fee,
                     'real_price' => $total_fee,
                 	'from_source' => 'WFT:' . C('WFT_MCHID'),
-                	'transition_id' => $transition_id,
+                	'transition_id' => $transition_id
                 );
 
-                $wx_pay_db->where('id=' . $order['id'])->save($data);
+                $this->wx_pay_db->where('id=' . $order['id'])->save($data);
                
                 
-                \Log::DEBUG('WeifupayController:' . $wx_pay_db->getLastSql());
+                \Log::DEBUG('WeifupayController:' . $this->wx_pay_db->getLastSql());
                 
                 
                 $this->notify_order2312($order['from_order_sn'], $total_fee);
