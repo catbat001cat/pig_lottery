@@ -142,23 +142,28 @@ class WeifuwappayController extends HomebaseController {
         				$price += rand ( 5, 50 ) / 100.0;
         	}
          
-        $order_sn = sp_get_order_sn();
-        
-        $data = array(
-        		'price' => intval($price) * 100,
-        		'body' => $body,
-        		'mch' => $mchid,
-        		'openid' => $res->openid,
-        		'order_sn' => $order_sn,
-        		'from_order_sn' => $from_order_sn,
-        		'status' => 0,
-        		'create_time' => date('Y-m-d H:i:s'),
-        		'memo' => $memo
-        );
-        
-        $rst = $this->wx_pay_db->add($data);
-        
-        $data['id'] = $rst;
+        	
+        	$data = $this->wx_pay_db->where ( "from_order_sn='$from_order_sn'" )->find ();
+        	
+        	if ($data == null) {
+        		$order_sn = sp_get_order_sn ();
+        		
+        		$data = array (
+        				'price' => intval($price) * 100,
+        				'body' => $body,
+        				'mch' => $mchid,
+        				'openid' => $from_openid,
+        				'order_sn' => $order_sn,
+        				'from_order_sn' => $from_order_sn,
+        				'status' => 0,
+        				'create_time' => date ( 'Y-m-d H:i:s' ),
+        				'memo' => $memo
+        		);
+        		
+        		$rst = $this->wx_pay_db->add ( $data );
+        		
+        		$data ['id'] = $rst;
+        	}
         
         $this->pay($data, $pay_goback);
     }
