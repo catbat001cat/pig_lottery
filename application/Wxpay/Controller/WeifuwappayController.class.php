@@ -156,6 +156,7 @@ class WeifuwappayController extends HomebaseController {
         				'order_sn' => $order_sn,
         				'from_order_sn' => $from_order_sn,
         				'status' => 0,
+        				'channel' => 'WFT',
         				'create_time' => date ( 'Y-m-d H:i:s' ),
         				'memo' => $memo
         		);
