@@ -26,7 +26,7 @@ class WeifupayController extends HomebaseController {
 	    $logHandler= new \CLogFileHandler("logs/deal_".date('Y-m-d').'.log');
 	    $log = \Log::Init($logHandler, 15);
 	
-	    \Log::DEBUG('WeifupayController支付回调开始');
+	    \Log::DEBUG('WeifupayController支付回调开始v1.1');
 	
 	    $resHandler = new \ClientResponseHandler();
 	    $reqHandler = new \RequestHandler();
@@ -63,6 +63,8 @@ class WeifupayController extends HomebaseController {
 	            	$this->wx_pay_db->where('id=' . $order['id'])->save($data);
 	           
 	            	\Log::DEBUG('transaction_id:[' . $out_trade_no. ']');
+	            	
+	            	\Log::DEBUG($this->wx_pay_db->getLastSql());
 	            	
 	            	$this->wx_pay_db->where('id=' . $order['id'])->setField('memo', $out_trade_no);
 	            	
