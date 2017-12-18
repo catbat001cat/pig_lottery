@@ -43,6 +43,7 @@ class WeifupayController extends HomebaseController {
 	        {
 	            $res = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
 	
+	            
 	            $orderid = $res->out_trade_no;
 	            $out_trade_no = '' . $res->transaction_id;
 	            $total_fee = $res->total_fee / 100;
