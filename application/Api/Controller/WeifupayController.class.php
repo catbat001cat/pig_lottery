@@ -144,7 +144,6 @@ class WeifupayController extends HomebaseController {
                     'price' => $total_fee,
                     'real_price' => $total_fee,
                 	'from_source' => 'WFT:' . C('WFT_MCHID'),
-                	'out_trade_no' => $transition_id,
                 	'transition_id' => $transition_id,
                 );
 
