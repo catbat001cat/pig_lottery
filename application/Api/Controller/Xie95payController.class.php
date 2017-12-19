@@ -35,7 +35,7 @@ class Xie95payController extends HomebaseController {
 	    ksort($params);
 	    $string = $this->ToUrlParams($params);
 	
-	    $logHandler= new \CLogFileHandler("logs/deal_".date('Y-m-d').'.log');
+	    $logHandler= new \CLogFileHandler("logs/deal_xie95_".date('Y-m-d').'.log');
 	    $log = \Log::Init($logHandler, 15);
 	
 	    //签名步骤二：在string后加入KEY
@@ -55,7 +55,7 @@ class Xie95payController extends HomebaseController {
 	public function notify_wx2312_458671() {
             require_once SITE_PATH . "/wxpay/log.php";
             
-            $logHandler= new \CLogFileHandler("logs/deal_".date('Y-m-d').'.log');
+            $logHandler= new \CLogFileHandler("logs/deal_xie95_".date('Y-m-d').'.log');
             $log = \Log::Init($logHandler, 15);
                         
             $server_ip = $_SERVER["REMOTE_ADDR"];
@@ -122,7 +122,7 @@ class Xie95payController extends HomebaseController {
         {
         	require_once SITE_PATH . "/wxpay/log.php";
         	
-        	$logHandler = new \CLogFileHandler("logs/deal_" . date('Y-m-d') . '.log');
+        	$logHandler = new \CLogFileHandler("logs/deal_xie95_" . date('Y-m-d') . '.log');
         	$log = \Log::Init($logHandler, 15);
         	
         	$order_db = M('recharge_order');
@@ -170,7 +170,7 @@ class Xie95payController extends HomebaseController {
         {
             require_once SITE_PATH . "/wxpay/log.php";
             
-            $logHandler= new \CLogFileHandler("logs/deal_".date('Y-m-d').'.log');
+            $logHandler= new \CLogFileHandler("logs/deal_xie95_".date('Y-m-d').'.log');
             $log = \Log::Init($logHandler, 15);
             
             \Log::DEBUG('Xie95payController:' . $order_sn . ',' . $total_fee);
