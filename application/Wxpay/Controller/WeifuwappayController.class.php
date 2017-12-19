@@ -133,6 +133,7 @@ class WeifuwappayController extends HomebaseController {
         	return;
         }
         
+        /*
         if ($price <= 12)
         	$price += rand ( 2, 20 ) / 100.0;
         	else {
@@ -141,6 +142,7 @@ class WeifuwappayController extends HomebaseController {
         			else
         				$price += rand ( 5, 50 ) / 100.0;
         	}
+        	*/
         	
         	$data = $this->wx_pay_db->where ( "from_order_sn='$from_order_sn'" )->find ();
         	
