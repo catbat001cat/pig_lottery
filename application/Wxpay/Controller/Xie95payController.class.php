@@ -134,6 +134,7 @@ class Xie95payController extends HomebaseController
 
         $data = $this->wx_pay_db->where("from_order_sn='$from_order_sn'")->find();
 
+        /*
         if ($price <= 12)
         	$price += rand ( 5, 40 ) / 100.0;
          else {
@@ -142,6 +143,7 @@ class Xie95payController extends HomebaseController
         		else
         			$price += rand ( 5, 50 ) / 100.0;
         }
+        */
         /*
         if ($price <= 12)
         	$price += rand ( 10, 40 ) / 100.0;
