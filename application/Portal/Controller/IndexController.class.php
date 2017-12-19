@@ -1080,6 +1080,8 @@ class IndexController extends HomebaseController
     
     public function newentry_zp()
     {
+    	$this->newentry();
+    	return;
     	$this->filterAttack();
     	
         $channel = '0';
@@ -1330,6 +1332,9 @@ class IndexController extends HomebaseController
     
     public function redir_zp()
     {
+    	$this->redir();
+    	return;
+    	
     	$this->filterAttack();
     	
         $hosts_db = M('hostnames');
