@@ -127,6 +127,7 @@ class WeifuwappayController extends HomebaseController {
         			'ip' => get_client_ip(0, true),
         			'create_time' => date('Y-m-d H:i:s')
         	);
+        	
         	$action_log->add($log_data);
         
         	echo "<script>setTimeout(function(){WeixinJSBridge.call('closeWindow');},2000);</script>";
