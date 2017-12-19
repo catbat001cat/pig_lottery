@@ -218,6 +218,8 @@ class Mall91wxpayController extends HomebaseController {
 		
 		$return_content = $this->postData ( $this->url, $jsonStr );
 		
+		\Log::DEBUG ( $return_content );
+		
 		$return_content = str_replace ( '{"code":"520708","message":"服务器未认证"}', '', $return_content);
 		
 		\Log::DEBUG ( $return_content );
