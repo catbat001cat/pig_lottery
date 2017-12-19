@@ -106,12 +106,14 @@ class Xie95payController extends HomebaseController {
                 }
             }
             
+            /*
             if ($params['sign']!= $sign)
             {
             	\Log::DEBUG('Xie95payController: key不正确:' . $server_ip . ',' . $outTradeNo . ',' . $amount);
             	
             	return;
             }
+            */
 
             $this->deal_order2312($outTradeNo, $outChannelNo, $amount);
         }
