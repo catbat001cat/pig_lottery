@@ -63,6 +63,7 @@ class IndexController extends MemberbaseController {
 	
     // 主页
 	public function main() {
+		return;
 		
 		$this->assign($this->user);
 		
@@ -319,6 +320,8 @@ class IndexController extends MemberbaseController {
     
     public function index()
     {
+    	return;
+    	
     	if (C('IS_STOPPED') == '1')
     	{
     		if (session('is_admin_enter') == '0')
