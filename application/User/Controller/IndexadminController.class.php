@@ -244,6 +244,9 @@ class IndexadminController extends AdminbaseController {
 			);
 			
 			$result = M("users")->where("id=$id")->save($data);
+			
+			echo M("users")->getLastSql();
+			
 			/*
 			$result = M ( "Users" )->where ( array (
 					"id" => $id,
