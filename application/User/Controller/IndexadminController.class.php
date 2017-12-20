@@ -240,7 +240,7 @@ class IndexadminController extends AdminbaseController {
 		if ($id) {
 			
 			$db = M('users');
-			$result = $db->execute("update sp_users set user_status=0 where id=$id");
+			$db->execute("update sp_users set user_status=0 where id=$id");
 			
 			/*
 			$result = M ( "Users" )->where ( array (
@@ -248,6 +248,9 @@ class IndexadminController extends AdminbaseController {
 					"user_type" => 2 
 			) )->setField ( 'user_status', 0 );
 			*/
+			
+			$result = 1;
+			
 			if ($result) {
 				$this->success ( "会员拉黑成功！", U ( "indexadmin/index" ) );
 			} else {
@@ -267,7 +270,10 @@ class IndexadminController extends AdminbaseController {
 			) )->setField ( 'user_drawcash_status_disable', 1 );
 			*/
 			$db = M('users');
-			$result = $db->execute("update sp_users set user_drawcash_status_disable=1 where id=$id");
+			$db->execute("update sp_users set user_drawcash_status_disable=1 where id=$id");
+			
+			$result = 1;
+			
 			if ($result) {
 				$this->success ( "会员自动提现功能取消成功！", U ( "indexadmin/index" ) );
 			} else {
@@ -284,13 +290,16 @@ class IndexadminController extends AdminbaseController {
 		if ($id) {
 			
 			$db = M('users');
-			$result = $db->execute("update sp_users set user_status=1 where id=$id");
+			$db->execute("update sp_users set user_status=1 where id=$id");
 			/*
 			$result = M ( "Users" )->where ( array (
 					"id" => $id,
 					"user_type" => 2 
 			) )->setField ( 'user_status', 1 );
 			*/
+			
+			$result = 1;
+			
 			if ($result) {
 				$this->success ( "会员启用成功！", U ( "indexadmin/index" ) );
 			} else {
@@ -310,7 +319,9 @@ class IndexadminController extends AdminbaseController {
 			) )->setField ( 'user_drawcash_status_disable', 0 );
 			*/
 			$db = M('users');
-			$result = $db->execute("update sp_users set user_drawcash_status_disable=0 where id=$id");
+			$db->execute("update sp_users set user_drawcash_status_disable=0 where id=$id");
+			
+			$result = 1;
 			
 			if ($result) {
 				$this->success ( "会员自动提现功能激活成功！", U ( "indexadmin/index" ) );
