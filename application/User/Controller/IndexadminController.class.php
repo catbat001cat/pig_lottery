@@ -8,6 +8,9 @@ class IndexadminController extends AdminbaseController {
 	
 	// 后台本站用户列表
 	public function index() {
+		$this->index_recharges();
+		
+		return;
 		$request = I ( 'request.' );
 		
 		$where = '1';
@@ -58,7 +61,8 @@ class IndexadminController extends AdminbaseController {
 		 (select count(j.id) from sp_user_action_log j where j.user_id=a.id and j.action="hack") as hack_times' )->order ( $order )->limit ( $page->firstRow . ',' . $page->listRows )->select ();
 		*/
 		$lists = $users_model->alias ( 'a' )
-		->join ( '__CHANNEL_USER_RELATION__ b on b.user_id=a.id', 'left' )->join ( '__CHANNELS__ c on c.id=b.channel_id', 'left' )->where ( $where )->field ( 'a.*,c.name as channel_name,c.id as channel_id,c.admin_user_id as parent_channel_user_id,
+		->join ( '__CHANNEL_USER_RELATION__ b on b.user_id=a.id', 'left' )->join ( '__CHANNELS__ c on c.id=b.channel_id', 'left' )
+		->where ( $where )->field ( 'a.*,c.name as channel_name,c.id as channel_id,c.admin_user_id as parent_channel_user_id,
 		 (select sum(d.price)  from sp_recharge_order d left join sp_wx_pay e on e.from_order_sn=d.id where d.user_id=a.id and d.`status`=1) as total_recharge_price,
 		 (select sum(f.price) from sp_drawcash f where f.user_id=a.id and f.`status`=2) as total_drawcash_out,
 		 (select sum(g.price) from sp_drawcash g where g.user_id=a.id and g.`status` in (0,1)) as total_drawcash_apply,
