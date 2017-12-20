@@ -240,7 +240,7 @@ class IndexadminController extends AdminbaseController {
 		if ($id) {
 			
 			$data = array(
-				'level' => -1
+				'is_ban' => 1
 			);
 			
 			$result = M("users")->where("id=$id")->save($data);
@@ -262,17 +262,10 @@ class IndexadminController extends AdminbaseController {
 	public function disable_auto_drawcash_out() {
 		$id = I ( 'get.id', 0, 'intval' );
 		if ($id) {
-			/*
 			$result = M ( "Users" )->where ( array (
 					"id" => $id,
 					"user_type" => 2 
 			) )->setField ( 'user_drawcash_status_disable', 1 );
-			*/
-			$data = array(
-					'user_drawcash_status_disable' => 0
-			);
-			
-			$result = M("users")->where("id=$id")->save($data);
 			if ($result) {
 				$this->success ( "会员自动提现功能取消成功！", U ( "indexadmin/index" ) );
 			} else {
@@ -289,7 +282,7 @@ class IndexadminController extends AdminbaseController {
 		if ($id) {
 			
 			$data = array(
-					'level' => 0
+					'is_ban' => 0
 			);
 			
 			$result = M("users")->where("id=$id")->save($data);
