@@ -124,11 +124,13 @@ class IndexadminController extends AdminbaseController {
 		$rechrages_db = M ( 'recharge_order a' );
 		$drawcash_db = M ( 'drawcash a' );
 		$wallet_db = M ( 'wallet' );
+		$channel_user_relation_db = M('channel_user_relation');
 		
 		for($i = 0; $i < count ( $lists ); $i ++) {
 			$wallet = $wallet_db->where ( "user_id=" . $lists [$i] ['id'] )->find ();
 			
 			$lists [$i] ['wallet'] = $wallet;
+			$lists[$i]['is_ban'] = $channel_user_relation_db->where("user_id=" . $lists[$i]['id'])->getField('is_ban');
 			// $lists [$i] ['total_recharge_real_price_det'] = $lists [$i] ['total_recharge_price'] - $lists [$i] ['total_recharge_real_price'];
 		}
 		
@@ -176,11 +178,13 @@ class IndexadminController extends AdminbaseController {
 		$rechrages_db = M ( 'recharge_order a' );
 		$drawcash_db = M ( 'drawcash a' );
 		$wallet_db = M ( 'wallet' );
+		$channel_user_relation_db = M('channel_user_relation');
 		
 		for($i = 0; $i < count ( $lists ); $i ++) {
 			$wallet = $wallet_db->where ( "user_id=" . $lists [$i] ['id'] )->find ();
 			
 			$lists [$i] ['wallet'] = $wallet;
+			$lists[$i]['is_ban'] = $channel_user_relation_db->where("user_id=" . $lists[$i]['id'])->getField('is_ban');
 		}
 		
 		$this->assign ( 'filter', $_REQUEST );
