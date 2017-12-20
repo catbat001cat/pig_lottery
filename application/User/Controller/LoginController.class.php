@@ -30,6 +30,7 @@ class LoginController extends HomebaseController {
 	
 	// 前台用户邮箱激活提交
 	public function doactive(){
+		return;
 		$this->check_login();
 		$current_user=session('user');
 		if($current_user['user_status']==2){
@@ -235,6 +236,7 @@ hello;
 	
     // 处理前台用户手机登录
     private function _do_mobile_login(){
+    	return;
         $users_model=M('Users');
         $where = array("user_status"=>1);
         $where['mobile']=I('post.username');
@@ -265,7 +267,7 @@ hello;
     
     // 处理前台用户邮件或者用户登录
     private function _do_email_login(){
-
+    	return;
         $username=I('post.username');
         $password=I('post.password');
         $where = array("user_status"=>1);
