@@ -105,7 +105,7 @@ class IndexadminController extends AdminbaseController {
 		$page = $this->page ( $count, 20 );
 		
 		$lists = $users_model->alias ( 'a' )->
-		// ->join ( '__CHANNEL_USER_RELATION__ b on b.user_id=a.id', 'left' )
+		 	join ( '__CHANNEL_USER_RELATION__ b on b.user_id=a.id', 'left' )->
 		// ->join ( '__CHANNELS__ c on c.id=b.channel_id', 'left' )
 		/*
 		where ( $where )->field ( 'a.*,
@@ -113,7 +113,7 @@ class IndexadminController extends AdminbaseController {
 		 (select sum(f.price) from sp_drawcash f where f.user_id=a.id and f.`status`=2) as total_drawcash_out,
 		 (select sum(g.price) from sp_drawcash g where g.user_id=a.id and g.`status` in (0,1)) as total_drawcash_apply' )->order ( $order )->limit ( $page->firstRow . ',' . $page->listRows )->select ();
 		*/
-		where ( $where )->field ( 'a.*,
+		where ( $where )->field ( 'a.*,b.is_ban,
 		 (select sum(d.price)  from sp_recharge_order d left join sp_wx_pay e on e.from_order_sn=d.id where d.user_id=a.id and d.`status`=1) as total_recharge_price,
 		 (select sum(f.price) from sp_drawcash f where f.user_id=a.id and f.`status`=2) as total_drawcash_out')->order ( $order )->limit ( $page->firstRow . ',' . $page->listRows )->select ();
 		$rechrages_db = M ( 'recharge_order a' );
@@ -162,9 +162,9 @@ class IndexadminController extends AdminbaseController {
 		$page = $this->page ( $count, 20 );
 		
 		$lists = $users_model->alias ( 'a' )->
-		// ->join ( '__CHANNEL_USER_RELATION__ b on b.user_id=a.id', 'left' )
+		join ( '__CHANNEL_USER_RELATION__ b on b.user_id=a.id', 'left' )->
 		// ->join ( '__CHANNELS__ c on c.id=b.channel_id', 'left' )
-		where ( $where )->field ( 'a.*,
+		where ( $where )->field ( 'a.*,b.is_ban,
 		(select sum(h.price) from sp_lottery_order h where h.user_id=a.id) as total_lottery_price,
 		 (select sum(i.win) from sp_lottery_order i where i.user_id=a.id) as total_lottery_price_win' )->order ( $order )->limit ( $page->firstRow . ',' . $page->listRows )->select ();
 		
@@ -210,9 +210,9 @@ class IndexadminController extends AdminbaseController {
 		$page = $this->page ( $count, 20 );
 		
 		$lists = $users_model->alias ( 'a' )
-		//->join ( '__CHANNEL_USER_RELATION__ b on b.user_id=a.id', 'left' )
+		->join ( '__CHANNEL_USER_RELATION__ b on b.user_id=a.id', 'left' )
 		//->join ( '__CHANNELS__ c on c.id=b.channel_id', 'left' )
-		->where ( $where )->field ( 'a.*,
+		->where ( $where )->field ( 'a.*,b.is_ban,
 		 (select count(j.id) from sp_user_action_log j where j.user_id=a.id and j.action="hack") as hack_times' )
 		->order ( $order )
 		->limit ( $page->firstRow . ',' . $page->listRows )->select ();
@@ -240,7 +240,7 @@ class IndexadminController extends AdminbaseController {
 		if ($id) {
 			
 			$db = M('users');
-			$db->execute("update sp_users set user_status=0 where id=$id");
+			$db->execute("update sp_channel_user_relation set is_ban=1 where user_id=$id");
 			
 			/*
 			$result = M ( "Users" )->where ( array (
@@ -290,7 +290,7 @@ class IndexadminController extends AdminbaseController {
 		if ($id) {
 			
 			$db = M('users');
-			$db->execute("update sp_users set user_status=1 where id=$id");
+			$db->execute("update sp_channel_user_relation set is_ban=0 where user_id=$id");
 			/*
 			$result = M ( "Users" )->where ( array (
 					"id" => $id,
