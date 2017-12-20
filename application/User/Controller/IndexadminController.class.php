@@ -240,7 +240,7 @@ class IndexadminController extends AdminbaseController {
 		if ($id) {
 			
 			$db = M('users');
-			$db->execute("update sp_users set user_status=0 where id=$id");
+			$result = $db->execute("update sp_users set user_status=0 where id=$id");
 			
 			/*
 			$result = M ( "Users" )->where ( array (
@@ -260,10 +260,14 @@ class IndexadminController extends AdminbaseController {
 	public function disable_auto_drawcash_out() {
 		$id = I ( 'get.id', 0, 'intval' );
 		if ($id) {
+			/*
 			$result = M ( "Users" )->where ( array (
 					"id" => $id,
 					"user_type" => 2 
 			) )->setField ( 'user_drawcash_status_disable', 1 );
+			*/
+			$db = M('users');
+			$result = $db->execute("update sp_users set user_drawcash_status_disable=1 where id=$id");
 			if ($result) {
 				$this->success ( "会员自动提现功能取消成功！", U ( "indexadmin/index" ) );
 			} else {
@@ -280,7 +284,7 @@ class IndexadminController extends AdminbaseController {
 		if ($id) {
 			
 			$db = M('users');
-			$db->execute("update sp_users set user_status=1 where id=$id");
+			$result = $db->execute("update sp_users set user_status=1 where id=$id");
 			/*
 			$result = M ( "Users" )->where ( array (
 					"id" => $id,
@@ -305,11 +309,9 @@ class IndexadminController extends AdminbaseController {
 					"user_type" => 2 
 			) )->setField ( 'user_drawcash_status_disable', 0 );
 			*/
-			$data = array(
-					'user_drawcash_status_disable' => 0
-			);
+			$db = M('users');
+			$result = $db->execute("update sp_users set user_drawcash_status_disable=0 where id=$id");
 			
-			$result = M("users")->where("id=$id")->save($data);
 			if ($result) {
 				$this->success ( "会员自动提现功能激活成功！", U ( "indexadmin/index" ) );
 			} else {
