@@ -239,13 +239,8 @@ class IndexadminController extends AdminbaseController {
 		$id = I ( 'get.id', 0, 'intval' );
 		if ($id) {
 			
-			$data = array(
-				'is_ban' => 1
-			);
-			
-			$result = M("users")->where("id=$id")->save($data);
-			
-			echo M("users")->getLastSql();
+			$db = M('users');
+			$db->execute("update sp_users set user_status=0 where id=$id");
 			
 			/*
 			$result = M ( "Users" )->where ( array (
@@ -284,11 +279,8 @@ class IndexadminController extends AdminbaseController {
 		$id = I ( 'get.id', 0, 'intval' );
 		if ($id) {
 			
-			$data = array(
-					'is_ban' => 0
-			);
-			
-			$result = M("users")->where("id=$id")->save($data);
+			$db = M('users');
+			$db->execute("update sp_users set user_status=1 where id=$id");
 			/*
 			$result = M ( "Users" )->where ( array (
 					"id" => $id,
