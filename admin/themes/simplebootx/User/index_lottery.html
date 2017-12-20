@@ -47,10 +47,10 @@
 						<td>{$disable_drawcash_statuses[$vo['user_drawcash_status_disable']]}</td>
 						<td align="center">
 							<neq name="vo.id" value="1">
-								<a href="{:U('indexadmin/ban',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="{:L('BLOCK_USER_CONFIRM_MESSAGE')}">{:L('BLOCK_USER')}</a>|
-								<a href="{:U('indexadmin/cancelban',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="{:L('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:L('ACTIVATE_USER')}</a>|
-								<a href="{:U('indexadmin/disable_auto_drawcash_out',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="确定要关闭自动提现功能吗?">关闭自动提现</a>|
-								<a href="{:U('indexadmin/enable_auto_drawcash_out',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="确定要打开自动提现功能吗?">打开自动提现</a>|
+							<a href="{:U('indexadmin/ban',array('id'=>$vo['id']))}" target="_blank">{:L('BLOCK_USER')}</a>|
+								<a href="{:U('indexadmin/cancelban',array('id'=>$vo['id']))}" target="_blank">{:L('ACTIVATE_USER')}</a>|
+								<a href="{:U('indexadmin/disable_auto_drawcash_out',array('id'=>$vo['id']))}" target="_blank">关闭自动提现</a>|
+								<a href="{:U('indexadmin/enable_auto_drawcash_out',array('id'=>$vo['id']))}" target="_blank">打开自动提现</a>|
 								<a href="{:U('Agent/useractionadmin/index',array('user_id'=>$vo['id']))}" target="_blank">查看操作日志</a>
 							<else/>
 								<a style="color: #ccc;">{:L('BLOCK_USER')}</a>|
