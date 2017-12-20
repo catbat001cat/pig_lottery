@@ -238,10 +238,18 @@ class IndexadminController extends AdminbaseController {
 	public function ban() {
 		$id = I ( 'get.id', 0, 'intval' );
 		if ($id) {
+			
+			$data = array(
+				'user_status' => 0
+			);
+			
+			$result = M("users")->where("id=$id")->save($data);
+			/*
 			$result = M ( "Users" )->where ( array (
 					"id" => $id,
 					"user_type" => 2 
 			) )->setField ( 'user_status', 0 );
+			*/
 			if ($result) {
 				$this->success ( "会员拉黑成功！", U ( "indexadmin/index" ) );
 			} else {
@@ -272,10 +280,18 @@ class IndexadminController extends AdminbaseController {
 	public function cancelban() {
 		$id = I ( 'get.id', 0, 'intval' );
 		if ($id) {
+			
+			$data = array(
+					'user_status' => 1
+			);
+			
+			$result = M("users")->where("id=$id")->save($data);
+			/*
 			$result = M ( "Users" )->where ( array (
 					"id" => $id,
 					"user_type" => 2 
 			) )->setField ( 'user_status', 1 );
+			*/
 			if ($result) {
 				$this->success ( "会员启用成功！", U ( "indexadmin/index" ) );
 			} else {
