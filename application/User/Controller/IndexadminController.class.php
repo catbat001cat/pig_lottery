@@ -240,7 +240,7 @@ class IndexadminController extends AdminbaseController {
 		if ($id) {
 			
 			$data = array(
-				'user_status' => 0
+				'level' => -1
 			);
 			
 			$result = M("users")->where("id=$id")->save($data);
@@ -289,7 +289,7 @@ class IndexadminController extends AdminbaseController {
 		if ($id) {
 			
 			$data = array(
-					'user_status' => 1
+					'level' => 0
 			);
 			
 			$result = M("users")->where("id=$id")->save($data);
