@@ -57,8 +57,6 @@
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HEADER, true);
 		
-		echo json_encode($parameters);
-
 		$body = NULL;
 		if(!isset($files) || count($files) == 0) {
 			$body = json_encode($parameters);
@@ -243,9 +241,6 @@
 		}
 
 		$str = $str . "&" . $body;
-
-		echo "data: " . $str;
-		echo "signed: " . $signed;
 
 		return (bool) openssl_verify($str, $signed, $publicKey);
 	}
