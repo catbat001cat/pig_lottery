@@ -223,7 +223,7 @@ class Ak47payController extends HomebaseController
         {
         	$this->assign('msg', $response['msg']);
         	
-        	$this->assign(':error');
+        	$this->display(':error');
         }
     }
 }
