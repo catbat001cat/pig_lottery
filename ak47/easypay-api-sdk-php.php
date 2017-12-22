@@ -295,7 +295,7 @@
 		$body = substr($response, $header_size);
 
     	//printf("header_text: %s\n", $header_text);
-
+    	
     	$status = 0;
 
     	foreach (explode("\r\n", $header_text) as $i => $line) {
