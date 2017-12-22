@@ -119,6 +119,7 @@ class Ak47payController extends HomebaseController
         
         $ticket = $_REQUEST['ticket'];
         $from_openid = $_REQUEST['openid'];
+        $user_id = $_REQUEST['user_id'];
         $sign = $_REQUEST['sign'];
 
         $params_url = $from_order_sn. $price . $from_openid. urlencode($pay_goback) . $ticket;
