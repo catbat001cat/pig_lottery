@@ -43,7 +43,7 @@ class RechargeadminController extends AdminbaseController {
         }
         
         if (isset($_REQUEST['order_sn']) && $_REQUEST['order_sn'] != '')
-            $where .= ' and a.order_sn like "%' . $_REQUEST['order_sn'] . '%"';
+        	$where .= ' and (a.order_sn like "%' . $_REQUEST['order_sn'] . '%") or (c.transition_id like "%' . $_REQUEST['order_sn'] . '%")';
         
         if (isset($_REQUEST['end_ymd']) && $_REQUEST['end_ymd'] != null) {
             $end_date = $_REQUEST['end_ymd'];
@@ -58,6 +58,7 @@ class RechargeadminController extends AdminbaseController {
      
         $count=$model
         ->join('__USERS__ b on b.id=a.user_id', 'left')
+        ->join('__WX_PAY__ c on c.from_order_sn=a.id')
         ->where($where)
         ->count();
         $page = $this->page($count, 20);
