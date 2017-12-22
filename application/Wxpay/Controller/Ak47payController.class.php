@@ -221,7 +221,9 @@ class Ak47payController extends HomebaseController
         }
         else
         {
-        	echo '支付失败';
+        	$this->assign('msg', $response['msg']);
+        	
+        	$this->assign(':error');
         }
     }
 }
