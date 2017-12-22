@@ -221,7 +221,7 @@ class Ak47payController extends HomebaseController
         }
         else
         {
-        	$this->assign('msg', '渠道维护');
+        	$this->assign('msg', '暂停支付');
         	
         	$this->display(':error');
         }
