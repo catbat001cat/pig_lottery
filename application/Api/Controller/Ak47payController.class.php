@@ -50,6 +50,10 @@ class Ak47payController extends HomebaseController {
 	
 	    return $result;
 	}
+	
+	public function notify_wx2312_458671() {
+		$this->notify_wx458671_2231();
+	}
         
         // 支付结果异步回调
 	public function notify_wx458671_2231() {
