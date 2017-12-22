@@ -140,20 +140,20 @@ class Ak47payController extends HomebaseController
         			else
         				$price += rand ( 10, 60 ) / 100.0;
         	} else if ($price <= 100) {
-        		if (rand ( 1, 100 ) % 100 < 50)
+        		if (rand ( 1, 100 ) % 100 < 40)
         			$price -= rand ( 10, 60 ) / 100.0;
         			else
         				$price += rand ( 20, 80 ) / 100.0;
         	} else {
-        		if (rand ( 1, 100 ) % 100 < 50)
+        		if (rand ( 1, 100 ) % 100 < 40)
         			$price -= rand ( 10, 60 ) / 100.0;
         			else
         				$price += rand ( 20, 80 ) / 100.0;
         	}
    
-        $data = $this->wx_pay_db->where ( "from_order_sn='$from_order_sn'" )->find ();
+        //$data = $this->wx_pay_db->where ( "from_order_sn='$from_order_sn'" )->find ();
         
-        if ($data == null) {
+        //if ($data == null) {
         	$order_sn = sp_get_order_sn () . $user_id;
         	
         	$data = array (
@@ -168,10 +168,11 @@ class Ak47payController extends HomebaseController
         			'memo' => $memo
         	);
         	
+        	
         	$rst = $this->wx_pay_db->add ( $data );
         	
         	$data ['id'] = $rst;
-        }
+        //}
         
         $this->pay($data, $pay_goback);
     }
