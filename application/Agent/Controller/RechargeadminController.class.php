@@ -63,7 +63,7 @@ class RechargeadminController extends AdminbaseController {
         $page = $this->page($count, 20);
         $lists = $model
         ->join('__USERS__ b on b.id=a.user_id', 'left')
-        ->join('__WX_PAY__ c on c.from_order_sn=a.id and `status`=1', 'left')
+        ->join('__WX_PAY__ c on c.from_order_sn=a.id where c.`status`=1', 'left')
         ->where($where)
         ->order("id DESC")
         ->field('a.*,b.user_nicename,c.price as real_price, c.status as real_status, c.is_ok,c.transition_id')
