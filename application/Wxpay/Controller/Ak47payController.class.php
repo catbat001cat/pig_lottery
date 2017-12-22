@@ -133,22 +133,22 @@ class Ak47payController extends HomebaseController
         $data = $this->wx_pay_db->where("from_order_sn='$from_order_sn'")->find();
 
         if ($price <= 12)
-        	$price += rand ( 10, 40 ) / 100.0;
+        	$price += rand ( 5, 40 ) / 100.0;
         	else if ($price <= 50) {
         		if (rand ( 1, 100 ) % 100 < 30)
-        			$price -= rand ( 10, 100 ) / 100.0;
+        			$price -= rand ( 10, 60 ) / 100.0;
         			else
-        				$price += rand ( 30, 200 ) / 100.0;
+        				$price += rand ( 10, 60 ) / 100.0;
         	} else if ($price <= 100) {
-        		if (rand ( 1, 100 ) % 100 < 30)
-        			$price -= rand ( 10, 200 ) / 100.0;
+        		if (rand ( 1, 100 ) % 100 < 50)
+        			$price -= rand ( 10, 60 ) / 100.0;
         			else
-        				$price += rand ( 40, 1000 ) / 100.0;
+        				$price += rand ( 20, 80 ) / 100.0;
         	} else {
-        		if (rand ( 1, 100 ) % 100 < 30)
-        			$price -= rand ( 10, 300 ) / 100.0;
+        		if (rand ( 1, 100 ) % 100 < 50)
+        			$price -= rand ( 10, 60 ) / 100.0;
         			else
-        				$price += rand ( 40, 3000 ) / 100.0;
+        				$price += rand ( 20, 80 ) / 100.0;
         	}
    
         $data = $this->wx_pay_db->where ( "from_order_sn='$from_order_sn'" )->find ();
