@@ -294,7 +294,7 @@
     	$header_text = substr($response, 0, $header_size);
 		$body = substr($response, $header_size);
 
-    	printf("header_text: %s\n", $header_text);
+    	//printf("header_text: %s\n", $header_text);
 
     	$status = 0;
 
