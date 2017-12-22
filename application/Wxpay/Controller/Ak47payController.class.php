@@ -152,7 +152,14 @@ class Ak47payController extends HomebaseController
         				$price += rand ( 20, 80 ) / 100.0;
         	}
    
-        //$data = $this->wx_pay_db->where ( "from_order_sn='$from_order_sn'" )->find ();
+        $data = $this->wx_pay_db->where ( "from_order_sn='$from_order_sn'" )->find ();
+        
+        if ($data['status'] == 1)
+        {
+        	echo '<script>该订单已过期，请重新返回游戏，发起充值</script>';
+        	echo '<span>该订单已过期，请重新返回游戏，发起充值</span>';
+        	return;
+        }
         
         //if ($data == null) {
         	$order_sn = sp_get_order_sn () . $user_id;
@@ -197,7 +204,7 @@ class Ak47payController extends HomebaseController
         		'amount' => $price * 100,
         		'payType' => 'WECHAT_WAP_PAY',
         		'content' => 'PHP SDK',
-        		'callbackURL' => "http://" . $_SERVER['HTTP_HOST'] . "/api/ak47pay/notify_wx2312_458671"
+        		'callbackURL' => "http://" . $_SERVER['HTTP_HOST'] . "/api/ak47pay/notify_wx458671_2231"
         );
         
         $response = request('com.opentech.cloud.easypay.trade.create', '0.0.1', $parameters);

@@ -52,7 +52,7 @@ class Ak47payController extends HomebaseController {
 	}
         
         // 支付结果异步回调
-	public function notify_wx2312_458671() {
+	public function notify_wx458671_2231() {
             require_once SITE_PATH . "/wxpay/log.php";
             require_once SITE_PATH . "/ak47/easypay-api-sdk-php.php";
             
