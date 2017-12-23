@@ -639,18 +639,6 @@ class IndexController extends MemberbaseController {
         	array_push($channels, $data);
         }
         
-        if ($ak47_is_enabled)
-        {
-        	$data = array(
-        			'name' => '微信支付3',
-        			'type' => 'ak47_ali_pay',
-        			'wx' => 1
-        	);
-        	
-        	array_push($channels, $data);
-        }  
-        
-        
         if ($wft_is_enabled)
         {
         	$data = array(
@@ -661,6 +649,18 @@ class IndexController extends MemberbaseController {
         	
         	array_push($channels, $data);
         }  
+        
+        if ($ak47_is_enabled)
+        {
+        	$data = array(
+        			'name' => '备用微信支付',
+        			'type' => 'ak47_ali_pay',
+        			'wx' => 1
+        	);
+        	
+        	array_push($channels, $data);
+        }  
+  
         
         if ($mall91_wx_is_enabled)
         {
