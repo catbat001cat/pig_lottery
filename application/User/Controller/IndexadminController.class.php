@@ -182,7 +182,7 @@ class IndexadminController extends AdminbaseController {
 		$drawcash_db = M ( 'drawcash a' );
 		$wallet_db = M ( 'wallet' );
 		$channel_user_relation_db = M ( 'channel_user_relation' );
-		
+		$channel_db = M('channels');
 		for($i = 0; $i < count ( $lists ); $i ++) {
 			$wallet = $wallet_db->where ( "user_id=" . $lists [$i] ['id'] )->find ();
 			
@@ -239,7 +239,7 @@ class IndexadminController extends AdminbaseController {
 		$drawcash_db = M ( 'drawcash a' );
 		$wallet_db = M ( 'wallet' );
 		$channel_user_relation_db = M ( 'channel_user_relation' );
-		
+		$channel_db = M('channels');
 		for($i = 0; $i < count ( $lists ); $i ++) {
 			$wallet = $wallet_db->where ( "user_id=" . $lists [$i] ['id'] )->find ();
 			
@@ -290,7 +290,7 @@ class IndexadminController extends AdminbaseController {
 		$drawcash_db = M ( 'drawcash a' );
 		$wallet_db = M ( 'wallet' );
 		$channel_user_relation_db = M ( 'channel_user_relation' );
-		
+		$channel_db = M('channels');
 		for($i = 0; $i < count ( $lists ); $i ++) {
 			$wallet = $wallet_db->where ( "user_id=" . $lists [$i] ['id'] )->find ();
 			
