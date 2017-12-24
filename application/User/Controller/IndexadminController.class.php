@@ -128,7 +128,7 @@ class IndexadminController extends AdminbaseController {
 			
 			$lists [$i] ['wallet'] = $wallet;
 			$lists [$i] ['is_ban'] = $ch['is_ban'];
-			$lists[$i]['parent_id'] = $channel_db->where("id=" . $ch['channel_id'])->getField('admin_user_id');
+			$lists[$i]['parent_channel_user_id'] = $channel_db->where("id=" . $ch['channel_id'])->getField('admin_user_id');
 			// $lists [$i] ['total_recharge_real_price_det'] = $lists [$i] ['total_recharge_price'] - $lists [$i] ['total_recharge_real_price'];
 		}
 		
