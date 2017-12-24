@@ -113,7 +113,6 @@ class IndexadminController extends AdminbaseController {
 		$where = 'a.id in (' . $ids . ')';
 		
 		$lists = $users_model->alias ( 'a' )
-			->join ( '__CHANNEL_USER_RELATION__ b on b.user_id=a.id', 'left' )
 			->where ($where)->field ( 'a.*,
 					 (select sum(d.price)  from sp_recharge_order d left join sp_wx_pay e on e.from_order_sn=d.id where d.user_id=a.id and d.`status`=1) as total_recharge_price,
 		 			(select sum(f.price) from sp_drawcash f where f.user_id=a.id and f.`status`=2) as total_drawcash_out' )->order ( $order )->limit ( $page->firstRow . ',' . $page->listRows )->select ();
@@ -125,8 +124,11 @@ class IndexadminController extends AdminbaseController {
 		for($i = 0; $i < count ( $lists ); $i ++) {
 			$wallet = $wallet_db->where ( "user_id=" . $lists [$i] ['id'] )->find ();
 			
+			$ch = $channel_user_relation_db->where ( "user_id=" . $lists [$i] ['id'] )->find();
+			
 			$lists [$i] ['wallet'] = $wallet;
-			$lists [$i] ['is_ban'] = $channel_user_relation_db->where ( "user_id=" . $lists [$i] ['id'] )->getField ( 'is_ban' );
+			$lists [$i] ['is_ban'] = $ch['is_ban'];
+			$lists[$i]['parent_id'] = $channel_db->where("id=" . $ch['channel_id'])->getField('admin_user_id');
 			// $lists [$i] ['total_recharge_real_price_det'] = $lists [$i] ['total_recharge_price'] - $lists [$i] ['total_recharge_real_price'];
 		}
 		
