@@ -150,9 +150,6 @@ class IndexadminController extends AdminbaseController {
 		else
 			$where .= ' and a.level=0';
 		
-		if (! empty ( $request ['parent_id'] ))
-			$where .= ' and b.parent_id=' . intval ( $request ['parent_id'] );
-		
 		if (! empty ( $_REQUEST ['order_type'] )) {
 			if ($_REQUEST ['order_type'] == '1')
 				$order = 'total_recharge_price desc';
@@ -161,13 +158,13 @@ class IndexadminController extends AdminbaseController {
 		$users_model = M ( "Users" );
 		
 		$count = $users_model->alias ( 'a' )
-			->join ( '__CHANNELS__ b on b.admin_user_id=a.id', 'left' )
+			//->join ( '__CHANNELS__ b on b.admin_user_id=a.id', 'left' )
 			->where ( $where )
 			->count ();
 		$page = $this->page ( $count, 20 );
 		
-		$lists = $users_model->alias ( 'a' )
-			->join ( '__CHANNELS__ b on b.admin_user_id=a.id', 'left' )->
+		$lists = $users_model->alias ( 'a' )->
+			//->join ( '__CHANNELS__ b on b.admin_user_id=a.id', 'left' )
 		// join ( '__CHANNEL_USER_RELATION__ b on b.user_id=a.id', 'left' )->
 		// ->join ( '__CHANNELS__ c on c.id=b.channel_id', 'left' )
 		/*
