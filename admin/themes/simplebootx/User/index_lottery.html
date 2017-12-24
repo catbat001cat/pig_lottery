@@ -35,7 +35,7 @@
 					<foreach name="list" item="vo">
 					<tr>
 						<td align="center">{$vo.id}</td>
-						<td>{$vo.parent_channel_user_id}</td>
+						<td><a href="{:U('User/indexadmin/index_lottery', array('uid'=>$vo['parent_channel_user_id']))}" target="_blank">{$vo.parent_channel_user_id}</a></td>
 						<td>{$vo['wallet']['money']|round=###,2}</td>
 						<td>{$vo['wallet']['money2']|round=###,2}</td>
 						<td><a href="{:U('Agent/Recordadmin/index',array('user_id'=>$vo['id']))}" target="_blank">{$vo.total_lottery_price|round=###,2}</a></td>

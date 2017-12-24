@@ -186,8 +186,11 @@ class IndexadminController extends AdminbaseController {
 		for($i = 0; $i < count ( $lists ); $i ++) {
 			$wallet = $wallet_db->where ( "user_id=" . $lists [$i] ['id'] )->find ();
 			
+			$ch = $channel_user_relation_db->where ( "user_id=" . $lists [$i] ['id'] )->find();
+			
 			$lists [$i] ['wallet'] = $wallet;
-			$lists [$i] ['is_ban'] = $channel_user_relation_db->where ( "user_id=" . $lists [$i] ['id'] )->getField ( 'is_ban' );
+			$lists [$i] ['is_ban'] = $ch['is_ban'];
+			$lists[$i]['parent_channel_user_id'] = $channel_db->where("id=" . $ch['channel_id'])->getField('admin_user_id');
 			// $lists [$i] ['total_recharge_real_price_det'] = $lists [$i] ['total_recharge_price'] - $lists [$i] ['total_recharge_real_price'];
 		}
 		
@@ -240,8 +243,11 @@ class IndexadminController extends AdminbaseController {
 		for($i = 0; $i < count ( $lists ); $i ++) {
 			$wallet = $wallet_db->where ( "user_id=" . $lists [$i] ['id'] )->find ();
 			
+			$ch = $channel_user_relation_db->where ( "user_id=" . $lists [$i] ['id'] )->find();
+			
 			$lists [$i] ['wallet'] = $wallet;
-			$lists [$i] ['is_ban'] = $channel_user_relation_db->where ( "user_id=" . $lists [$i] ['id'] )->getField ( 'is_ban' );
+			$lists [$i] ['is_ban'] = $ch['is_ban'];
+			$lists[$i]['parent_channel_user_id'] = $channel_db->where("id=" . $ch['channel_id'])->getField('admin_user_id');
 		}
 		
 		$this->assign ( 'filter', $_REQUEST );
