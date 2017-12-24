@@ -53,7 +53,7 @@
 					<foreach name="list" item="vo">
 					<tr>
 						<td align="center">{$vo.id}</td>
-						<td>{$vo.parent_channel_user_id}</td>
+						<td><a href="{:U('User/indexadmin/index_channels', array('parent_id'=>$vo['parent_channel_user_id']))}">{$vo.parent_channel_user_id}</a></td>
 						<td>{$vo['wallet']['money']|round=###,2}</td>
 						<td>{$vo['wallet']['money2']|round=###,2}</td>
 						<td>{$vo['wallet']['money3']|round=###,2}</td>
