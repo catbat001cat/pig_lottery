@@ -8,6 +8,9 @@
 		<form class="well form-search" method="post" action="{:U('Indexadmin/index_recharges')}">
 			用户ID： 
 			<input type="text" name="uid" style="width: 100px;" value="{:I('request.uid')}" placeholder="请输入用户ID">
+			&nbsp;
+			父ID： 
+			<input type="text" name="parent_id" style="width: 100px;" value="{:I('request.parent_id')}" placeholder="请输入用户ID">
 			<!--排序
 			<select id="order_type" name="order_type">
 						<option value="" selected>按ID降序</option>
