@@ -104,7 +104,7 @@ class IndexadminController extends AdminbaseController {
 		
 		$lists = $channel_db->where($where)->select();
 		
-		$ids = '0,';
+		$ids = '0';
 		for ($i=0; $i<count($lists); $i++)
 		{
 			$ids .= ',' . $lists[$i]['admin_user_id'];
