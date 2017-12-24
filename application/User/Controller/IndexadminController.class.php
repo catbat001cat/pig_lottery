@@ -91,30 +91,29 @@ class IndexadminController extends AdminbaseController {
 		$where = '1';
 		
 		$order = "a.id desc";
-		
-		if (! empty ( $request ['uid'] ))
-			$where .= ' and a.id=' . intval ( $request ['uid'] );
-		else
-			$where .= ' and a.level=0';
-		
+
 		if (! empty ( $request ['parent_id'] ))
-			$where .= ' and b.parent_id=' . intval ( $request ['parent_id'] );
+			$where .= ' and parent_id=' . intval ( $request ['parent_id'] );
 		
-		if (! empty ( $_REQUEST ['order_type'] )) {
-			if ($_REQUEST ['order_type'] == '1')
-				$order = 'total_recharge_price desc';
-		}
+		$channel_db = M('channels');
+		$count = $channel_db->where($where)->count();
 		
 		$users_model = M ( "Users" );
 		
-		$count = $users_model->alias ( 'a' )
-			->join ( '__CHANNELS__ b on b.admin_user_id=a.id', 'left' )
-			->where ( $where )
-			->count ();
 		$page = $this->page ( $count, 20 );
 		
+		$lists = $channel_db->where($where)->select();
+		
+		$ids = '0,';
+		for ($i=0; $i<count($lists); $i++)
+		{
+			$ids .= ',' . $lists[$i]['admin_user_id'];
+		}
+		
+		$where = 'a.id in (' . $ids . ')';
+		
 		$lists = $users_model->alias ( 'a' )
-				->join ( '__CHANNELS__ b on b.admin_user_id=a.id', 'left' )->where ( $where )->field ( 'a.*,
+			->where ($where)->field ( 'a.*,
 					 (select sum(d.price)  from sp_recharge_order d left join sp_wx_pay e on e.from_order_sn=d.id where d.user_id=a.id and d.`status`=1) as total_recharge_price,
 		 			(select sum(f.price) from sp_drawcash f where f.user_id=a.id and f.`status`=2) as total_drawcash_out' )->order ( $order )->limit ( $page->firstRow . ',' . $page->listRows )->select ();
 		$rechrages_db = M ( 'recharge_order a' );
@@ -134,7 +133,7 @@ class IndexadminController extends AdminbaseController {
 		$this->assign ( 'list', $lists );
 		$this->assign ( "page", $page->show ( 'Admin' ) );
 		
-		$this->display ( ":index_recharges" );
+		$this->display ( ":index_channels" );
 	}
 	
 	// 查看充值记录
