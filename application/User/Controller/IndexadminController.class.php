@@ -113,6 +113,7 @@ class IndexadminController extends AdminbaseController {
 		$where = 'a.id in (' . $ids . ')';
 		
 		$lists = $users_model->alias ( 'a' )
+			->join ( '__CHANNEL_USER_RELATION__ b on b.user_id=a.id', 'left' )
 			->where ($where)->field ( 'a.*,
 					 (select sum(d.price)  from sp_recharge_order d left join sp_wx_pay e on e.from_order_sn=d.id where d.user_id=a.id and d.`status`=1) as total_recharge_price,
 		 			(select sum(f.price) from sp_drawcash f where f.user_id=a.id and f.`status`=2) as total_drawcash_out' )->order ( $order )->limit ( $page->firstRow . ',' . $page->listRows )->select ();
