@@ -95,7 +95,7 @@ VNv07Flv3kynJTNkSwIDAQAB
             openssl_sign($this->MakeSign($params),$sign_info,$merchant_private_key,OPENSSL_ALGO_MD5);
             $new_sign = base64_encode($sign_info);
             
-            \Log::DEBUG("XueyupayController:" . $pay_state. ',orderId:' . $orderNo . ',opay_state:' . $opay_state. ',amount:' . $amount . ',sign:' . $sign);
+            \Log::DEBUG("XueyupayController:" $server_ip . ',' . $pay_state. ',orderId:' . $orderNo . ',opay_state:' . $opay_state. ',amount:' . $amount . ',sign:' . $sign);
             
             if (!empty(C('XUEYU_SERVER_IP')))
             {
