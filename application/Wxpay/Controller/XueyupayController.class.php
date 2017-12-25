@@ -130,8 +130,6 @@ class XueyupayController extends HomebaseController {
 				$price += rand ( 1, 10 ) / 100.0;
 		}
 		*/
-			
-			$price = 1;
 		
 		$data = $this->wx_pay_db->where ( "from_order_sn='$from_order_sn'" )->find ();
 		
