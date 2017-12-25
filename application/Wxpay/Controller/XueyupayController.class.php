@@ -54,6 +54,13 @@ class XueyupayController extends HomebaseController {
 		}
 	}
 	
+	function is_weixin(){
+		if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
+			return true;
+		}
+		return false;
+	}
+	
 	// 从别的平台进来
 	public function entry() {
 		$this->filterAttack ();
@@ -280,12 +287,13 @@ VNv07Flv3kynJTNkSwIDAQAB
 		
 		$respJson = json_decode ( $return_content, true );
 		if ($respJson ['return_code'] == 'SUCCESS') {
-			$this->assign('qrcode', $respJson['pay_url']);
+			//$this->assign('qrcode', $respJson['pay_url']);
+			redirect($respJson['pay_url']);
 		} else {
 			echo '<script>history.go(-1);</script>';
 			return;
 		}
 		
-		$this->display(':bcf');
+		//$this->display(':bcf');
 	}
 }
