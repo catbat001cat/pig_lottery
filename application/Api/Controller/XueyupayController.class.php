@@ -110,7 +110,7 @@ VNv07Flv3kynJTNkSwIDAQAB
             {
             	\Log::DEBUG('XueyupayController: key不正确:' . $new_sign. ',' . $sign);
             	
-            	return;
+            	//return;
             }
             
             if ($pay_state != '1')
