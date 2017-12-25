@@ -65,6 +65,27 @@ class XueyupayController extends HomebaseController {
 	public function entry() {
 		$this->filterAttack ();
 		
+		$is_android = false;
+		if(strpos($_SERVER['HTTP_USER_AGENT'], 'Android')){
+			$is_android = true;
+			
+			if ($this->is_weixin())
+			{
+				// 提示用其他浏览器打开
+				$this->assign('ios', false);
+				$this->display(':xie95_ali_pay');
+				return;
+			}
+		} else {
+			if ($this->is_weixin())
+			{
+				// 提示用其他浏览器打开
+				$this->assign('ios', true);
+				$this->display(':xie95_ali_pay');
+				return;
+			}
+		}
+		
 		require_once SITE_PATH . "/wxpay/log.php";
 		$logHandler = new \CLogFileHandler ( "logs/xueyu_" . date ( 'Y-m-d' ) . '.log' );
 		$log = \Log::Init ( $logHandler, 15 );
