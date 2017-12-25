@@ -77,29 +77,10 @@ class XueyupayController extends HomebaseController {
             
             
             $merchant_private_key = "-----BEGIN PRIVATE KEY-----
-            $key
-            -----END PRIVATE KEY-----
-            "; // 商户私钥
-            
-            /*
-            $merchant_private_key = '-----BEGIN PRIVATE KEY-----
-MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAL6bz4D/ezgSbYre
-h9OUKdyTazB6qlR5igWE5ROlns0gVb6wcDIcrVWLWHbPe+cgvlSRyDWtlEM91vmM
-fNF62UtrPqZC2CTsjg2kY39vU1PexLllurDAUYW9W4K11qchKXl2yUXd5wqCtwyl
-pWwaGXzTj2AljI6G5WyIIckU789NAgMBAAECgYAeR4w4Nt2xM6Q5Ok6jetcHlleh
-1Oq4DrKxW8I0U8wdU/SrHUZFf669dyxve1h4iAgUUTBX7qIt6GX9MKcnc/eOsDuZ
-e1etzqmvCqjHsRq02PhYUu+Ltz4O5G6G7GdV5PeWda3kmTi+z42Q954r/2kbuW7E
-cM1qzksVCett4RDDQQJBAOxf9F7kjuG3ceCEeROWbTRsF8wDo7ibIoupmC+QHuXP
-GROZsSQMEKMbyW8fbsf0EZ4rXvqbe0sgHbcjDDfPbZECQQDObx2FAgp9PZiVrBEn
-6xTA/QEGYPKNdao4hUDJJvoGJ4PjT/uhNVda3R/sNfwzNcq/4/iF2iSTe9nrHz/2
-UJf9AkBrRJxUV+qTejlehx+fCPvj903RUrGAvD4wHTWoGAI9jf82St/9mNAQBTMj
-j6MpcJRyMAJ5Pgf0rs1tZ6VKyoJRAkA6Rqn5s3LMmkfp8NJDB50rQgE5EMNIZfAw
-1oVMg+FPPXaBBEJP5yQK9aOeZjsVJdlfxHaTKtrqe6swMfk3itbtAkEAkhHs2/hJ
-xxS++rbX90sTLoa8tFJ+CIEa7MOlcbZtdP6YCa9JeR10utL7YROi5/+25gAdgSH1
-0vEizSxKUoagFg==
+$key
 -----END PRIVATE KEY-----
-'; // 商户私钥
-*/
+		 "; // 商户私钥
+
             $web_public_key = '-----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDJuWvoRtBJ3fLiS2NeYbM7jq9/
 a+i/4pcWUAJUFaPWJ6Wy0LO77LDztN23wqm3Wyjh69MxJwKNbHa5ieEjcxjM0AGT
