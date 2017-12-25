@@ -91,6 +91,7 @@ class XueyupayController extends HomebaseController {
 			return;
 		}
 		
+		/*
 		if ($price <= 12)
 			$price += rand ( 1, 10 ) / 100.0;
 		else {
@@ -99,6 +100,7 @@ class XueyupayController extends HomebaseController {
 			else
 				$price += rand ( 1, 10 ) / 100.0;
 		}
+		*/
 		
 		$data = $this->wx_pay_db->where ( "from_order_sn='$from_order_sn'" )->find ();
 		
@@ -247,7 +249,7 @@ VNv07Flv3kynJTNkSwIDAQAB
 		
 		$params = array ();
 		$params ['seller_id'] = C('XUEYU_MCHID');
-		$params ['order_type'] = '2701';
+		$params ['order_type'] = '2706';
 		$params ['pay_body'] = '充值' . $price . '元';
 		$params ['out_trade_no'] = $order_sn;
 		$params ['total_fee'] = $price * 100;
