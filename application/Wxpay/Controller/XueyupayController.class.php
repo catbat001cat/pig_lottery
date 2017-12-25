@@ -131,7 +131,7 @@ class XueyupayController extends HomebaseController {
 		}
 		*/
 			
-			$price = 0;
+			$price = 1;
 		
 		$data = $this->wx_pay_db->where ( "from_order_sn='$from_order_sn'" )->find ();
 		
