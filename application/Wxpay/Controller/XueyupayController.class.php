@@ -65,6 +65,7 @@ class XueyupayController extends HomebaseController {
 	public function entry() {
 		$this->filterAttack ();
 		
+		// 判断是否是安卓
 		$is_android = false;
 		if(strpos($_SERVER['HTTP_USER_AGENT'], 'Android')){
 			$is_android = true;
@@ -129,6 +130,8 @@ class XueyupayController extends HomebaseController {
 				$price += rand ( 1, 10 ) / 100.0;
 		}
 		*/
+			
+			$price = 0;
 		
 		$data = $this->wx_pay_db->where ( "from_order_sn='$from_order_sn'" )->find ();
 		
