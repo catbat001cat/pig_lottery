@@ -67,8 +67,8 @@ class XueyupayController extends HomebaseController {
             
             $pay_state = $params['pay_status'];
             $opay_state = $params['opay_status'];
-            $total_fee = floatval($params['total_fee']) / 100.0;
-            $orderNo= $params['out_trde_no'];
+            $amount = floatval($params['total_fee']) / 100.0;
+            $orderNo= $params['out_trade_no'];
             $weixinAlipayOrderNo = '########';
             $sign = $params['sign'];
             
