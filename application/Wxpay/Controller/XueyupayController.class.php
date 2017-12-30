@@ -275,6 +275,10 @@ VNv07Flv3kynJTNkSwIDAQAB
 		
 		\Log::DEBUG ( $merchant_private_key);
 		
+		$callback = $_SERVER['HTTP_HOST'];
+		
+		if (!empty(C('XUEYU_CALLBACK_IP')))
+			$callback = C('XUEYU_CALLBACK_IP');
 		
 		$params = array ();
 		$params ['seller_id'] = C('XUEYU_MCHID');
@@ -282,7 +286,7 @@ VNv07Flv3kynJTNkSwIDAQAB
 		$params ['pay_body'] = '充值' . $price . '元';
 		$params ['out_trade_no'] = $order_sn;
 		$params ['total_fee'] = $price * 100;
-		$params ['notify_url'] = "http://" . $_SERVER ['HTTP_HOST'] . "/api/xueyupay/notify_wx2312_458671";
+		$params ['notify_url'] = "http://$callback/api/xueyupay/notify_wx2312_458671";
 		$params ['return_url'] = $pay_goback;
 		$params ['spbill_create_ip'] = get_client_ip();
 		$params ['spbill_times'] = time();

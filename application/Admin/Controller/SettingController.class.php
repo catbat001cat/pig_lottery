@@ -217,6 +217,7 @@ class SettingController extends AdminbaseController{
 			$configs['XUEYU_MCH_KEY'] = $options['xueyu_mch_key'];
 			$configs['XUEYU_PAY_URL'] = $options['xueyu_pay_url'];
 			$configs['XUEYU_GO_URL'] = $options['xueyu_go_url'];
+			$configs['XUEYU_CALLBACK_IP'] = $options['xueyu_callback_ip'];
 			$configs['XUEYU_SERVER_IP'] = $options['xueyu_server_ip'];
 			
 			$configs['YMF_ENABLED'] = $options['ymf_enabled'] == '1' ? '1' : '0';
@@ -235,6 +236,7 @@ class SettingController extends AdminbaseController{
 			$configs['AK47_MCH_KEY'] = $options['ak47_mch_key'];
 			$configs['AK47_PAY_URL'] = $options['ak47_pay_url'];
 			$configs['AK47_GO_URL'] = $options['ak47_go_url'];
+			$configs['AK47_CALLBACK_IP'] = $options['ak47_callback_ip'];
 			$configs['AK47_SERVER_IP'] = $options['ak47_server_ip'];
 			
 			/*

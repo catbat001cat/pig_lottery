@@ -199,6 +199,11 @@ class Ak47payController extends HomebaseController
         $logHandler= new \CLogFileHandler("logs/ak47_".date('Y-m-d').'.log');
         $log = \Log::Init($logHandler, 15);
         
+        $callback = $_SERVER['HTTP_HOST'];
+        
+        if (!empty(C('AK47_CALLBACK_IP')))
+        	$callback = C('AK47_CALLBACK_IP');
+        
         $parameters = array(
         		'merchantNo' => C('AK47_MCHID'),
         		'outTradeNo' => $order_sn,
@@ -206,7 +211,7 @@ class Ak47payController extends HomebaseController
         		'amount' => $price * 100,
         		'payType' => 'WECHAT_WAP_PAY',
         		'content' => 'PHP SDK',
-        		'callbackURL' => "http://" . $_SERVER['HTTP_HOST'] . "/api/ak47pay/notify_wx458671_2231"
+        		'callbackURL' => "http://$callback/api/ak47pay/notify_wx458671_2231"
         );
         
         $response = request('com.opentech.cloud.easypay.trade.create', '0.0.1', $parameters);
