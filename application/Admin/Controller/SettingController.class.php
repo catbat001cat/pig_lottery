@@ -73,6 +73,7 @@ class SettingController extends AdminbaseController{
 			$configs["MOBILE_TPL_ENABLED"]=empty($options['mobile_tpl_enabled'])?0:1;
 			$configs["HTML_CACHE_ON"]=empty($options['html_cache_on'])?false:true;
 			$configs['IS_STOPPED'] = $options['is_stopped'] == '1' ? '1' : '0';
+			$configs['IS_OPEN_ZP'] = $options['is_open_zp'] == '1' ? '1' : '0';
 			$configs['IS_STOPPED_DRAWCASH'] = $options['is_stopped_drawcash'] == '1' ? '1' : '0';
 			$configs['IS_STOPPED_LOTTERY'] = $options['is_stopped_lottery'] == '1' ? '1' : '0';
 			$configs['IS_STOPPED_RECHARGE'] = $options['is_stopped_recharge'] == '1' ? '1' : '0';

@@ -1080,8 +1080,10 @@ class IndexController extends HomebaseController
     
     public function newentry_zp()
     {
-    	$this->newentry();
+    	if (C('IS_OPEN_ZP') != '1')
+    		$this->newentry();
     	return;
+    	
     	$this->filterAttack();
     	
         $channel = '0';
@@ -1332,7 +1334,8 @@ class IndexController extends HomebaseController
     
     public function redir_zp()
     {
-    	$this->redir();
+    	if (C('IS_OPEN_ZP') != '1')
+    		$this->redir();
     	return;
     	
     	$this->filterAttack();

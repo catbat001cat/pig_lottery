@@ -63,7 +63,8 @@ class IndexController extends MemberbaseController {
 	
     // 主页
 	public function main() {
-		return;
+		if (C('IS_OPEN_ZP') != '1')
+			return;
 		
 		$this->assign($this->user);
 		
@@ -90,6 +91,7 @@ class IndexController extends MemberbaseController {
 		$mall91_is_enabled = (C('MALL91_ENABLED') == '1');
 		$mall91_ali_is_enabled = (C('MALL91_ALI_ENABLED') == '1');
 		$ak47_is_enabled = (C('AK47_ENABLED') == '1');
+		$xueyu_is_enabled = (C('XUEYU_ENABLED') == '1');
 		
 		if (!$bft_is_enabled && $_SESSION['is_admin_enter']== '1')
 		    $bft_is_enabled = (C('BFT_TEST_ENABLED') == '1');
@@ -114,6 +116,9 @@ class IndexController extends MemberbaseController {
 		
 		if (!$ak47_is_enabled && $_SESSION['is_admin_enter']== '1')
 		    $ak47_is_enabled= (C('AK47_TEST_ENABLED') == '1');
+		
+		if (!$xueyu_is_enabled && $_SESSION['is_admin_enter']== '1')
+		   	$xueyu_is_enabled= (C('XUEYU_TEST_ENABLED') == '1');
 		    	
 		
 		$channels = array();
@@ -199,13 +204,25 @@ class IndexController extends MemberbaseController {
 		if ($ak47_is_enabled)
 		{
 			$data = array(
-					'name' => '微信支付3',
+					'name' => '备用微信支付',
 					'type' => 'ak47_ali_pay',
 					'wx' => 1
 			);
 			
 			array_push($channels, $data);
 		}  
+		
+		
+		if ($xueyu_is_enabled)
+		{
+			$data = array(
+					'name' => 'H5支付',
+					'type' => 'xueyu_pay',
+					'wx' => 1
+			);
+			
+			array_push($channels, $data);
+		} 
 		
 		if ($mall91_is_enabled)
 		{
@@ -320,7 +337,8 @@ class IndexController extends MemberbaseController {
     
     public function index()
     {
-    	return;
+    	if (C('IS_OPEN_ZP') != '1')
+    		return;
     	
     	if (C('IS_STOPPED') == '1')
     	{
