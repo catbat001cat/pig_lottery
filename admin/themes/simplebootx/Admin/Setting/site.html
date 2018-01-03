@@ -29,6 +29,7 @@
 			<li><a href="#H13" data-toggle="tab">XUEYU支付设置</a></li>
 			<li><a href="#H14" data-toggle="tab">(一码付)支付设置</a></li>
 			<li><a href="#H15" data-toggle="tab">(AK47)支付设置</a></li>
+			<li><a href="#H16" data-toggle="tab">人工充值支付设置</a></li>
 			<li><a href="#I" data-toggle="tab">投注设置</a></li>
 			<li><a href="#J" data-toggle="tab">提现设置</a></li>
 			<li><a href="#L" data-toggle="tab">控盘设置</a></li>
@@ -1315,6 +1316,36 @@
 									<label class="control-label">支付回调服务器白名单(用;隔开)</label>
 									<div class="controls">
 										<input type="text" name="options[ak47_server_ip]" value="{$ak47_server_ip}" style="width:300px;"/>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<div class="tab-pane" id="H16">
+							<fieldset>
+								<div class="control-group">
+									<label class="control-label">是否启用</label>
+									<div class="controls">
+										<php>$manual_enabled_checked=empty($manual_enabled)?'':'checked';</php>
+										<label class="checkbox inline"><input type="checkbox" name="options[manual_enabled]" value="1" {$manual_enabled_checked}></label>
+									</div>
+								</div>								
+								<div class="control-group">
+									<label class="control-label">是否测试</label>
+									<div class="controls">
+										<php>$manual_test_enabled_checked=empty($manual_test_enabled)?'':'checked';</php>
+										<label class="checkbox inline"><input type="checkbox" name="options[manual_test_enabled]" value="1" {$manual_test_enabled_checked}></label>
+									</div>
+								</div>																					
+								<div class="control-group">
+									<label class="control-label">支付菜单内容</label>
+									<div class="controls">
+										<input type="text" name="options[manual_menu]" value="{$manual_menu}" style="width:300px;"/>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">联系QQ</label>
+									<div class="controls">
+										<input type="text" name="options[manual_qq]" value="{$manual_qq}" style="width:300px;"/>
 									</div>
 								</div>
 							</fieldset>
