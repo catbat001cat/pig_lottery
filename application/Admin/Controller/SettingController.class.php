@@ -239,6 +239,11 @@ class SettingController extends AdminbaseController{
 			$configs['AK47_CALLBACK_IP'] = $options['ak47_callback_ip'];
 			$configs['AK47_SERVER_IP'] = $options['ak47_server_ip'];
 			
+			$configs['MANUAL_ENABLED'] =  $options['manual_enabled'] == '1' ? '1' : '0';
+			$configs['MANUAL_TEST_ENABLED'] = $options['manual_test_enabled'] == '1' ? '1' : '0';
+			$configs['MANUAL_MENU'] = $options['manual_menu'];
+			$configs['MANUAL_QQ'] = $options['manual_qq'];
+			
 			/*
 			$configs['YOUCHANG_ENABLED'] = $options['youchang_enabled'] == '1' ? '1' : '0';
 			$configs['YOUCHANG_TEST_ENABLED'] = $options['youchang_test_enabled'] == '1' ? '1' : '0';

@@ -439,6 +439,7 @@ class IndexController extends MemberbaseController {
         $xueyu_is_enabled = (C('XUEYU_ENABLED') == '1');
         $ymf_is_enabled = (C('YMF_ENABLED') == '1');
         $ak47_is_enabled = (C('AK47_ENABLED') == '1');
+        $manual_is_enabled = (C('MANUAL_ENABLED') == '1');
         
         if (!$bft_is_enabled && $_SESSION['is_admin_enter']== '1')
         	$bft_is_enabled = (C('BFT_TEST_ENABLED') == '1');
@@ -490,6 +491,9 @@ class IndexController extends MemberbaseController {
        	 
        	 if (!$ak47_is_enabled && $_SESSION['is_admin_enter']== '1')
        	 	$ak47_is_enabled= (C('AK47_TEST_ENABLED') == '1');
+       	 
+       	 if (!$manual_is_enabled && $_SESSION['is_admin_enter']== '1')
+       	 	$manual_is_enabled= (C('MANUAL_TEST_ENABLED') == '1');
              
         $channels = array();
         
@@ -689,6 +693,17 @@ class IndexController extends MemberbaseController {
         	$data = array(
         			'name' => '支付宝支付',
         			'type' => 'ymf_ali_pay',
+        			'wx' => 0
+        	);
+        	
+        	array_push($channels, $data);
+        }
+        
+        if ($manual_is_enabled)
+        {
+        	$data = array(
+        			'name' => C('MANUAL_MENU'),
+        			'type' => 'manual_pay',
         			'wx' => 0
         	);
         	

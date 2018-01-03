@@ -3267,6 +3267,23 @@ class PayController extends HomebaseController {
 					'ret' => 1,
 					'url' => $url
 			) );
-		}	
+		}
+		
+		$manual_is_enabled = (C ( 'MANUAL_ENABLED' ) == '1');
+		
+		if (! $manual_is_enabled) {
+			if (C ( 'MANUAL_TEST_ENABLED' ) == '1' && session ( 'is_admin_enter' ) == '1')
+				$manual_is_enabled= true;
+		}
+		
+		if ($manual_is_enabled&& $type == 'manual_pay') {
+			
+			$url = 'index.php?g=Wxpay&m=Manualpay&a=entry';
+			
+			return $this->ajaxReturn ( array (
+					'ret' => 1,
+					'url' => $url
+			) );
+		}
 	}
 }
