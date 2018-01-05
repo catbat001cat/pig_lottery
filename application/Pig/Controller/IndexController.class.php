@@ -520,7 +520,6 @@ class IndexController extends MemberbaseController {
         	array_push($channels, $data);
         }
         
-        
         if ($yubwx_ali_is_enabled)
         {
         	$data = array(
