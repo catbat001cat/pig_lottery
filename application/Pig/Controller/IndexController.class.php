@@ -524,7 +524,7 @@ class IndexController extends MemberbaseController {
         if ($yubwx_ali_is_enabled)
         {
         	$data = array(
-        			'name' => '支付宝扫码支付',
+        			'name' => '支付宝扫码支付100元起',
         			'type' => 'yubwx_ali_pay',
         			'wx' => 0
         	);
