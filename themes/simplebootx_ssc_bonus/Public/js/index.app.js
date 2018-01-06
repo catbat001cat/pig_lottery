@@ -2,6 +2,9 @@ var choose_tag = 0;
 var choose_method = 0;
 var buy_lotterys = new Array();
 
+
+var has_he = false;
+
 var wallet = null;
 var open_time = null;
 var wallet_money = 0;
@@ -20,6 +23,7 @@ function get_wallet() {
 		data : {},
 		success : function(data) {
 			if (data.ret == 1) {
+				$('.user-money').html(Number(data.info.money).toFixed(2));
 				$('#user-money').html(Number(data.info.money).toFixed(2));
 				wallet = data.info;
 				wallet_money = wallet.money;
@@ -27,6 +31,7 @@ function get_wallet() {
 		}
 	});
 }
+
 
 function append_history_lottery_item(item) {
 	
@@ -36,24 +41,51 @@ function append_history_lottery_item(item) {
 	if ((last_num - '0') % 2 == 0)
 		is_event = 1;
 	
-	if (item.type == 1)
+	if (has_he)
 	{
-		result = '<span class="red">大</span>小合';
-		
-		if (is_event)
-			result += '单<span class="red">双</span>';
-		else
-			result += '<span class="red">单</span>双';
+		if (item.type == 1)
+		{
+			result = '<span class="red">大</span>小合';
+			
+			if (is_event)
+				result += '单<span class="red">双</span>';
+			else
+				result += '<span class="red">单</span>双';
+		}
+		else if (item.type == 0)
+			result = '大小<span class="red">合</span>';
+		else if (item.type == -1)
+		{
+			result = '大<span class="red">小</span>合';
+			if (is_event)
+				result += '单<span class="red">双</span>';
+			else
+				result += '<span class="red">单</span>双';
+		}	
 	}
-	else if (item.type == 0)
-		result = '大小<span class="red">合</span>';
-	else if (item.type == -1)
+	else
 	{
-		result = '大<span class="red">小</span>合';
-		if (is_event)
-			result += '单<span class="red">双</span>';
-		else
-			result += '<span class="red">单</span>双';
+		if (item.type == 1)
+		{
+			result = '<span class="red">大</span>小';
+			
+			if (is_event)
+				result += '单<span class="red">双</span>';
+			else
+				result += '<span class="red">单</span>双';
+		}
+		else if (item.type == 0)
+		{
+			
+		}
+		else if (item.type == -1)
+		{
+			result = '大<span class="red">小</span>';
+			if (is_event)
+				result += '单<span class="red">双</span>';
+			else
+				result += '<span class="red">单</span>双';
+		}	
 	}
 	
 	var item_template = $('#history_lottery_template').html();
@@ -64,6 +96,10 @@ function append_history_lottery_item(item) {
 			.replace(/{result}/g, result);
 
 	$('#history_lottery_container').append(item_template);
+}
+
+function process_balls(openBalls)
+{
 }
 
 function get_open_lottery_result() {
@@ -77,7 +113,6 @@ function get_open_lottery_result() {
 					no : current_lottery.no
 				},
 				success : function(data) {
-					console.log(JSON.stringify(data));
 					if (data.ret == 1) {
 						if (data.lottery.status != 2) {
 							get_open_lottery_result();
@@ -92,11 +127,9 @@ function get_open_lottery_result() {
 						    for (var i=0; i<data.lottery.number.length; i++)
 						    	openBalls.push(data.lottery.number.substr(i,1) - '0');
 						    
-						    console.log(JSON.stringify(openBalls));
+						    process_balls(openBalls);
 						    
 						    lottery_result = data;
-						    
-						    console.log(JSON.stringify(lottery_result));
 						    
 						    run(800);
 						    
@@ -118,6 +151,9 @@ function get_open_lottery_result() {
 			});
 }
 
+
+var is_first = true;
+
 function get_lottery_info() {
 	$.ajax({
 		url : 'index.php?g=Qqonline&m=index&a=ajax_get_lottery_info',
@@ -126,8 +162,8 @@ function get_lottery_info() {
 		data : {},
 		success : function(data) {
 			if (data.ret == 1) {
-
-				if (!is_showing && $('#percentNum').html() != data.lottery_history[0].no)
+				
+				if (!is_showing && $('#percentNum').html() == data.lottery_history[0].no)
 				{
 					$('#percentNum').html(data.lottery_history[0].no);
 
@@ -136,23 +172,30 @@ function get_lottery_info() {
 				    openBalls = new Array();
 				    for (var i=0; i<data.lottery_history[0].number.length; i++)
 				    	openBalls.push(data.lottery_history[0].number.substr(i,1) - '0');
+				    
+				    process_balls(openBalls);
 
 				    run(0);	
 				}
 				
+				var open_date = data.current_lottery.open_time.split(' ');
+				var open_times = open_date[1].split(':');
 				
 				$('#openNum').html(data.current_lottery.no);
+				$('#openTime').html(open_times[0] + ':' + open_times[1]);
 				$('.now-num').html(data.current_lottery.no);
 				current_lottery = data.current_lottery;
 				$('#big_ratio').html(data.ratio.big_ratio);
 				$('#mid_ratio').html(data.ratio.mid_ratio);
 				$('#small_ratio').html(data.ratio.small_ratio);
 				$('#odd_ratio').html(data.ratio.odd_ratio);
+				$('.num_ratio').html(data.ratio.num_ratio);
 				$('#event_ratio').html(data.ratio.event_ratio);
 				$('#num_ratio').html(data.ratio.num_ratio);
 				$('#num2_ratio').html(data.ratio.num2_ratio);
 				$('#num3_ratio').html(data.ratio.num3_ratio);
-				
+				$('#cur_percentNum').html(data.lottery_history[0].no);
+
 				cur_ratio = data.ratio; 
 
 				can_lottery = false;
@@ -203,6 +246,21 @@ function get_lottery_info() {
 
 						countdown(diff);
 					}
+				}
+				
+				if (is_first)
+				{
+				    openBalls = new Array();
+				    for (var i=0; i<data.lottery_history[0].number.length; i++)
+				    	openBalls.push(data.lottery_history[0].number.substr(i,1) - '0');
+				    
+				    process_balls(openBalls);
+				    
+				    //lottery_result = data;
+				    
+				    run(0);
+				    
+					is_first = false;
 				}
 				
 				// 这里不需要显示历史
@@ -271,14 +329,33 @@ function sub_count() {
 function add_count() {
 	count++;
 
-	if (count > price_mul.length)
-		count = price_mul.length;
+	if (count > 100)
+		count = 100;
 
 	compute_price();
 }
 
+function mul()
+{
+	count *= 2;
+	
+	if (count > 100)
+		count = 100;
+
+	compute_price();
+}
+
+function div()
+{
+	count = Math.floor(count / 2);
+	if (count < 1)
+		count = 1;
+	
+	compute_price();
+}
+
 function max() {
-	count = price_mul.length;
+	count = 100;
 	
 	compute_price();
 }
@@ -320,6 +397,15 @@ function select_method(type)
 	$('#method' + choose_method).addClass('active');
 	
 	compute_price();
+		
+	$('#buy_confirm_panel').show();
+}
+
+function confirm()
+{
+	$('#buy_confirm_panel').hide();
+	
+	submit();
 }
 
 function select_record(idx)
@@ -354,6 +440,91 @@ Array.prototype.remove=function(dx)
 	this.length-=1
 }
 
+function select_tag2(type) {
+	choose_method = 2;
+	
+	// 判断是否超过200元
+	if (base_price * count >= 200)
+	{
+        $('#modal .title').html('选择数字不能超过200元下注！');
+        $('#modal .btnSure').attr('onclick','closeModal()');
+        $('.modal').css('opacity',100);
+        $('#modal').show();
+        return;
+	}
+	
+	$('#method0_tag0').removeClass('active');
+	$('#method0_tag1').removeClass('active');
+	$('#method0_tag2').removeClass('active');
+	$('#method0_tag12').removeClass('active');
+	$('#method0_tag11').removeClass('active');
+	
+	for (var i=0; i<10; i++)
+	{
+		$('#method2_tag' + i).removeClass('active');
+	}
+	
+	buy_lotterys = new Array();
+	
+	buy_lotterys.push(type);
+	
+	for (var i=0; i<=9; i++)
+		$('#method2_tag' + i).removeClass('active');
+	
+	for (var i=0; i<buy_lotterys.length; i++)
+	{
+		$('#method2_tag' + buy_lotterys[i]).addClass('active');
+	}
+	
+	compute_price();
+	
+	$('#cur_buy_type').html(type);			
+	
+	$('#buy_confirm_panel').show();
+}
+
+
+function select_tag(type) {
+	choose_method = 0;
+	
+	$('#method0_tag0').removeClass('active');
+	$('#method0_tag1').removeClass('active');
+	$('#method0_tag2').removeClass('active');
+	$('#method0_tag12').removeClass('active');
+	$('#method0_tag11').removeClass('active');
+	
+	for (var i=0; i<10; i++)
+	{
+		$('#method2_tag' + i).removeClass('active');
+	}
+	
+	buy_lotterys = new Array();
+	
+	buy_lotterys.push(type);
+	
+	for (var i=0; i<3; i++)
+		$('#method0_tag' + i).removeClass('active');
+	
+	for (var i=0; i<buy_lotterys.length; i++)
+	{
+		$('#method0_tag' + (buy_lotterys[i] + 1)).addClass('active');
+	}
+	
+	compute_price();
+	
+	if (type == 1)
+		$('#cur_buy_type').html('大');
+	else if (type == -1)
+		$('#cur_buy_type').html('小');
+	if (type == 10)
+		$('#cur_buy_type').html('单');
+	else if (type == 11)
+		$('#cur_buy_type').html('双');
+	
+	$('#buy_confirm_panel').show();
+}
+
+/*
 function select_tag(type) {
 	for (var i=0; i<buy_lotterys.length; i++)
 	{
@@ -380,6 +551,7 @@ function select_tag(type) {
 			return;
 		}
 	}
+	
 	
 	buy_lotterys.push(type);
 	
@@ -419,30 +591,39 @@ function select_tag(type) {
 	
 	compute_price();
 }
+*/
 
 function compute_price()
 {
-	var total_price = buy_lotterys.length * base_price * price_mul[count-1];
+	var total_price = buy_lotterys.length * count;
 	
 	$('#money').html('' + total_price);
 	
 	var low_gain = 999999;
 	var high_gain = 0; 
 	
+	/*
 	for (var i=0; i<buy_lotterys.length; i++)
 	{
-		var cur_gain = base_price * price_mul[count-1];
+		var cur_gain = base_price * count;
 		
-		if (buy_lotterys[i] == 1)
-			cur_gain *= cur_ratio.big_ratio;
-		else if (buy_lotterys[i] == 0)
-			cur_gain *= cur_ratio.mid_ratio;
-		else if (buy_lotterys[i] == -1)
-			cur_gain *= cur_ratio.small_ratio;
-		else if (buy_lotterys[i] == 10)
-			cur_gain *= cur_ratio.odd_ratio;
-		else if (buy_lotterys[i] == 11)
-			cur_gain *= cur_ratio.event_ratio;
+		if (choose_method == 0)
+		{
+			if (buy_lotterys[i] == 1)
+				cur_gain *= cur_ratio.big_ratio;
+			else if (buy_lotterys[i] == 0)
+				cur_gain *= cur_ratio.mid_ratio;
+			else if (buy_lotterys[i] == -1)
+				cur_gain *= cur_ratio.small_ratio;
+			else if (buy_lotterys[i] == 10)
+				cur_gain *= cur_ratio.odd_ratio;
+			else if (buy_lotterys[i] == 11)
+				cur_gain *= cur_ratio.event_ratio;	
+		}
+		else
+		{
+			cur_gain *= cur_ratio.num_ratio;
+		}
 		
 		if (low_gain >= cur_gain)
 			low_gain = cur_gain;
@@ -462,12 +643,19 @@ function compute_price()
 		else
 			$('#future-money').html(high_gain.toFixed(2));		
 	}
+	*/
+	
+	var f1 = base_price * count * cur_ratio.big_ratio;
+	var f2 = base_price * count * cur_ratio.num_ratio;
+	
+	$('#future-money').html(f1.toFixed(2));
+	$('#future-money2').html(f2.toFixed(2));
 	
 	var cur_price_ratio = price_ratio;
 	if (cur_price_ratio.charAt(cur_price_ratio.length - 1) == '%')
 	{
 		cur_price_ratio = cur_price_ratio.replace("%","") / 100.0;
-		discount_price = total_price * cur_price_ratio;
+		discount_price = total_price * base_price * cur_price_ratio;
 		
 		$('#price_ratio').html(discount_price.toFixed(2));
 	}
@@ -488,40 +676,66 @@ function paint(){
     $(".num2 .num-img").css({'backgroundPositionY':ranArr[openBalls[1]],});
     $(".num3 .num-img").css({'backgroundPositionY':ranArr[openBalls[2]],});
     $(".num4 .num-img").css({'backgroundPositionY':ranArr[openBalls[3]],});
-    $(".num5 .num-img").css({'backgroundPositionY':ranArr[openBalls[4]],});
-    $(".num6 .num-img").css({'backgroundPositionY':ranArr[openBalls[5]],});
+    $(".num5 .num-img").css({'backgroundPositionY':ranArr[openBalls[8]],});
+    $(".num6 .num-img").css({'backgroundPositionY':ranArr[openBalls[7]],});
     $(".num7 .num-img").css({'backgroundPositionY':ranArr[openBalls[6]],});
-    $(".num8 .num-img").css({'backgroundPositionY':ranArr[openBalls[7]],});
-    $(".num9 .num-img").css({'backgroundPositionY':ranArr[openBalls[8]],});
+    $(".num8 .num-img").css({'backgroundPositionY':ranArr[openBalls[5]],});
+    $(".num9 .num-img").css({'backgroundPositionY':ranArr[openBalls[4]],});
     
 	var is_event = 0;
 	if (openBalls[8] % 2 == 0)
 		is_event = 1;
     
-    if(openBalls[7] == openBalls[8]){ //合
-        $('#ball1').html(openBalls[7]);
-        $('#ball2').html(openBalls[8]);
-        $('#ball3').html('合');
-    }else if(openBalls[8] >= 5){
-        $('#ball1').html('-');
-        $('#ball2').html(openBalls[8]);
-        $('#ball3').html('大');
-        
-        if (is_event)
-        	$('#ball1').html('双');
-        else
-        	$('#ball1').html('单');
-        
-    }else if(openBalls[8] < 5){
-        $('#ball1').html('-');
-        $('#ball2').html(openBalls[8]);
-        $('#ball3').html('小');
-        
-        if (is_event)
-        	$('#ball1').html('双');
-        else
-        	$('#ball1').html('单');
-    }
+	if (has_he)
+	{
+	    if(openBalls[7] == openBalls[8]){ //合
+	        $('#ball1').html(openBalls[7]);
+	        $('#ball2').html(openBalls[8]);
+	        $('#ball3').html('合');
+	    }else if(openBalls[8] >= 5){
+	        $('#ball1').html('-');
+	        $('#ball2').html(openBalls[8]);
+	        $('#ball3').html('大');
+	        
+	        if (is_event)
+	        	$('#ball1').html('双');
+	        else
+	        	$('#ball1').html('单');
+	        
+	    }else if(openBalls[8] < 5){
+	        $('#ball1').html('-');
+	        $('#ball2').html(openBalls[8]);
+	        $('#ball3').html('小');
+	        
+	        if (is_event)
+	        	$('#ball1').html('双');
+	        else
+	        	$('#ball1').html('单');
+	    }
+	}
+	else
+	{
+		if(openBalls[8] >= 5){
+	        $('#ball1').html('-');
+	        $('#ball2').html(openBalls[8]);
+	        $('#ball3').html('大');
+	        
+	        if (is_event)
+	        	$('#ball1').html('双');
+	        else
+	        	$('#ball1').html('单');
+	        
+	    }else if(openBalls[8] < 5){
+	        $('#ball1').html('-');
+	        $('#ball2').html(openBalls[8]);
+	        $('#ball3').html('小');
+	        
+	        if (is_event)
+	        	$('#ball1').html('双');
+	        else
+	        	$('#ball1').html('单');
+	    }
+	}
 }
 
 function showResult (result)
@@ -530,31 +744,49 @@ function showResult (result)
     $('#full-result .ball .openBall2').html(openBalls[7]);
     $('#full-result .ball .openBall3').html(openBalls[8]);
 
-    $('#full-result .result-num').html(lottery_result.lottery.no);
+    $('#full-result .result-num').html(lottery_result.lottery.no + '期');
     var openStr = '';
-    if(openBalls[7] == openBalls[8]){
-        openStr = '<span class="roll">'+openBalls[7]+'</span>'
-                + '<span class="roll">'+openBalls[8]+'</span>'
-                + '<span class="roll">合</span>';
-        
+    
     var is_event = 0;
-    if (openBalls[8] % 2 == 0)
-    	is_event = 1;
-    	
-    }else if(openBalls[8] >= 5){
-        openStr = '<span class="roll">大</span>';
-        
-		if (is_event)
-			result += '单<span class="red">双</span>';
-		else
-			result += '<span class="red">单</span>双';
-    }else{
-        openStr = '<span class="roll">小</span>';
+    
+    if (has_he)
+    {
+        if(openBalls[7] == openBalls[8]){
+            openStr = '<span class="roll">'+openBalls[7]+'</span>'
+                    + '<span class="roll">'+openBalls[8]+'</span>'
+                    + '<span class="roll">合</span>';
+            
+        if (openBalls[8] % 2 == 0)
+        	is_event = 1;
+        	
+        }else if(openBalls[8] >= 5){
+            openStr = '<span class="roll">大</span>';
+        }else{
+            openStr = '<span class="roll">小</span>';
+        }
         
         if (is_event)
-			result += '单<span class="red">双</span>';
+        	openStr += '<span class="roll">双</span>';
 		else
-			result += '<span class="red">单</span>双';
+			openStr += '<span class="roll">单</span>';        
+    }
+    else
+    {
+        if (openBalls[8] % 2 == 0)
+        	is_event = 1;
+        
+        openStr = '<span class="roll">'+openBalls[8]+'</span>'
+        
+        if(openBalls[8] >= 5){
+            openStr += '<span class="roll">大</span>';
+        }else{
+            openStr += '<span class="roll">小</span>';
+        }
+        
+        if (is_event)
+        	openStr += '<span class="roll">双</span>';
+		else
+			openStr += '<span class="roll">单</span>';        
     }
 
     var ballsStr='';
@@ -600,8 +832,11 @@ function run(delay){
     $(".num-img").each(function (index) {
         var _num = $(this);
         var u = 26;
+        var i = index;
+        if (index >= 4)
+        	i = 8 - (index - 4);
         _num.animate({
-            backgroundPositionY: (u*60) - (u*openBalls[index]),
+            backgroundPositionY: (u*60) - (u*openBalls[i]),
         }, {
             duration: index* delay,
             easing: "easeOutCubic",
@@ -761,22 +996,34 @@ function openedRecord() {
                 	if (k.balls[8] % 2 == 0)
                 		is_event = 1;
 				    
-	                if(k.balls[7] == k.balls[8]){
+	                if(k.balls[7] == k.balls[8] && has_he){
                         html1 += '<tr><td>'+k.no+'</td>'
                             +'<td></td><td></td><td><span class="active"></span><td></td><td></td></td></tr>';
 
-                        html3 += '<tr><td>'+k.no+'</td>'
-                            +'<td><span>'+k.balls[6]+'</span><span class="bg-red">'+k.balls[7]+'</span><span class="bg-red">'+k.balls[8]+'</span></td>'
-                            +'<td><span>大</span><span>小</span><span class="bg-red">合</span><span>单</span><span>双</span></td></tr>';
+                        	html3 += '<tr><td>'+k.no+'</td>'
+                            	+'<td><span>'+k.balls[6]+'</span><span class="bg-red">'+k.balls[7]+'</span><span class="bg-red">'+k.balls[8]+'</span></td>'
+                            	+'<td><span>大</span><span>小</span><span class="bg-red">合</span><span>单</span><span>双</span></td></tr>';
 
                     }else if(k.balls[8] >= 5){
                     	
-                        html1 += '<tr><td>'+k.no+'</td>'
-                            +'<td><span class="active"></span></td><td></td><td></td>';
-
-                        html3 += '<tr><td>'+k.no+'</td>'
-                            +'<td><span>'+k.balls[6]+'</span><span>'+k.balls[7]+'</span><span class="bg-red">'+k.balls[8]+'</span></td>'
-                            +'<td><span class="bg-red">大</span><span>小</span><span>合</span>';
+                        if (has_he)
+                        {
+                            html1 += '<tr><td>'+k.no+'</td>'
+                            	+'<td><span class="active"></span></td><td></td><td></td>';
+                        	
+                        	html3 += '<tr><td>'+k.no+'</td>'
+                            	+'<td><span>'+k.balls[6]+'</span><span>'+k.balls[7]+'</span><span class="bg-red">'+k.balls[8]+'</span></td>'
+                            	+'<td><span class="bg-red">大</span><span>小</span><span>合</span>';
+                        }
+                        else
+                        {
+                        	html1 += '<tr><td>'+k.no+'</td>'
+                        		+'<td><span class="active"></span></td><td></td>';
+                        	
+                        	html3 += '<tr><td>'+k.no+'</td>'
+                        	+'<td><span>'+k.balls[6]+'</span><span>'+k.balls[7]+'</span><span class="bg-red">'+k.balls[8]+'</span></td>'
+                        	+'<td><span class="bg-red">大</span><span>小</span>';                        	
+                        }
                         
                        	if (is_event)
                        	{
@@ -792,12 +1039,25 @@ function openedRecord() {
                        	html1 += '</tr>';
                         html3 += '</td></tr>';
                     }else{
-                        html1 += '<tr><td>'+k.no+'</td>'
-                            +'<td></td><td><span class="active"></span></td><td></td>';
 
-                        html3 += '<tr><td>'+k.no+'</td>'
-                            +'<td><span>'+k.balls[6]+'</span><span>'+k.balls[7]+'</span><span class="bg-red">'+k.balls[8]+'</span></td>'
-                            +'<td><span>大</span><span class="bg-red">小</span><span>合</span>';
+                        if (has_he)
+                        {
+                            html1 += '<tr><td>'+k.no+'</td>'
+                            +'<td></td><td><span class="active"></span></td><td></td>';
+                            
+                            html3 += '<tr><td>'+k.no+'</td>'
+                            	+'<td><span>'+k.balls[6]+'</span><span>'+k.balls[7]+'</span><span class="bg-red">'+k.balls[8]+'</span></td>'
+                            	+'<td><span>大</span><span class="bg-red">小</span><span>合</span>';	
+                        }
+                        else
+                        {
+                            html1 += '<tr><td>'+k.no+'</td>'
+                            +'<td></td><td><span class="active"></span></td>';
+                            
+                            html3 += '<tr><td>'+k.no+'</td>'
+                        		+'<td><span>'+k.balls[6]+'</span><span>'+k.balls[7]+'</span><span class="bg-red">'+k.balls[8]+'</span></td>'
+                        		+'<td><span>大</span><span class="bg-red">小</span>';                        	
+                        }
                         
                        	if (is_event)
                        	{
@@ -847,6 +1107,10 @@ function openedRecord() {
         $('#full-record').slideDown();
         openedRecord();
     })
+    $('#gameRule').click(function() {
+    	//$('#rule_panel').show();
+    	location.href = 'index.php?g=Qqonline&m=index&a=rule';
+    })
     //关闭往期窗口
     $('#full-record .close-btn').click(function () {
         $('#full-record').slideUp();
@@ -862,3 +1126,47 @@ function openedRecord() {
     })
     
     select_method(0);
+    
+    var swiper;
+    function get_marquee()
+    {
+        $.ajax({
+            type: 'get',
+            dataType: 'json',
+            url: 'index.php?g=Qqonline&m=index&a=ajax_get_win_list',
+            data: { },
+            success: function (data) {
+            	console.log(JSON.stringify(data));
+                if (data.ret == 1) {
+        			var htmlC = '';
+        			document.getElementById('swiper_wrapper').style = 'transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;';
+        			for (var i = data.lists.length - 1; i >= 0; i -= 1) {
+        				var region = '';
+        				if (data.lists[i].buy_method == 0)
+        					region = '大小区';
+        				else
+        					region = '数字区';
+        				var str = '恭喜会员［' + data.lists[i].user_activation_key + '］在' + region + '投中' + data.lists[i].win + '元！';
+        				htmlC += '<div class="swiper-slide">&nbsp;' + str + '</div>';
+        			}
+        			$(".swiper-wrapper").html(htmlC);
+        			if (swiper != null)
+        				swiper.stopAutoplay();
+    				swiper = new Swiper('.swiper-container', {
+        				pagination: '.swiper-pagination',
+        				paginationClickable: true,
+        				direction: 'vertical',
+        				spaceBetween: 30,
+        				autoplay: 2000,
+        				loop: true
+        			});
+                }
+            }
+        });	
+    }
+
+    get_marquee();
+
+    setInterval(function () {
+    	get_marquee();
+    }, 15000);    

@@ -73,8 +73,7 @@
             margin: 10px auto;
             margin-top: 0;
             min-height: 395px;
-            /*background: url("__TMPL__Public/img/39.png") center  no-repeat;*/
-        	background-color:#FFD800;
+            background: url("__TMPL__Public/img/39-2.png") center  no-repeat;
             background-size: 100% 100%;
         	border-radius: 10px;
             position: relative;
@@ -84,8 +83,9 @@
         }
         .order-list>div{
             border-bottom: 1px solid #c679d0;
-            height:40px;
-            line-height: 40px;
+            height:35px;
+            line-height: 35px;
+        	color: white;
         }
         .full-record .buy-btn{
             width: 80px;
@@ -161,18 +161,10 @@
 <!--开奖结果-->
 <div class="full-record" id="full-record">
     <div class="order">
-        <div class="order-title">详情</div>
         <div class="order-box">
+        	<div class="order-title" style="color:white;font-size:18px">详情</div>        
             <!--<div class="order-close" id="result-close"></div>-->
-            <div class="buy-head">
-                <p style="margin-bottom: 0">本期开奖号码</p>
-                <p>
-                    <span class="openBall1 roll"></span>
-                    <span class="openBall2 roll"></span>
-                    <span class="openBall3 red-bg roll"></span>
-                </p>
-            </div>
-            <div class="order-list" id="result-list">
+            <div class="order-list" id="result-list" style="border:0px">
                 <div class="clearfix">
                     <div class="pull-left">本次期号</div>
                     <div class="pull-right ball">
@@ -186,15 +178,21 @@
                     </div>
                 </div>
                 <div class="clearfix">
+                    <div class="pull-left">开奖号码</div>
+                    <div class="pull-right buy-balls"><span class="buy roll"></span></div>
+                </div>                
+                <div class="clearfix">
                     <div class="pull-left">开奖结果</div>
                     <div class="pull-right openResult">
                         <span class="roll"></span>
                     </div>
                 </div>
                 <div class="clearfix">
-                    <div class="pull-left">本次竞猜</div>
-                    <div class="pull-right buy-balls"><span class="buy roll"></span></div>
-                </div>
+                    <div class="pull-left">投注号码</div>
+                    <div class="pull-right openLottery">
+                    	<span class="roll"></span>
+                    </div>
+                </div>                
                 <div class="clearfix">
                     <div class="pull-left">本次投注</div>
                     <div class="pull-right"><span class="money"></span>金币</div>
@@ -204,7 +202,8 @@
                     <div class="pull-right"><span class="fucture-money"></span>金币</div>
                 </div>
             </div>
-            <div class="buy-btn" id="resultConfirm">确定</div>
+            <div style="margin-top: 18px; text-align:center; border-top: 0px solid #F0F0F0; color: white; font-size: 16px;
+                    line-height: 45px;" id="resultConfirm" onclick="$('#full-record').hide()">知道了</div>
         </div>
     </div>
 </div>
@@ -256,6 +255,7 @@
         $('#full-record .openBall3').html('');
         $('#full-record .openTime').html('');
         $('#full-record .openResult').html('');//开奖结果
+        $('#full-record .openLottery').html('');
         $('#full-record .money').html('');
         $('#full-record .buy-balls').html('');//本次竞猜
         $('#full-record .fucture-money').html(0);
@@ -275,6 +275,8 @@
                     $('#full-record').show();
                     $('#full-record .buy-num').html(res.lottery.no);
                     var openStr = '';
+                    var buyStr = '';
+                    
                     if(res.lottery.status == "2"){
                         $('#full-record  .openBall1').html(balls[6]);
                         $('#full-record  .openBall2').html(balls[7]);
@@ -291,37 +293,58 @@
                         }else if(balls[8] >= 5){
                             openStr =  '<span class="roll">'+balls[8]+'</span>'
                                 +'<span class="roll red-bg">大</span>';
-                                
-                            if (is_event)
-                            	openStr += '<span span class="roll red-bg">双</span>';
-                    		else
-                    			openStr += '<span class="roll red-bg">单</span>';
                         }else{
                             openStr = '<span class="roll">'+balls[8]+'</span>'
                                 +'<span class="roll red-bg">小</span>';
-                                
-                            if (is_event)
-                            	openStr += '<span span class="roll red-bg">双</span>';
-                    		else
-                    			openStr += '<span class="roll red-bg">单</span>';
                         }
+
+                        if (is_event)
+                        	openStr += '<span span class="roll red-bg">双</span>';
+                		else
+                			openStr += '<span class="roll red-bg">单</span>';                        
+                        
                         $('#full-record .openTime').html(getTime(res.lottery.open_time));
                         $('#full-record .fucture-money').html(Number(res.result.total_win).toFixed(2));
                     }else{
                         $('#full-record .openTime').html('');
                         $('#full-record .fucture-money').html(0);
                     }
+                    
+                    for (var i=0; i<res.lottery.buy_lists.length; i++)
+                    {
+                    	if (res.lottery.buy_lists[i]['buy_method'] == "0")
+                    	{
+                    		if (res.lottery.buy_lists[i]['buy_type'] == "1")
+                    			cur_buy = '<span class="roll red-bg">大</span>';
+                    		else if (res.lottery.buy_lists[i]['buy_type'] == "-1")
+                    			cur_buy = '<span class="roll red-bg">小</span>'
+                    		if (res.lottery.buy_lists[i]['buy_type'] == "10")
+                            	cur_buy = '<span class="roll red-bg">单</span>';
+                            else if (res.lottery.buy_lists[i]['buy_type'] == "11")
+                            	cur_buy = '<span class="roll red-bg">双</span>'
+                    	}
+                    	else if (res.lottery.buy_lists[i]['buy_method'] == "2")
+                    	{
+                    		cur_buy = '<span class="roll">' +  res.lottery.buy_lists[i]['buy_type'] + '</span>';
+                    	}
+                    	
+                    	if (i == 0)
+                    		buyStr = cur_buy;
+                    	else
+                    		buyStr += cur_buy;
+                    }
  
                     var ballsStr='';
                     for (var i=balls.length-3; i<balls.length; i++)
-                    	 ballsStr += '<span class="roll">'+balls[i]+'</span>';
+                    	ballsStr += '<span class="roll">'+balls[i]+'</span>';
                     	 
                     var total_price = 0;
                     if (res.result.total_price != null)
                     	total_price = res.result.total_price;
-
+                    
                     $('#full-record .openResult').html(openStr);//开奖结果
                     $('#full-record .money').html(total_price);
+                    $('#full-record .openLottery').html(buyStr);
                     $('#full-record .buy-balls').html(ballsStr);//本次竞猜
 
                 }else{

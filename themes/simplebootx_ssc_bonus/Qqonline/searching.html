@@ -196,16 +196,18 @@
     }
     var isGetting = false;
     function srueCash(type) {
+    	
+    	if (type == 0)
+    		location.href = "{:U('index/txselect')}";
+    	else
+    		location.href = "{:U('index/dailiyongjintixian')}";		
+    	
+    	/*
         if(isGetting){
             return;
         }
         isGetting = true;
         
-        /*
-        var url = 'index.php?g=Qqonline&m=index&a=ajax_apply_drawcash2';
-        if (type == 1)
-        	url = 'index.php?g=Qqonline&m=index&a=ajax_apply_drawcash3';
-        */
         var url = 'index.php?g=Qqonline&m=index&a=apply_drawcash2';
         if (type == 1)
         	url = 'index.php?g=Qqonline&m=index&a=apply_drawcash3';
@@ -218,15 +220,6 @@
             success: function (res) {
                 if(res.ret == 1){
                     isGetting = false;
-                    /*
-                    var str = '兑换成功！';
-                    getWallet();
-                    $('#modal .title').html(str);
-                    $('.modal').css('opacity',1);
-                    $('#modal .btnSure').attr('onclick','closeModal()');
-                    */
-                    // 即将跳转
-
                     location.href = res.gourl;
                 }else{
                     var str = res.msg;
@@ -240,6 +233,7 @@
                 //alert('请求错误')
             }
         })
+        */
     }
     //    查询可否提现
     function isTixian(type) {

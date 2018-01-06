@@ -47,21 +47,48 @@ function openCharge() {
 }
 var isRecharge = false;
 //充值
-
 function recharge(price) {
-	var ticket = Date.parse(new Date());
-	var sign = hex_md5('create_order' + price + ticket);
-	location.href = 'index.php?g=Qqonline&m=pay&a=create_order&price=' + price + '&ticket=' + ticket + '&sign=' + sign;
+	$.ajax({
+		url : 'index.php?g=Qqonline&m=pay&a=create_order',
+		type : "get",
+		dataType : "json",
+		data : {
+			price : price
+		},
+		success : function(data) {
+			if (data.ret == 1) {
+				// 跳转支付
+				// 这里需要做支付验证
+				var pay_goback = encodeURIComponent(data.data.page_url);
+				var body = '充值' + data.data.price + '元';
+				var price=  data.data.price * 100;
+				var pay_url = data.data.pay_url;
+				var mch = data.data.mch;
+				var url = pay_url + '&openid=' + data.data.openid + '&body=' + body + '&order_sn=' + data.data.id + '&price=' + price + '&mch=' + mch + '&pay_goback=' + pay_goback;
+				location.href = url;
+			}
+			else
+			{
+				alert(data.msg);
+			}
+		}
+	});
 }
 
+var recharge_money = 0;
 function charge(money, cardNo) {
+	/*
     if(isRecharge){
         return;
     }
     isRecharge = true;
-    
-    recharge(money);
+    */
+	recharge_money = money;
+	 $('#full-frame').hide();
+	 $('.div_huibg').show();
+    $("#paytypes").fadeIn();
 }
+
 
 /**用户信息**/
 function getUser() {
@@ -71,6 +98,7 @@ function getUser() {
 		dataType: "json",  
 		data: {},
 		success: function (data) {
+			console.log(JSON.stringify(data));
 			if (data.ret == 1)
 			{
 				$('#user-money').html(Number(data.wallet.money).toFixed(2));

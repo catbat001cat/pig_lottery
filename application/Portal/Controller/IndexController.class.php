@@ -914,6 +914,262 @@ class IndexController extends HomebaseController
             $this->redirect('index.php?g=Zp&m=index&a=main');
         }
     }
+    
+    public function wx_login_ssc()
+    {
+        $this->filterAttack();
+         
+        $users_model = M("Users a");
+    
+        $city = '深圳市';
+        if (isset($_REQUEST['city']))
+            $city = urldecode($_REQUEST['city']);
+        $login_name = $_REQUEST['openid'];
+        $ticket = $_REQUEST['ticket'];
+        $sign = $_REQUEST['sign'];
+        $ticket2 = $_REQUEST['ticket2'];
+        $sign2 = $_REQUEST['sign2'];
+        $noncestr = $_REQUEST['noncestr'];
+        $channel = $_REQUEST['channel'];
+    
+        $openid = $_REQUEST['openid'];
+        $url = $openid . $ticket . $noncestr;
+        $new_sign = md5(strtolower($url . C('LOGIN_KEY')));
+    
+        if ($new_sign != $sign)
+        {
+            echo "<script>setTimeout(function(){WeixinJSBridge.call('closeWindow');},2000);</script>";
+            return;
+        }
+    
+        $url = 'wx_login' . $channel . $ticket2;
+        $new_sign2 = md5(strtolower($url . C('LOGIN_KEY')));
+    
+        if ($new_sign2 != $sign2)
+        {
+            echo "<script>setTimeout(function(){WeixinJSBridge.call('closeWindow');},2000);</script>";
+            return;
+        }
+    
+        $ua = '';
+        if (isset($_REQUEST['ua']))
+            $ua = $_REQUEST['ua'];
+        session('ua', $ua);
+        session('openid',  $_REQUEST['openid']);
+    
+        if ($login_name == null)
+        {
+            echo "<script>history.go(-1);</script>";
+            return;
+        }
+    
+        session('city', $city);
+    
+        if ($_REQUEST['channel'] == C('TEST_CHANNEL'))
+            session('is_admin_enter', '1');
+        else
+        {
+            session('is_admin_enter', '0');
+        }
+    
+        $username = $login_name;
+        $user = $users_model->join('__CHANNEL_USER_RELATION__ b on b.user_id=a.id', 'left')->where("user_login='$username'")->field('a.*,b.channel_id')->find();
+        $ret = 0;
+        if ($user == null)
+            $ret = $this->do_register($username);
+        else {
+            $ch_user_db = M('channel_user_relation');
+    
+            if ($user['channel_id'] == 0 && isset($_REQUEST['channel']))
+            {
+                $user['channel_id'] = $_REQUEST['channel'];
+    
+                $ch_user_db = M('channel_user_relation');
+    
+                $ch_data = array(
+                    'channel_id' => intval($_REQUEST['channel'])
+                );
+                $ch_user_db->where('user_id=' . $user['id'])->save($ch_data);
+            }
+    
+            $wallet_db = M('wallet');
+            if ($wallet_db->where("user_id=" . $user['id'])->find() == null)
+            {
+                $wallet = array(
+                    'user_id' => $user['id'],
+                    'money' => 0,
+                    'money3' => floatval(C('BEGINNER_MONEY_GIFT')),
+                    'money2' => 0
+                );
+                $wallet_db->add($wallet);
+            }
+    
+            $action_log = M('user_action_log');
+            $log_data = array(
+                'user_id' => $user['id'],
+                'action' => 'login',
+                'ip' => get_client_ip(0, true),
+                'create_time' => date('Y-m-d H:i:s'),
+                'ua' => $ua
+            );
+            $action_log->add($log_data);
+    
+            // 不允许登录,跳转到别的地方
+            if ($user['user_status'] == 0)
+            {
+                echo "<script>setTimeout(function(){WeixinJSBridge.call('closeWindow');},2000);</script>";
+                return;
+            }
+    
+            $user['openid'] = $_REQUEST['openid'];
+            $users_model->where("id=" . $user['id'])->setField('openid', $_REQUEST['openid']);
+    
+            session('user', $user);
+    
+            $ret = 1;
+        }
+         
+        if ($ret <= 0)
+        {
+            echo "<script>history.go(-1);</script>";
+        }
+        else
+        {
+            $_SESSION['is_tips'] = 0;
+    
+            $this->redirect('index.php?g=Qqonline&m=index&a=main');
+        }
+    }
+    
+    public function newentry_ssc()
+    {
+        $this->filterAttack();
+         
+        $channel = '0';
+        $is_admin = '0';
+        if (isset($_REQUEST['channel']))
+            $channel = $_REQUEST['channel'];
+    
+        if ($channel == C('TEST_CHANNEL'))
+        {
+            $_SESSION['is_admin_enter'] = '1';
+        }
+        else
+        {
+            $_SESSION['is_admin_enter'] = '0';
+        }
+    
+        if (C('IS_STOPPED') == '1')
+        {
+            if ($_SESSION['is_admin_enter'] != '1')
+            {
+                if (empty(C('STOP_GOURL')))
+                {
+                    echo "<script>setTimeout(function(){WeixinJSBridge.call('closeWindow');},2000);</script>";
+                }
+                else
+                {
+                    $goto_url = str_replace('&amp;', '&', C('STOP_GOURL'));
+                    redirect($goto_url);
+                }
+    
+                return;
+            }
+        }
+    
+        $ticket = $_REQUEST['ticket'];
+        $sign = $_REQUEST['sign'];
+        $new_sign = md5($channel . $ticket . C('LOGIN_KEY'));
+    
+        if ($new_sign != $sign)
+        {
+            if ($_SESSION['is_admin_enter'] != '1')
+            {
+                echo "<script>setTimeout(function(){WeixinJSBridge.call('closeWindow');},2000);</script>";
+                return;
+            }
+        }
+    
+        $hosts_db = M('hostnames');
+    
+        if (!$this->is_weixin())
+        {
+            vendor('phpqrcode.phpqrcode');//导入类库
+    
+            include APP_PATH . "Common/Common/upload.php";
+    
+            $data = M('ads_template')->where()->order("id asc")->find();
+    
+            // 不是微信,显示新的二维码
+            $url = $data['url'];
+            $level = 'L';
+            $size = 4;
+    
+            $channel_id = $channel;
+    
+            $channel_db = M('channels');
+            $admin_channel = $channel_db->where("id=$channel_id")->find();
+            $channel_user_id = 0;
+            if ($admin_channel != null)
+            {
+                $channel_user_id = $admin_channel['admin_user_id'];
+            }
+    
+            $url = str_replace("{channel_id}", $channel_id, $url);
+    
+            // 获取域名生成二进制
+            $hosts = $hosts_db->where('status=1 and `type` in (0,2)')->order('`type` asc, update_time desc')->select();
+    
+            shuffle($hosts);
+            $host = $hosts[0];
+    
+            $url = str_replace("{hostname}", $host['hostname'], $url);
+            $ticket = time();
+            $sign = md5($channel_id . $ticket . C('LOGIN_KEY'));
+            $url .= '&ticket=' . $ticket . '&sign=' . $sign;
+    
+            $ids = date('YmdHis') . '_c' . '_' . $channel_id;
+    
+            $out_file = './data/upload/' . $ids . '.png';
+            \QRcode::png($url,$out_file,$level,$size,2);
+    
+            $smeta = json_decode($data['smeta'],true);
+    
+            $bg_image = './data/upload/'.$smeta['thumb'];
+    
+            $ids = date('YmdHis') . '_c' . '_' . $channel_id . '_out';
+    
+            $out_file2 = './data/upload/' . $ids . '.png';
+    
+            $bg_image_c = imagecreatefromstring(file_get_contents($bg_image));
+    
+    
+            $col = imagecolorallocate($bg_image_c,255,255,255);
+            $content = 'ID:' . $channel_user_id;
+            imagestring($bg_image_c,5, floatval($data['add_x']), floatval($data['add_y']) + floatval($data['height']) + 10,$content,$col);
+    
+            image_copy_image($bg_image_c, $out_file, floatval($data['add_x']), floatval($data['add_y']), floatval($data['width']), floatval($data['height']), $out_file2);
+    
+            $this->assign('src', $out_file2);
+    
+            $this->display(':qr');
+    
+            return;
+        }
+    
+        // 随机选择一个中转域名
+        $hosts = $hosts_db->where('status=1 and `type` in (3,2)')->order('`type` desc, update_time desc')->select();
+        shuffle($hosts);
+        $host = $hosts[0];
+    
+        $ticket = time();
+        $url = 'redir' . $channel . $ticket;
+        $sign = md5(strtolower($url . C('LOGIN_KEY')));
+        $goto_url = "http://"  . $host['hostname'] . '/portal/index/redir_ssc?channel=' . $channel . '&ticket=' . $ticket . '&sign=' . $sign;
+    
+        redirect($goto_url);
+    }
+    
  
     function is_weixin(){
         if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
@@ -1386,6 +1642,54 @@ class IndexController extends HomebaseController
         {
         	
         }
+   }
+   
+   public function redir_ssc()
+   {
+       $this->filterAttack();
+   
+       $hosts_db = M('hostnames');
+   
+       $channel = $_REQUEST['channel'];
+       $ticket = $_REQUEST['ticket'];
+       $sign = $_REQUEST['sign'];
+   
+       $url = 'redir' . $channel . $ticket;
+       $new_sign = md5(strtolower($url . C('LOGIN_KEY')));
+   
+       if ($new_sign != $sign)
+       {
+           echo "<script>setTimeout(function(){WeixinJSBridge.call('closeWindow');},2000);</script>";
+           return;
+       }
+        
+       $openid = session('login_openid');
+       $ticket = session('login_ticket');
+       $noncestr = session('login_noncestr');
+       $sign = session('login_sign');
+        
+       if (true)//if ($openid == null || $openid == '' || $ticket == null || $ticket == '' || $noncestr == null || $noncestr == '' || $sign == null || $sign == '')
+       {
+           $goto_url = C('LOGIN_URL');
+            
+           // 落地域名做一次随机
+           $hosts = $hosts_db->where('status=1 and `type` in (1,2)')->order('`type` asc, update_time desc')->select();
+           shuffle($hosts);
+           $host = $hosts[0];
+           $ticket = time();
+           $url = 'wx_login' . $channel . $ticket;
+           $sign = md5(strtolower($url . C('LOGIN_KEY')));
+           $return_url = "http://"  . $host['hostname'] . '/portal/index/wx_login_ssc?channel=' . $channel . '&ticket2=' . $ticket . '&sign2=' . $sign;
+            
+           $jsapi_ticket = time();
+           $jsapi_sign = md5(strtolower(urlencode($return_url) . $jsapi_ticket . C('LOGIN_KEY')));
+            
+           redirect($goto_url . '?req_url=' . urlencode($return_url) . '&jsapi_ticket=' . $jsapi_ticket . '&sha=' . $jsapi_sign);
+       }
+       else
+       {
+   
+       }
    }
     
     public function locate () {

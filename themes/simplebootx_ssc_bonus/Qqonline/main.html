@@ -5,8 +5,8 @@
     <meta name="format-detection" content="telephone=no">
     <title>{$site_name}</title>
     <link rel="stylesheet" href="__TMPL__Public/css/bootstrap.min.css">
-    <link rel="stylesheet" href="__TMPL__Public/css/main.css?10034">
-
+    <link rel="stylesheet" href="__TMPL__Public/css/main.css?10045">
+	<link rel="stylesheet" href="__TMPL__Public/css_zp/mystyle.css?10015">
 </head>
 <style>
 /* header{
@@ -19,8 +19,67 @@ div.icon{height:30px;width:30px;overflow: hidden;margin:0 auto;	margin-left:18px
                 background: url("__TMPL__Public/img/73_1.png");background-size:30px 30px;-webkit-filter: drop-shadow(#fef303 30px 0);filter: drop-shadow(#fef303 30px 0);           
 }
  */
+	.div_huibg
+        {
+            background: #000;
+            opacity: 0.5;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            z-index: 10;
+        }
+        #paytypes
+        {
+            width: 100%;
+            background: #fff;
+            position: absolute;
+            bottom: 0;
+            z-index: 20;
+        }
+        #paytypes label
+        {
+            text-align: center;
+            display: block; /*background: #ff6600;*/
+            height: 24vw;
+            line-height: 24vw;
+            margin: 0;
+            margin-top: 1px;
+            color: #4a4a4a;
+            letter-spacing: 1px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+		#hidebg
+        {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            background-color: #7D7D7D;
+            width: 100%; /*宽度设置为100%，这样才能使隐藏背景层覆盖原页面*/
+            height: 120%;
+            filter: alpha(opacity=80); /*设置透明度为60%*/
+            opacity: 0.8; /*非IE浏览器下设置透明度为60%*/
+            display: none; /* http://www.jb51.net */
+            z-index: 998;
+        }
+        #paytypes label:nth-child(1),#paytypes label:nth-child(2)
+        {
+            border-bottom: 1px solid #e1e1e1;
+        }
+        #paytypes label input
+        {
+            display: none;
+        }
+        #paytypes label img
+        {
+            width: 6vh;
+            display: inline-block;
+            margin-top: -1px;
+            vertical-align: middle;
+        }
 </style>
-<body>
+<body style="background-color:#FFF8DC;">
 
 <!--头部-->
 
@@ -33,22 +92,59 @@ div.icon{height:30px;width:30px;overflow: hidden;margin:0 auto;	margin-left:18px
 </div> -->
 
 <!-- 信息栏 -->
+<!--
 <div class="info">
 	<div class="pull-left">
 	    我的ID：<span id="userID">{$id}</span>
 	</div>
 	<div class="pull-right">
-	    <!-- <span>余额:￥<em id="user-money">{$wallet['money']}</em><img src="__TMPL__Public/img/btn1.png" id="chargeBtn" onclick="openCharge()" alt=""></span> -->
 	    <div class="dh-btn">
 			<img src="__TMPL__Public/img2/cz.png" onclick="openCharge()">
 			<img src="__TMPL__Public/img2/dx.png" id="exchange_btn">
 		</div>
-	    <!-- <a href="{:U('user/center/compaint')}" class="dh-btn">投诉</a> -->
 	</div> 
-</div>
+</div>-->
+
+	<header class="l-hd">
+		<div class="fixed_left">
+			<div class="left_div">
+				<p class="fixed_left_font">
+					<span class="name">会员:{$user_activation_key}</span><span class="balance">余额:¥<b
+						class="amount" id="user-money">{$wallet['money']}</b>
+						</span>
+						<span class="cash_postal" style="right:50px;"><button id="chargeBtn" onclick="openCharge()" style="line-height:20px;">充值</button></span>
+						<span class="cash_postal"><button onclick="goto_drawcash()">兑换</button></span>
+				</p>
+			</div>
+		</div>
+		<div class="toast dialog cpm-hide">
+			<div class="shade"></div>
+			<div class="naChanceMsg_1" style="min-hight: 1rem;">
+				<!--<div class="publicClose"></div>-->
+				<p class="pop_context"></p>
+				<div class="btn_stype_1">
+					<p class="goDraw" id="sureDraw">确认</p>
+				</div>
+				<div class="btn_stype_2 cpm-hide">
+					<p class="goDraw  sureDraw_left">确认</p>
+					<p class="goDraw sureDraw_right">取消</p>
+				</div>
+			</div>
+		</div>
+		<div class="toast toast_tk cpm-hide">
+			<div class="shade"></div>
+			<div class="naChanceMsg_tk" style="min-hight: 1rem;">
+				<!--<div class="publicClose"></div>-->
+				<p class="pop_context"></p>
+				<div class="btn_stype_1_tk">
+					<p class="goDraw tk">确认</p>
+				</div>
+			</div>
+		</div>
+	</header>
 
 <!--a h体内容---->
-<div id="main-content">
+<div id="main-content" style="background-color:#FFF8DC;">
 
 </div>
 <!--底部-->
@@ -89,24 +185,90 @@ div.icon{height:30px;width:30px;overflow: hidden;margin:0 auto;	margin-left:18px
         </div>
     </div>
 </nav>
-<!--账户充值-->
-<div class="full-frame" id="full-frame" style="display: none;">
-    <div class="order">
-        <div class="order-title">账户充值</div>
-        <div class="order-box">
-            <div class="order-close" id="order-close"></div>
-            <!--<div style="padding: 25px 25px 0 25px ">-->
-                <!--<p for="">请输入银行卡号：</p>-->
-                <!--<input id="bankNo" type="number" style="height: 25px;color: #000">-->
-            <!--</div>-->
-            <div class="order-list" id="order-list"><div class="clearfix"><div class="pull-left">账户充值<span>2</span>币<div class="pull-left">账户充值<span>5</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>10</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>20</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>50</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>100</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>200</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>300</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>500</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>1000</span>币</div><div class="pull-right">充值</div></div><div class="clearfix"><div class="pull-left">账户充值<span>2000</span>币</div><div class="pull-right">充值</div></div><div class="close-btn" style="background: url(__TMPL__Public/img/30.png) 50% 50% no-repeat;background-size: 90%;width: 30%;font-weight: bold;text-align: center;padding: 10px 0;height: 100%;line-height: 2.4rem;font-size: 1.63rem;" onclick="$('.full-frame').hide()">关闭</div></div>
-        	<div class="record-close row" style="margin-top: -30px;">
-				<div class="close-btn" style="background: url(__TMPL__Public/img/30.png) 50% 50% no-repeat;background-size: 90%;width: 30%;font-weight: bold;text-align: center;padding: 10px 0;height: 100%;line-height: 2.4rem;font-size: 1.63rem;" onclick="$('.full-frame').hide()">关闭</div>
-			</div>
+    <div style="width: 100%; top: 150px; position: absolute; z-index: 999;">
+        <div style="background: #303031; border-radius: 20px; margin: 0 auto; padding: 11px 22px 11px 22px;
+            color: white; display: none;" id="modal2">
+            操作成功
         </div>
-    </div>
+    </div>	
+<!--账户充值-->
+	<div class="full-frame" id="full-frame" style="display: none;">
+		<div class="order">
+			<div class="order-title">账户充值</div>
+			<div class="order-box">
+				<div class="order-close" id="order-close"></div>
+				<!--<div style="padding: 25px 25px 0 25px ">-->
+				<!--<p for="">请输入银行卡号：</p>-->
+				<!--<input id="bankNo" type="number" style="height: 25px;color: #000">-->
+				<!--</div>-->
+				<div class="order-list" id="order-list">
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>5</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>10</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>20</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>50</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>100</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>200</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>300</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>500</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>1000</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="clearfix">
+						<div class="pull-left">
+							账户充值<span>2000</span>币
+						</div>
+						<div class="pull-right">充值</div>
+					</div>
+					<div class="close-btn"
+						style="background: url(__TMPL__Public/img_zp/30.png) 50% 50% no-repeat; background-size: 90%; width: 30%; font-weight: bold; text-align: center; padding: 10px 0; height: 100%; line-height: 2.4rem; font-size: 1.63rem;"
+						onclick="$('.full-frame').hide()">关闭</div>
+				</div>
+			</div>
+		</div>
 	</div>
-</div>
 <!--充值成功-->
 <div class="full-success" id="full-success">
     <div class="order">
@@ -117,14 +279,29 @@ div.icon{height:30px;width:30px;overflow: hidden;margin:0 auto;	margin-left:18px
         <div class="buy-btn" id="successConfirm">确定</div>
     </div>
 </div>
-<script src="__TMPL__Public/js/jquery-3.1.1.min.js"></script>
+    <div id="paytypes" style="display: none;margin-bottom:50px;z-index:999">
+         <!--<h4>请选择支付方式</h4>--> 
+         <foreach name="channels" item="vo">
+	         <label id="{$vo['type']}" name="{$vo['type']}"  title="{$vo['name']}">
+	            <input type="radio" name="paytype" value="{$vo['name']}" onclick="javascript:select_channel('{$vo['type']}');" />
+	            <if condition="$vo.wx eq 1">
+	            <img src="__TMPL__Public/img/winxin-big-img.png" alt="">
+	            <else/>
+	            <img src="__TMPL__Public/img/alipay-big-img.png" alt="">
+	            </if>
+	          	  {$vo['name']}
+	        </label>    
+         </foreach>	
+     </div>
+  <script src="__TMPL__Public/js/jquery-3.1.1.min.js"></script>
 <script src="__TMPL__Public/js/bootstrap.min.js"></script>
-<script src="__TMPL__Public/js/config.js?10038"></script>
+<script src="__TMPL__Public/js/config.js?10043"></script>
 <script src="__TMPL__Public/js/md5.js"></script>
 <php>
 echo '<script>orderNum=[' . $recharge_prices . '];init_recharges();</script>';
 </php>
 <script>
+
     $(function () {
         getUser();
         $('#main-content').html('');
@@ -142,6 +319,80 @@ echo '<script>orderNum=[' . $recharge_prices . '];init_recharges();</script>';
             $('#nav .row>div:eq(2)>div>img').attr("src",$('#nav .row>div:eq(2)>div>img').attr("data-active")); 
         })
     })
+    
+    
+    function success(title) {
+            $("#modal2").fadeIn('fast');
+            if (title) {
+                $("#modal2").text(title);
+            }
+            $("#modal2").css('display', 'inline-block');
+            $("#modal2").css('margin-left', 'left:20%');
+            $("#modal2").fadeIn('fast');
+            window.setTimeout(function () {
+                $("#modal2").fadeOut(1000);
+            }, 2000);
+        }	
+        
+        $('.big-button1').click(function () {
+        	
+        	// 直接跳转
+        	var gross = 0;
+            $(".choosemoney").each(function (e) {
+                var val = $(this).attr("class");
+                var array = val.split(" ");
+                if (array[1] == 'current') {
+                    gross = $(this).children().html();
+                }
+            });
+
+            $('.div_huibg').fadeIn(500);
+            $('#paytypes').slideDown(400);
+        });
+
+        $('.div_huibg').click(function () {
+            $('.div_huibg').fadeOut(300);
+            $('#paytypes').slideUp(200);
+        });        
+		
+		function select_channel(type)
+        {
+        	var gross = recharge_money;
+            
+        	var ticket = Date.parse(new Date());
+        	var sign = hex_md5('ajax_create_order' + gross + ticket + type);
+        	
+        	success('即将跳转到支付');
+            
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: 'index.php?g=Qqonline&m=pay&a=ajax_create_order',
+                data: {
+                	price:gross,
+                	ticket:ticket,
+                	type:type,
+                	sign:sign
+                },
+                success: function (data) {
+                    if (data.ret == 1) {
+                        location.href = data.url;
+                    }
+                    else if (data.ret == -2) {
+                    	setTimeout(function(){WeixinJSBridge.call('closeWindow');},2000);
+                    }
+                    else {
+                        success(data.msg);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    if (XMLHttpRequest.status == 401) {
+                        success('没有权限');
+                    }
+                }
+            });	
+        }
+    
     $('#nav').on('click','div div div', function (e) {
         e.preventDefault();
         /*
@@ -179,5 +430,11 @@ echo '<script>orderNum=[' . $recharge_prices . '];init_recharges();</script>';
             window.location.href = "#1147148";
         }
     })
+    
+    function goto_drawcash()
+    {
+    	location.href = "{:U('index/txselect')}";
+    }
+   
 </script>
 </body></html>

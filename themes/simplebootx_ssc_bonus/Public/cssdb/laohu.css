@@ -1,0 +1,71 @@
+html,body{
+	 width: 100%; margin:0 auto;text-align:center; font-family:"Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+	  font-size:14px;
+}
+
+.all{
+	 width: 100%;text-align:center;margin:0 auto; 
+} 
+
+.header{
+	background:black;
+	color:white;
+	height:45px;
+}
+
+.h_l{
+	width:30%;
+	float:left;
+	text-align:left;
+	margin-top:10px;
+	margin-left:15px;
+}
+.h_c{
+	width:30%;
+	float:left;
+	margin-top:10px;
+}
+.h_r{
+	width:40%;
+	float:left;
+	text-align:right;
+	margin-top:10px;
+	margin-left:-30px;
+}
+.clear{
+	clear:both;
+	}
+.content{
+	width:93%;
+	text-align:center; 
+    margin-left:10px;	
+}
+.logo{
+	position: absolute;
+	background:white;
+	padding-top:10px;
+	border-radius:5px;
+	width:70px;
+	border:#F0F0F0 1px solid;
+	height:60px;
+}
+.restmoney{
+	margin-top:10px;
+	border:#F0F0F0 1px solid;
+	height:70px;
+	background:white;
+	color:#9C9C9C;
+}
+.cashyu{
+	float:left;
+	margin-left:20px;
+	margin-top:5px;
+}
+.zhanghuyu{
+	float:right;
+	margin-right:20px;
+	margin-top:5px;
+}
+
+
+
