@@ -410,9 +410,10 @@ function confirm()
 
 function select_record(idx)
 {
-	for (var i=0; i<3; i++)
+	for (var i=0; i<4; i++)
 		$('#record' + i).removeClass('active');
 	
+	$('#full-record .record-content .record-history').hide();
     $('#full-record .record-content .big-small').hide();
     $('#full-record .record-content .record-exact').hide();
     $('#full-record .record-content .record-prev').hide();
@@ -421,8 +422,10 @@ function select_record(idx)
     	$('#full-record .record-content .big-small').show();
     else if (idx == 1)
     	$('#full-record .record-content .record-exact').show();
-    else
+    else if (idx == 2)
     	$('#full-record .record-content .record-prev').show();
+    else if (idx == 3)
+    	$('#full-record .record-content .record-history').show();
 	
 	$('#record' + idx).addClass('active');
 }
@@ -975,6 +978,98 @@ function submit() {
 get_wallet();
 get_lottery_info();
 
+// 历史记录
+function loadRecord(){
+    $.ajax({
+        url: 'index.php?g=Qqonline&m=record&a=get_records',
+        type: 'GET',
+        dataType : "json",
+        data: {},
+        success: function (obj) {
+            if(obj.ret == 1){
+            	
+            	var res = {
+            		list : new Array()
+            	};
+            	
+            	for (var i=0; i<obj.list.length; i++)
+            	{
+            		var is_finded = false;
+            		for (var j=0; j<res.list.length; j++)
+            		{
+            			if (res.list[j].no == obj.list[i].no)
+            			{
+            				res.list[j].buy_lists.push(obj.list[i]);
+            				
+            				is_finded = true;
+            				
+            				break;
+            			}
+            		}
+            		
+            		if (!is_finded)
+            		{
+            			obj.list[i].buy_lists = new Array();
+            			obj.list.push(obj.list[i]);
+            			res.list.push(obj.list[i]);
+            		}
+            	}
+            	
+                var str = '';
+            	var html3 = '';
+                
+                $.each(res.list,function (k,v) {
+
+                    if(v.status == 0) {	//还未开奖
+                    }else {
+                    	
+                    	var balls = new Array();
+    				    for (var i=0; i<v.number.length; i++)
+    				    	balls.push(v.number.substr(i,1) - '0');
+                    	
+                    	var buyStr = '';
+                    	
+                        for (var i=0; i<v.buy_lists.length; i++)
+                        {
+                        	if (v.buy_lists[i].buy_method == "0")
+                        	{
+                        		if (v.buy_lists[i].buy_type == "1")
+                        			cur_buy = '<span class="roll red-bg">大</span>';
+                        		else if (v.buy_lists[i].buy_type == "-1")
+                        			cur_buy = '<span class="roll red-bg">小</span>'
+                        		if (v.buy_lists[i].buy_type == "10")
+                                	cur_buy = '<span class="roll red-bg">单</span>';
+                                else if (v.buy_lists[i].buy_type == "11")
+                                	cur_buy = '<span class="roll red-bg">双</span>'
+                        	}
+                        	else if (v.buy_lists[i].buy_method == "2")
+                        	{
+                        		cur_buy = '<span class="roll">' +  v.buy_lists[i].buy_type + '</span>';
+                        	}
+                        	
+                        	if (i == 0)
+                        		buyStr = cur_buy;
+                        	else
+                        		buyStr += cur_buy;
+                        }                    	
+                    
+                    	html3 += '<tr><td>'+v.no+'</td>'
+                    		+'<td><span>'+balls[6]+'</span><span>'+balls[7]+'</span><span class="bg-red">'+balls[8]+'</span></td>'
+                    		+'<td>' +　buyStr　+　'</td></tr>';
+                    }
+                });
+                
+                $('#full-record .record-content .record-history tbody').html(html3);
+            }else{
+                alert(res.msg);
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //alert('请求错误')
+        }
+    })
+}
+
 //往期
 function openedRecord() {
     $.ajax({
@@ -1106,6 +1201,7 @@ function openedRecord() {
     $('#openPrev').click(function () {
         $('#full-record').slideDown();
         openedRecord();
+        loadRecord();
     })
     $('#gameRule').click(function() {
     	//$('#rule_panel').show();

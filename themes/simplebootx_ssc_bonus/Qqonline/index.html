@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="__TMPL__Public/css/common.css">
-<link rel="stylesheet" href="__TMPL__Public/css/index.css?10034">
+<link rel="stylesheet" href="__TMPL__Public/css/index.css?10035">
 <script src="__TMPL__Public/js_zp/swiper.min.js?10017"></script>
 <script src="__TMPL__Public/js_zp/jquery.rotate.min.js?10003"></script>
 <script>
@@ -293,12 +293,26 @@ var cur_ratio = {
 <div class="full-record" id="full-record">
 	<div class="record">
 		<div class="row tool" id="tool">
-			<div class="col-xs-4 active" id="record0" onclick="select_record(0)">大小</div>
-			<div class="col-xs-4" id="record1" onclick="select_record(1)">精确</div>
-			<div class="col-xs-4" id="record2" onclick="select_record(2)">往期</div>
+			<div class="col-xs-3 active" id="record3" onclick="select_record(3)">历史</div>
+			<div class="col-xs-3" id="record0" onclick="select_record(0)">大小</div>
+			<div class="col-xs-3" id="record1" onclick="select_record(1)">精确</div>
+			<div class="col-xs-3" id="record2" onclick="select_record(2)">往期</div>
 		</div>
 		<div class="record-content">
-			<div class="big-small active">
+			<div class="record-history active">
+				<table>
+					<thead>
+						<tr>
+							<th style="width:30%">期号</th>
+							<th style="width:30%">开奖结果</th>
+							<th style="width:40%">投注</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div class="big-small">
 				<table>
 					<thead>
 						<tr>
@@ -456,7 +470,7 @@ var cur_ratio = {
 
 
 
-<script src="__TMPL__Public/js/index.app.js?10153"></script>
+<script src="__TMPL__Public/js/index.app.js?10156"></script>
 
 <script src="__TMPL__Public/js/md5.js"></script>
 
