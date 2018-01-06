@@ -507,6 +507,9 @@ class IndexController extends MemberbaseController {
         ->field('id, no, number, num3, create_time, open_time, type, status')
         ->find();
         
+        $lottery_order_db = M('lottery_order');
+        $lottery['buy_lists'] = $lottery_order_db->where("no='$no' and user_id=" . $this->userid)->select();        
+        
         $buy_count = 0;
         if ($lottery['status'] == 2)
         {
