@@ -8,6 +8,8 @@
 		<form class="well form-search" method="post" action="{:U('Indexadmin/index_hack')}">
 			用户ID： 
 			<input type="text" name="uid" style="width: 100px;" value="{:I('request.uid')}" placeholder="请输入用户ID">
+			用户编码： 
+			<input type="text" name="keyword" style="width: 100px;" value="{:I('request.keyword')}" placeholder="请输入用户编码">
 			<!--排序
 			<select id="order_type" name="order_type">
 						<option value="" selected>按ID降序</option>
@@ -24,6 +26,7 @@
 				<thead>
 					<tr>
 						<th align="center">ID</th>
+						<th>编码</th>
 						<th>上级用户</th>
 						<th>钱包余额</th>
 						<th>佣金余额</th>
@@ -43,6 +46,7 @@
 					<foreach name="list" item="vo">
 					<tr>
 						<td align="center">{$vo.id}</td>
+						<td>{$vo['user_activation_key']}</td>
 						<td>{$vo.parent_channel_user_id}</td>
 						<td>{$vo['wallet']['money']|round=###,2}</td>
 						<td>{$vo['wallet']['money2']|round=###,2}</td>

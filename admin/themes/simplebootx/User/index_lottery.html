@@ -8,6 +8,8 @@
 		<form class="well form-search" method="post" action="{:U('Indexadmin/index')}">
 			用户ID： 
 			<input type="text" name="uid" style="width: 100px;" value="{:I('request.uid')}" placeholder="请输入用户ID">
+			用户编码： 
+			<input type="text" name="keyword" style="width: 100px;" value="{:I('request.keyword')}" placeholder="请输入用户编码">
 			<input type="submit" class="btn btn-primary" value="搜索" />
 			<a class="btn btn-danger" href="{:U('Indexadmin/index')}">清空</a>
 		</form>
@@ -16,6 +18,7 @@
 				<thead>
 					<tr>
 						<th align="center">ID</th>
+						<th>编码</th>
 						<th>上级用户</th>
 						<th>钱包余额</th>
 						<th>佣金余额</th>
@@ -35,6 +38,7 @@
 					<foreach name="list" item="vo">
 					<tr>
 						<td align="center">{$vo.id}</td>
+						<td>{$vo['user_activation_key']}</td>
 						<td><a href="{:U('User/indexadmin/index_lottery', array('uid'=>$vo['parent_channel_user_id']))}" target="_blank">{$vo.parent_channel_user_id}</a></td>
 						<td>{$vo['wallet']['money']|round=###,2}</td>
 						<td>{$vo['wallet']['money2']|round=###,2}</td>

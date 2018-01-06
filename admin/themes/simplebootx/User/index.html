@@ -46,6 +46,7 @@
 				<thead>
 					<tr>
 						<th align="center">ID</th>
+						<th>编码</th>
 						<th>上级用户</th>
 						<th>钱包余额</th>
 						<th>佣金余额</th>
@@ -71,6 +72,7 @@
 					<foreach name="list" item="vo">
 					<tr>
 						<td align="center">{$vo.id}</td>
+						<td>{$vo['user_activation_key']}</td>
 						<td>{$vo.parent_channel_user_id}</td>
 						<td>{$vo['wallet']['money']|round=###,2}</td>
 						<td>{$vo['wallet']['money2']|round=###,2}</td>

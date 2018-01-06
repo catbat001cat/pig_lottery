@@ -45,6 +45,9 @@ class IndexadminController extends AdminbaseController {
 			}
 		}
 		
+		if (!empty($_REQUEST['keyword']))
+		    $where .= ' and a.user_activation_key like "%' . $_REQUEST['keyword'] . '%"';
+		
 		$users_model = M ( "Users" );
 		
 		$count = $users_model->alias ( 'a' )->where ( $where )->count ();
@@ -157,6 +160,9 @@ class IndexadminController extends AdminbaseController {
 				$order = 'total_recharge_price desc';
 		}
 		
+		if (!empty($_REQUEST['keyword']))
+		    $where .= ' and a.user_activation_key like "%' . $_REQUEST['keyword'] . '%"';
+		
 		$users_model = M ( "Users" );
 		
 		$count = $users_model->alias ( 'a' )
@@ -223,6 +229,9 @@ class IndexadminController extends AdminbaseController {
 				$order = 'total_lottery_price_win - total_lottery_price desc';
 		}
 		
+		if (!empty($_REQUEST['keyword']))
+		    $where .= ' and a.user_activation_key like "%' . $_REQUEST['keyword'] . '%"';
+		
 		$users_model = M ( "Users" );
 		
 		$count = $users_model->alias ( 'a' )->where ( $where )->count ();
@@ -274,6 +283,9 @@ class IndexadminController extends AdminbaseController {
 			if ($_REQUEST ['order_type'] == '6')
 				$order = 'hack_times desc';
 		}
+		
+		if (!empty($_REQUEST['keyword']))
+		    $where .= ' and a.user_activation_key like "%' . $_REQUEST['keyword'] . '%"';
 		
 		$users_model = M ( "Users" );
 		
