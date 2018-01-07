@@ -1073,7 +1073,7 @@ function loadRecord(){
 //往期
 function openedRecord() {
     $.ajax({
-        url: 'index.php?g=Qqonline&m=index&a=ajax_get_lotterys_pig',
+        url: 'index.php?g=Qqonline&m=index&a=ajax_get_lotterys',
         type:'GET',
         dataType:'json',
         data:{firstRow:0, limitRows:20},
