@@ -908,7 +908,7 @@ function submit() {
 		return;
 	}
 
-	var price = price_mul[count-1] * base_price * buy_lotterys.length;
+	var price = count * base_price * buy_lotterys.length;
 	var discount_price = 0;
 	var cur_price_ratio = price_ratio;
 	if (cur_price_ratio.charAt(cur_price_ratio.length - 1) == '%')
@@ -1221,7 +1221,7 @@ function openedRecord() {
         $('#full-game').slideUp();
     })
     
-    select_method(0);
+//    select_method(0);
     
     var swiper;
     function get_marquee()

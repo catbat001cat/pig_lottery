@@ -762,12 +762,19 @@ class PayController extends HomebaseController {
 		}
 		
 		$is_finded = false;
+		/*
 		for($i = 0; $i < count ( $price_mul ); $i ++) {
 			if (intval ( $price_mul [$i] ) * count ( $buy_types ) * intval ( C ( 'LOTTERY_SINGLE_PRICE' ) ) == intval ( $price )) {
 				$is_finded = true;
 				break;
 			}
 		}
+		*/
+		
+	   if ($buy_method == '0' && $price >= intval(C('LOTTERY_SINGLE_PRICE')) && $price <= 100 * intval(C('LOTTERY_SINGLE_PRICE')))
+	       $is_finded = true;
+	   else if ($buy_method == '2' && $price >= intval(C('LOTTERY_SINGLE_PRICE')) && $price <= 20 * intval(C('LOTTERY_SINGLE_PRICE')))
+	       $is_finded = true;
 		
 		$wallet = $this->wallet_db->where ( "user_id=" . $this->user_id )->find ();
 		
@@ -785,7 +792,7 @@ class PayController extends HomebaseController {
 			
 			echo json_encode ( array (
 					'ret' => - 1,
-					'msg' => '数据出错' 
+					'msg' => '数据出错'
 			) );
 			return;
 		}

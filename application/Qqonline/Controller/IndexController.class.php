@@ -468,9 +468,14 @@ class IndexController extends MemberbaseController {
     
     public function ajax_get_win_list()
     {
-        $lottery_order_db = M('lottery_order');
+        $lottery_order_db = M('lottery_order a');
         
-        $lists = $lottery_order_db->where("win>0")->order("id desc")->limit(0, 40)->select();
+        $lists = $lottery_order_db
+            ->join('__USERS__ b on b.id=a.user_id', 'left')
+            ->where("a.win>0")
+            ->field('a.*,b.user_activation_key')
+            ->order("a.id desc")
+            ->limit(0, 20)->select();
         
         shuffle($lists);
         

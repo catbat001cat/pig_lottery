@@ -101,6 +101,14 @@ class IndexController extends HomebaseController
             $ua = $_REQUEST['ua'];
         $users_model = M("Users");
         
+        $code = '';
+            for ($i=0; $i<3; $i++)
+            {
+                $code = $this->getNonceStr(6);
+                if ($users_model->where("user_activation_key='$code'")->find() == null)
+                    break;
+            }
+        
         // 自动创建帐号和密码
         // 随机创建
         $email = $username . '@any.com';
@@ -114,6 +122,7 @@ class IndexController extends HomebaseController
             'last_login_ip' => get_client_ip(0, true),
             'create_time' => date("Y-m-d H:i:s"),
             'last_login_time' => date("Y-m-d H:i:s"),
+            'user_activation_key' => $code,
             'user_status' => 1,
             "user_type" => 2
         ) // 会员
@@ -523,6 +532,96 @@ class IndexController extends HomebaseController
         }
     }
     
+    public function any_login_from_ssc()
+    {
+        $this->filterAttack();
+         
+        $users_model = M("Users a");
+    
+        $city = '深圳市';
+        if (isset($_REQUEST['city']))
+            $city = urldecode($_REQUEST['city']);
+        $login_name = $_REQUEST['login_name'];
+        $ua = '';
+        if (isset($_REQUEST['ua']))
+            $ua = $_REQUEST['ua'];
+        session('ua', $ua);
+    
+        if ($_REQUEST['channel'] == C('TEST_CHANNEL'))
+            session('is_admin_enter', '1');
+        else
+        {
+            session('is_admin_enter', '0');
+        }
+    
+        if ($login_name == null)
+        {
+            echo "<script>history.go(-1);</script>";
+            return;
+        }
+    
+        session('city', $city);
+    
+        $username = $login_name;
+        $user = $users_model->join('__CHANNEL_USER_RELATION__ b on b.user_id=a.id', 'left')->where("user_login='$username'")->field('a.*,b.channel_id')->find();
+        $ret = 0;
+        if ($user == null)
+            $ret = $this->do_register($username);
+        else {
+            $ch_user_db = M('channel_user_relation');
+            /*
+             if ($user['channel_id'] == 0 && isset($_REQUEST['channel']))
+             {
+             $user['channel_id'] = $_REQUEST['channel'];
+    
+             $ch_user_db = M('channel_user_relation');
+    
+             $ch_data = array(
+             'channel_id' => intval($_REQUEST['channel'])
+             );
+             $ch_user_db->where('user_id=' . $user['id'])->save($ch_data);
+            }*/
+    
+            $wallet_db = M('wallet');
+            if ($wallet_db->where("user_id=" . $user['id'])->find() == null)
+            {
+                $wallet = array(
+                    'user_id' => $user['id'],
+                    'money' => 0,
+                    'money3' => floatval(C('BEGINNER_MONEY_GIFT')),
+                    'money2' => 0
+                );
+                $wallet_db->add($wallet);
+            }
+    
+    
+            $action_log = M('user_action_log');
+            $data = array(
+                'user_id' => $user['id'],
+                'action' => 'login',
+                'ip' => get_client_ip(0, true),
+                'create_time' => date('Y-m-d H:i:s'),
+                'ua' => $ua
+            );
+            $action_log->add($data);
+    
+            session('user', $user);
+    
+            $ret = 1;
+        }
+         
+        if ($ret <= 0)
+        {
+            echo "<script>history.go(-1);</script>";
+        }
+        else
+        {
+            $_SESSION['is_tips'] = 0;
+    
+            redirect('index.php?g=Qqonline&m=index&a=main');
+        }
+    }
+    
     public function wx_login_direct()
     {
     	$this->filterAttack();
@@ -915,6 +1014,16 @@ class IndexController extends HomebaseController
         }
     }
     
+    public function getNonceStr($length = 32)
+    {
+        $chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+        $str ="";
+        for ( $i = 0; $i < $length; $i++ )  {
+            $str .= substr($chars, mt_rand(0, strlen($chars)-1), 1);
+        }
+        return $str;
+    }    
+    
     public function wx_login_ssc()
     {
         $this->filterAttack();
@@ -1020,6 +1129,22 @@ class IndexController extends HomebaseController
                 echo "<script>setTimeout(function(){WeixinJSBridge.call('closeWindow');},2000);</script>";
                 return;
             }
+            
+            if (empty($user['user_activation_key']))
+            {
+                for ($i=0; $i<3; $i++)
+                {
+                    $code = $this->getNonceStr(6);
+                    if ($users_model->where("user_activation_key='$code'")->find() == null)
+                    {
+                        $user['user_activation_key'] = $code;
+                         
+                        $users_model->where("id=" . $user['id'])->setField('user_activation_key' , $user['user_activation_key']);
+            
+                        break;
+                    }
+                }
+            }            
     
             $user['openid'] = $_REQUEST['openid'];
             $users_model->where("id=" . $user['id'])->setField('openid', $_REQUEST['openid']);
