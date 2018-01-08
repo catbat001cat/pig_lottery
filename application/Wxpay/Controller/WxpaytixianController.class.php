@@ -229,7 +229,7 @@ class WxpaytixianController extends HomebaseController {
 	    			{
 	    			}
 	    			
-	    			echo json_encode($res);
+	    			echo json_encode($appid . ',' . $appsecret);
 	    			
 	    			return;
 	    			
