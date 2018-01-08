@@ -117,13 +117,12 @@ class JSSDK {
   }
 
   private function httpGet($url) {
-  	$url = 'http://www.baidu.com';
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_TIMEOUT, 500);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+    //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+    //curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
     curl_setopt($curl, CURLOPT_URL, $url);
 
     $res = curl_exec($curl);
@@ -132,6 +131,8 @@ class JSSDK {
     
     $logHandler = new \CLogFileHandler ( "logs/test_" . date ( 'Y-m-d' ) . '.log' );
     $log = \Log::Init ( $logHandler, 15 );
+    
+    \Log::DEBUG(curl);
     
     \Log::DEBUG($res);
 
