@@ -127,7 +127,9 @@ class JSSDK {
 
     $res = curl_exec($curl);
     
-    echo 'res:' . $res . ']';
+    echo 'res:' . $url . '|' . $res . ']';
+    
+    echo 'error:' . curl_error($curl);
 
     curl_close($curl);
     
