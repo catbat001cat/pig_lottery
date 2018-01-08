@@ -390,6 +390,7 @@ class IndexController extends MemberbaseController {
 		}
 		
 		
+		
 		if ($mall91_wx_is_enabled)
 		{
 		    $data = array(
