@@ -155,12 +155,13 @@ class WxloginController extends HomebaseController
         $res = $jssdk->getAuthAccessToke($code);
         if (!property_exists($res, 'openid'))
         {
-            echo "<script>alert('请在微信打开');</script>";
+            echo "<script>alert('open in weixin');</script>";
         }
         else
         {
         }
 
+        /*
         $rand_string = $this->getRandChar(16);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$appsecret");
@@ -168,23 +169,20 @@ class WxloginController extends HomebaseController
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         $result = curl_exec($ch);
-        echo curl_error($ch);
         $obj = json_decode($result);
-        
-        echo '111233';
-        
         //curl_close($ch);
         $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token={$obj->access_token}&type=jsapi";
         curl_setopt($ch, CURLOPT_URL, $url);
         $result = curl_exec($ch);
-        //echo curl_error($ch);
+        echo curl_error($ch);
         $obj2 = json_decode($result);
         curl_close($ch);
         $timestamp = time();
         $url = "http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
         $str = "jsapi_ticket={$obj2->ticket}&noncestr={$rand_string}&timestamp={$timestamp}&url={$url}";
-        print_r($str);
+        //print_r($str);
         $signature = sha1($str);
+        */
         
         $rand_string = $this->getRandChar(32);
         
@@ -201,7 +199,7 @@ class WxloginController extends HomebaseController
         
         //header("Location: $goto_url");
         
-       // redirect($goto_url);
+        redirect($goto_url);
     }
     
     
