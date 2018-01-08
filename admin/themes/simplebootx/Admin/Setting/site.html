@@ -236,12 +236,26 @@
 									</div>
 								</div>
 								<div class="control-group">
+									<label class="control-label">夺宝入口开启</label>
+									<div class="controls">
+										<php>$is_open_duobao_checked=empty($is_open_duobao)?'':'checked';</php>
+										<label class="checkbox inline"><input type="checkbox" name="options[is_open_duobao]" value="1" {$is_open_duobao_checked}></label>
+									</div>
+								</div>
+								<div class="control-group">
 									<label class="control-label">转盘入口开启</label>
 									<div class="controls">
 										<php>$is_open_zp_checked=empty($is_open_zp)?'':'checked';</php>
 										<label class="checkbox inline"><input type="checkbox" name="options[is_open_zp]" value="1" {$is_open_zp_checked}></label>
 									</div>
 								</div>
+								<div class="control-group">
+									<label class="control-label">时时彩入口开启</label>
+									<div class="controls">
+										<php>$is_open_ssc_checked=empty($is_open_ssc)?'':'checked';</php>
+										<label class="checkbox inline"><input type="checkbox" name="options[is_open_ssc]" value="1" {$is_open_ssc_checked}></label>
+									</div>
+								</div>								
 								<div class="control-group">
 									<label class="control-label">停止提现申请</label>
 									<div class="controls">

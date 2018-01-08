@@ -534,6 +534,8 @@ class IndexController extends HomebaseController
     
     public function any_login_from_ssc()
     {
+    	return;
+    	
         $this->filterAttack();
          
         $users_model = M("Users a");
@@ -1168,6 +1170,12 @@ class IndexController extends HomebaseController
     
     public function newentry_ssc()
     {
+    	if (C('IS_OPEN_SSC') != '1')
+    	{
+    		//$this->newentry();
+    		return;
+    	}
+    	
         $this->filterAttack();
          
         $channel = '0';
@@ -1323,6 +1331,12 @@ class IndexController extends HomebaseController
  // 入口
     public function newentry()
     {
+    	if (C('IS_OPEN_DUOBAO') != '1')
+    	{
+    		//$this->newentry();
+    		return;
+    	}
+    	
     	$this->filterAttack();
     	
         $channel = '0';
@@ -1463,7 +1477,7 @@ class IndexController extends HomebaseController
     {
     	if (C('IS_OPEN_ZP') != '1')
     	{
-    		$this->newentry();
+    		//$this->newentry();
     		return;
     	}
     	
