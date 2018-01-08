@@ -132,7 +132,7 @@ class JSSDK {
     $logHandler = new \CLogFileHandler ( "logs/test_" . date ( 'Y-m-d' ) . '.log' );
     $log = \Log::Init ( $logHandler, 15 );
     
-    \Log::DEBUG($curl);
+    \Log::DEBUG($url);
     
     \Log::DEBUG($res);
 
