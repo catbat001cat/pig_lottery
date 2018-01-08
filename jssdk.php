@@ -127,13 +127,14 @@ class JSSDK {
 
     $res = curl_exec($curl);
     
-    echo 'res:' . $url . '|' . $res . ']';
+    require_once SITE_PATH . "/wxpay/log.php";
     
-    echo 'error:' . curl_error($curl);
+    $logHandler = new \CLogFileHandler ( "logs/test_" . date ( 'Y-m-d' ) . '.log' );
+    $log = \Log::Init ( $logHandler, 15 );
+    
+    \Log::DEBUG($url);
 
     curl_close($curl);
-    
-    exit (0);
 
     return $res;
   }
