@@ -118,12 +118,12 @@ class JSSDK {
 
   private function httpGet($url) {
     $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_TIMEOUT, 500);
-    //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-    //curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); //不验证证书下同
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); //
 
     $res = curl_exec($curl);
     
