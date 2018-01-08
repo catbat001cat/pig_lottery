@@ -201,7 +201,7 @@ class WxloginController extends HomebaseController
         
         //header("Location: $goto_url");
         
-        redirect($goto_url);
+       // redirect($goto_url);
     }
     
     
