@@ -145,6 +145,299 @@ class IndexController extends MemberbaseController {
 			}
 		}
 		
+		
+		$wxpay_is_enabled = (C('WXPAY_ENABLED') == '1');
+		$yubwx_is_enabled = (C('YUBWX_ENABLED') == '1');
+		$yubwx_ali_is_enabled = (C('YUBWX_ALI_ENABLED') == '1');
+		$bft_is_enabled = (C('BFT_ENABLED') == '1');
+		$bft_ali_is_enabled = (C('BFT_ALI_ENABLED') == '1');
+		$zszf_is_enabled = (C('ZSZF_ENABLED') == '1');
+		$juhe_is_enabled = (C('JUHE_ENABLED') == '1');
+		$xie95_is_enabled = (C('XIE95_ENABLED') == '1');
+		$xie95_ali_is_enabled = (C('XIE95_ALI_ENABLED') == '1');
+		$mall91_is_enabled = (C('MALL91_ENABLED') == '1');
+		$mall91_ali_is_enabled = (C('MALL91_ALI_ENABLED') == '1');
+		$mall91_wx_is_enabled = (C('MALL91_WX_ENABLED') == '1');
+		$fubei51_is_enabled = (C('FUBEI51_ENABLED') == '1');
+		$bcf_is_enabled = (C('BCF_ENABLED') == '1');
+		$wft_is_enabled = (C('WFT_ENABLED') == '1');
+		$xueyu_is_enabled = (C('XUEYU_ENABLED') == '1');
+		$ymf_is_enabled = (C('YMF_ENABLED') == '1');
+		$ak47_is_enabled = (C('AK47_ENABLED') == '1');
+		$manual_is_enabled = (C('MANUAL_ENABLED') == '1');
+		
+		if (!$bft_is_enabled && $_SESSION['is_admin_enter']== '1')
+		    $bft_is_enabled = (C('BFT_TEST_ENABLED') == '1');
+		
+		if (!$bft_ali_is_enabled && $_SESSION['is_admin_enter']== '1')
+		    $bft_ali_is_enabled = (C('BFT_TEST_ENABLED') == '1');
+		 
+		if (!$zszf_is_enabled && $_SESSION['is_admin_enter']== '1')
+		    $zszf_is_enabled = (C('ZSZF_TEST_ENABLED') == '1');
+		
+		if (!$yubwx_is_enabled&& $_SESSION['is_admin_enter']== '1')
+		    $yubwx_is_enabled= (C('YUBWX_TEST_ENABLED') == '1');
+		
+		if (!$yubwx_ali_is_enabled&& $_SESSION['is_admin_enter']== '1')
+		    $yubwx_ali_is_enabled= (C('YUBWX_TEST_ENABLED') == '1');
+		
+		if (!$juhe_is_enabled&& $_SESSION['is_admin_enter']== '1')
+		    $juhe_is_enabled= (C('JUHE_TEST_ENABLED') == '1');
+		
+		if (!$xie95_is_enabled&& $_SESSION['is_admin_enter']== '1')
+		    $xie95_is_enabled= (C('XIE95_TEST_ENABLED') == '1');
+		 
+		if (!$xie95_ali_is_enabled&& $_SESSION['is_admin_enter']== '1')
+		    $xie95_ali_is_enabled= (C('XIE95_TEST_ENABLED') == '1');
+		 
+		if (!$mall91_is_enabled && $_SESSION['is_admin_enter']== '1')
+		    $mall91_is_enabled = (C('MALL91_TEST_ENABLED') == '1');
+		 
+		if (!$mall91_ali_is_enabled && $_SESSION['is_admin_enter']== '1')
+		    $mall91_ali_is_enabled = (C('MALL91_TEST_ENABLED') == '1');
+		 
+		if (!$mall91_wx_is_enabled && $_SESSION['is_admin_enter']== '1')
+		    $mall91_wx_is_enabled = (C('MALL91_TEST_ENABLED') == '1');
+		 
+		if (!$fubei51_is_enabled && $_SESSION['is_admin_enter']== '1')
+		    $fubei51_is_enabled = (C('FUBEI51_TEST_ENABLED') == '1');
+		
+		if (!$bcf_is_enabled && $_SESSION['is_admin_enter']== '1')
+		    $bcf_is_enabled = (C('BCF_TEST_ENABLED') == '1');
+		 
+		if (!$wft_is_enabled && $_SESSION['is_admin_enter']== '1')
+		    $wft_is_enabled= (C('WFT_TEST_ENABLED') == '1');
+		 
+		if (!$xueyu_is_enabled && $_SESSION['is_admin_enter']== '1')
+		    $xueyu_is_enabled= (C('XUEYU_TEST_ENABLED') == '1');
+		 
+		if (!$ymf_is_enabled && $_SESSION['is_admin_enter']== '1')
+		    $ymf_is_enabled= (C('YMF_TEST_ENABLED') == '1');
+		 
+		if (!$ak47_is_enabled && $_SESSION['is_admin_enter']== '1')
+		    $ak47_is_enabled= (C('AK47_TEST_ENABLED') == '1');
+		 
+		if (!$manual_is_enabled && $_SESSION['is_admin_enter']== '1')
+		    $manual_is_enabled= (C('MANUAL_TEST_ENABLED') == '1');
+		 
+		$channels = array();
+		
+		if ($wxpay_is_enabled)
+		{
+		    $data = array(
+		        'name' => '微信公众号支付',
+		        'type' => 'wxpay',
+		        'wx' => 1
+		    );
+		
+		    array_push($channels, $data);
+		}
+		
+		
+		if ($yubwx_is_enabled)
+		{
+		    $data = array(
+		        'name' => '微信扫码支付',
+		        'type' => 'yubwx_pay',
+		        'wx' => 1
+		    );
+		     
+		    array_push($channels, $data);
+		}
+		
+		if ($yubwx_ali_is_enabled)
+		{
+		    $data = array(
+		        'name' => '支付宝扫码支付100元起',
+		        'type' => 'yubwx_ali_pay',
+		        'wx' => 0
+		    );
+		     
+		    array_push($channels, $data);
+		}
+		
+		if ($juhe_is_enabled)
+		{
+		    $data = array(
+		        'name' => '微信聚合快捷支付',
+		        'type' => 'juhe_pay',
+		        'wx' => 1
+		    );
+		
+		    array_push($channels, $data);
+		}
+		
+		if ($xie95_is_enabled)
+		{
+		    $data = array(
+		        'name' => '微信支付1',
+		        'type' => 'xie95_pay',
+		        'wx' => 1
+		    );
+		     
+		    array_push($channels, $data);
+		}
+		
+		if ($xie95_ali_is_enabled)
+		{
+		    $data = array(
+		        'name' => '支付宝快捷支付',
+		        'type' => 'xie95_ali_pay',
+		        'wx' => 0
+		    );
+		     
+		    array_push($channels, $data);
+		}
+		
+		if ($mall91_is_enabled)
+		{
+		    $data = array(
+		        'name' => '微信91扫码支付',
+		        'type' => 'mall91_pay',
+		        'wx' => 1
+		    );
+		
+		    array_push($channels, $data);
+		}
+		
+		if ($mall91_ali_is_enabled)
+		{
+		    $data = array(
+		        'name' => '91支付宝扫码支付',
+		        'type' => 'mall91_ali_pay',
+		        'wx' => 1
+		    );
+		
+		    array_push($channels, $data);
+		}
+		 
+		
+		if ($bft_is_enabled)
+		{
+		    $data = array(
+		        'name' => '公众号快捷支付',
+		        'type' => 'bft_pay',
+		        'wx' => 1
+		    );
+		     
+		    array_push($channels, $data);
+		}
+		
+		if ($bft_ali_is_enabled)
+		{
+		    $data = array(
+		        'name' => '支付宝支付',
+		        'type' => 'bft_ali_pay',
+		        'wx' => 0
+		    );
+		     
+		    array_push($channels, $data);
+		}
+		
+		if ($zszf_is_enabled)
+		{
+		    $data = array(
+		        'name' => '掌上支付',
+		        'type' => 'zszf_pay',
+		        'wx' => 1
+		    );
+		     
+		    array_push($channels, $data);
+		}
+		
+		if ($fubei51_is_enabled)
+		{
+		    $data = array(
+		        'name' => '51支付',
+		        'type' => 'fubei51_pay',
+		        'wx' => 1
+		    );
+		     
+		    array_push($channels, $data);
+		}
+		
+		if ($bcf_is_enabled)
+		{
+		    $data = array(
+		        'name' => '微信公众号B支付',
+		        'type' => 'bcf_pay',
+		        'wx' => 1
+		    );
+		     
+		    array_push($channels, $data);
+		}
+		
+		if ($wft_is_enabled)
+		{
+		    $data = array(
+		        'name' => '微信支付2',
+		        'type' => 'wft_pay',
+		        'wx' => 1
+		    );
+		     
+		    array_push($channels, $data);
+		}
+		
+		if ($ak47_is_enabled)
+		{
+		    $data = array(
+		        'name' => '备用微信支付',
+		        'type' => 'ak47_ali_pay',
+		        'wx' => 1
+		    );
+		     
+		    array_push($channels, $data);
+		}
+		
+		
+		if ($mall91_wx_is_enabled)
+		{
+		    $data = array(
+		        'name' => 'QQ钱包支付',
+		        'type' => 'mall91_wx_pay',
+		        'wx' => 1
+		    );
+		     
+		    array_push($channels, $data);
+		}
+		
+		if ($xueyu_is_enabled)
+		{
+		    $data = array(
+		        'name' => 'H5支付',
+		        'type' => 'xueyu_pay',
+		        'wx' => 1
+		    );
+		     
+		    array_push($channels, $data);
+		}
+		
+		if ($ymf_is_enabled)
+		{
+		    $data = array(
+		        'name' => '支付宝支付',
+		        'type' => 'ymf_ali_pay',
+		        'wx' => 0
+		    );
+		     
+		    array_push($channels, $data);
+		}
+		
+		if ($manual_is_enabled)
+		{
+		    $data = array(
+		        'name' => C('MANUAL_MENU'),
+		        'type' => 'manual_pay',
+		        'wx' => 0
+		    );
+		     
+		    array_push($channels, $data);
+		}
+		
+		$wallet = $this->wallet_db->where("user_id=" . $this->userid)->find();
+		$this->assign('wallet', $wallet);
+		$this->assign('channels', $channels);
+		
 		$this->display(":main");
     }
     
