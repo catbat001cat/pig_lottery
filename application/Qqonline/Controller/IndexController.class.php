@@ -2431,5 +2431,27 @@ class IndexController extends MemberbaseController {
             $ret['signin_bonus'] = $sign_core;
             return $this->ajaxReturn($ret);
         }
-    }    
+    }
+    
+    // 提现
+    public function txselect()
+    {
+        $wallet = $this->wallet_db->where("user_id=" . $this->userid)->find();
+        $this->assign('wallet', $wallet);
+        $this->assign('base_price', C('DRAWCASH_BASE_PRICE'));
+        $this->assign('max_times', C('DRAWCASH_TIMES_PER_DAY'));
+         
+        $this->display(':txselect');
+    }
+    
+    // 代理佣金提现
+    public function dailiyongjintixian()
+    {
+        $wallet = $this->wallet_db->where("user_id=" . $this->userid)->find();
+        $this->assign('wallet', $wallet);
+        $this->assign('base_price', C('DRAWCASH_BASE_PRICE'));
+        $this->assign('max_times', C('DRAWCASH_TIMES_PER_DAY'));
+         
+        $this->display(':dailiyongjintixian');
+    }
 }
