@@ -220,6 +220,8 @@ class WxpaytixianController extends HomebaseController {
 	    			$code = '';
 	    		
 	    	echo 'code:' . $code;
+	    	
+	    	return;
 	    			
 	    			$jssdk = new \JSSDK($appid, $appsecret);
 	    			$res = $jssdk->getAuthAccessToke($code);
