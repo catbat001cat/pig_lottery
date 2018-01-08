@@ -51,6 +51,9 @@ class DrawcashadminController extends AdminbaseController {
         }
         
         $where .= ' and b.level=0';
+        
+        if (!empty($_REQUEST['keyword']))
+            $where .= ' and b.user_activation_key like "%' . $_REQUEST['keyword'] . '%"';
      
         $count=$model
         ->join('__USERS__ b on b.id=a.user_id', 'left')
@@ -61,7 +64,7 @@ class DrawcashadminController extends AdminbaseController {
         ->join('__USERS__ b on b.id=a.user_id', 'left')
         ->where($where)
         ->order("id DESC")
-        ->field('a.*,b.user_nicename')
+        ->field('a.*,b.user_nicename,b.user_activation_key')
         ->limit($page->firstRow . ',' . $page->listRows)
         ->select();
         

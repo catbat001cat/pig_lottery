@@ -7,6 +7,8 @@
 				<div class="mb10">
 						用户ID： 
 						<input type="text" name="user_id" style="width: 200px;" value="{$filter.user_id}" placeholder="请输入用户ID...">
+						编号： 
+						<input type="text" name="keyword" style="width: 200px;" value="{$filter.keyword}" placeholder="请输入用户编号...">						
 						&nbsp;投注期号： 
 						<input type="text" name="no" style="width: 200px;" value="{$filter.no}" placeholder="请输入投注期号...">
 						&nbsp;开始日期： 
@@ -34,6 +36,7 @@
 						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
 						<th width="50">ID</th>
 						<th>用户ID</th>
+						<th>用户编号</th>
 						<th>投注期号</th>
 						<th>中奖号码</th>
 						<th>投注类型</th>
@@ -54,6 +57,7 @@
 					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}"></td>
                     <td><b>{$vo.id}</b></td>
 					<td><a href="{:U('Recordadmin/index',array('user_id'=>$vo['user_id']))}" target="_blank">{$vo.user_id}</a></td>
+                    <td><b>{$vo.user_activation_key}</b></td>					
 					<td>{$vo.no}</td>
 					<td>{$vo.num3}</td>
 					<td>{$buy_method_arr[$vo['buy_method']]}</td>

@@ -58,6 +58,9 @@ class RecordadminController extends AdminbaseController {
             
             $where .= " and DATE_FORMAT( a.create_time,'" . $date_format . "')<='" . $end_date . "'";
         }
+        
+        if (!empty($_REQUEST['keyword']))
+            $where .= ' and b.user_activation_key like "%' . $_REQUEST['keyword'] . '%"';
      
         $count=$model
         ->join('__USERS__ b on b.id=a.user_id', 'left')
@@ -68,7 +71,7 @@ class RecordadminController extends AdminbaseController {
         ->join('__USERS__ b on b.id=a.user_id', 'left')
         //->join('__LOTTERY__ b on (b.id=a.lottery_id or b.no=a.no)', 'left')
         ->where($where)
-        ->field('a.*')//,b.num3')
+        ->field('a.*,b.user_activation_key')//,b.num3')
         ->order("id DESC")
         ->limit($page->firstRow . ',' . $page->listRows)
         ->select();

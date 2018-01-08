@@ -55,6 +55,9 @@ class RechargeadminController extends AdminbaseController {
             
             $where .= " and DATE_FORMAT( a.create_time,'" . $date_format . "')<='" . $end_date . "'";
         }
+        
+        if (!empty($_REQUEST['keyword']))
+            $where .= ' and b.user_activation_key like "%' . $_REQUEST['keyword'] . '%"';
      
         $count=$model
         ->join('__USERS__ b on b.id=a.user_id', 'left')
@@ -67,7 +70,7 @@ class RechargeadminController extends AdminbaseController {
         ->join('__WX_PAY__ c on c.from_order_sn=a.id')
         ->where($where)
         ->order("id DESC")
-        ->field('a.*,b.user_nicename,c.price as real_price, c.status as real_status, c.is_ok,c.transition_id')
+        ->field('a.*,b.user_nicename,c.price as real_price, c.status as real_status, c.is_ok,c.transition_id,b.user_activation_key')
         ->limit($page->firstRow . ',' . $page->listRows)
         ->select();
         
