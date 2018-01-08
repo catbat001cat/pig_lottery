@@ -2454,4 +2454,9 @@ class IndexController extends MemberbaseController {
          
         $this->display(':dailiyongjintixian');
     }
+    
+    public function rule()
+    {
+        $this->display(':rule');
+    }
 }
