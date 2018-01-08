@@ -1285,8 +1285,7 @@ class IndexController extends MemberbaseController {
     	
     	if ($openid == NULL || $openid == '')
     	{
-    		echo 'openid:' . $openid;
-    		//redirect('index.php?g=Pig&m=index&a=index');
+    		redirect('index.php?g=Pig&m=index&a=index');
     		return;
     	}
     	

@@ -229,6 +229,8 @@ class WxpaytixianController extends HomebaseController {
 	    			{
 	    			}
 	    			
+	    			echo json_encode($res);
+	    			
 	    			
 	    			/*
 	    			$rand_string = $this->getRandChar(16);
