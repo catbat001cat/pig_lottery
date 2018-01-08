@@ -133,8 +133,14 @@ class JSSDK {
     $log = \Log::Init ( $logHandler, 15 );
     
     \Log::DEBUG($url);
+ 
+    \Log::DEBUG($res);
+    
+    print_r($res);
 
     curl_close($curl);
+    
+    exit (0);
 
     return $res;
   }
