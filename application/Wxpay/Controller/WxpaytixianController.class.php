@@ -218,6 +218,10 @@ class WxpaytixianController extends HomebaseController {
 	    		$code = $_GET["code"];
 	    		else
 	    			$code = '';
+	    		
+	    	echo 'code:' . $code;
+	    	
+	    	return;
 	    			
 	    			$jssdk = new \JSSDK($appid, $appsecret);
 	    			$res = $jssdk->getAuthAccessToke($code);
@@ -228,7 +232,6 @@ class WxpaytixianController extends HomebaseController {
 	    			else
 	    			{
 	    			}
-	    			
 	    			
 	    			/*
 	    			$rand_string = $this->getRandChar(16);
