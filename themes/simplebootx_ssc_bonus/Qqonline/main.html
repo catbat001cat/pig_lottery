@@ -363,6 +363,8 @@ echo '<script>orderNum=[' . $recharge_prices . '];init_recharges();</script>';
         	var sign = hex_md5('ajax_create_order' + gross + ticket + type);
         	
         	success('即将跳转到支付');
+        	
+        	$('#paytypes').hide();
             
             $.ajax({
                 type: 'get',
