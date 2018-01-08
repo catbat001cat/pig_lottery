@@ -161,7 +161,6 @@ class WxloginController extends HomebaseController
         {
         }
 
-        /*
         $rand_string = $this->getRandChar(16);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$appsecret");
@@ -170,6 +169,11 @@ class WxloginController extends HomebaseController
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         $result = curl_exec($ch);
         $obj = json_decode($result);
+        
+        echo $result;
+        
+        return;
+        
         //curl_close($ch);
         $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token={$obj->access_token}&type=jsapi";
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -182,7 +186,6 @@ class WxloginController extends HomebaseController
         $str = "jsapi_ticket={$obj2->ticket}&noncestr={$rand_string}&timestamp={$timestamp}&url={$url}";
         //print_r($str);
         $signature = sha1($str);
-        */
         
         $rand_string = $this->getRandChar(32);
         
