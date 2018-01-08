@@ -773,10 +773,6 @@ class IndexController extends HomebaseController
     	$url = $openid . $ticket . $noncestr;
         $new_sign = md5(strtolower($url . C('LOGIN_KEY')));
         
-        echo $url;
-        
-        return;
-        
         if ($openid == '')
         {
         	$this->redirect('index/newentry_after_pay');
