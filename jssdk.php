@@ -142,7 +142,10 @@ class JSSDK {
   // 第二步:通过code换取网页授权access_token
   public function getAuthAccessToke($code) {
   	$url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$this->appId&secret=$this->appSecret&code=$code&grant_type=authorization_code";
-  	$res = json_decode($this->httpGet($url));
+  	
+  	echo $url;
+  	
+  	//$res = json_decode($this->httpGet($url));
 	return $res;
   }
   
