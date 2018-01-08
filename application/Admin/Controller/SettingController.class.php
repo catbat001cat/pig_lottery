@@ -74,6 +74,8 @@ class SettingController extends AdminbaseController{
 			$configs["HTML_CACHE_ON"]=empty($options['html_cache_on'])?false:true;
 			$configs['IS_STOPPED'] = $options['is_stopped'] == '1' ? '1' : '0';
 			$configs['IS_OPEN_ZP'] = $options['is_open_zp'] == '1' ? '1' : '0';
+			$configs['IS_OPEN_DUOBAO'] = $options['is_open_duobao'] == '1' ? '1' : '0';
+			$configs['IS_OPEN_SSC'] = $options['is_open_ssc'] == '1' ? '1' : '0';
 			$configs['IS_STOPPED_DRAWCASH'] = $options['is_stopped_drawcash'] == '1' ? '1' : '0';
 			$configs['IS_STOPPED_LOTTERY'] = $options['is_stopped_lottery'] == '1' ? '1' : '0';
 			$configs['IS_STOPPED_RECHARGE'] = $options['is_stopped_recharge'] == '1' ? '1' : '0';
