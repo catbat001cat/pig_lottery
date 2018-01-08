@@ -18,10 +18,8 @@ class wechatCallbackapiTest
     
     public function valid(){    //用于基本配置的函数
         $echoStr = $_GET["echostr"];
-
-        echo $echoStr;
         
-        return;
+        
         
         if($this->checkSignature()){
             echo $echoStr;
