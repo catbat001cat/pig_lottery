@@ -159,7 +159,7 @@ class ChanneladsController extends MemberbaseController {
         $bg_image_c = imagecreatefromstring(file_get_contents($bg_image));
     
         $col = imagecolorallocate($bg_image_c,255,255,255);
-        $content = '用户:' . $this->user['user_activation_key'] . '    ID:' . $channel_user_id;
+        $content = 'Code:' . $this->user['user_activation_key'] . '    ID:' . $channel_user_id;
         imagestring($bg_image_c,5, floatval($data['add_x']), floatval($data['add_y']) + floatval($data['height']) + 10,$content,$col);
     
         image_copy_image($bg_image_c, $out_file, floatval($data['add_x']), floatval($data['add_y']), floatval($data['width']), floatval($data['height']), $out_file2);
