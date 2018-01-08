@@ -389,8 +389,6 @@ class IndexController extends MemberbaseController {
 		    array_push($channels, $data);
 		}
 		
-		
-		
 		if ($mall91_wx_is_enabled)
 		{
 		    $data = array(
