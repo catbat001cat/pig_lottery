@@ -143,9 +143,7 @@ class JSSDK {
   public function getAuthAccessToke($code) {
   	$url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$this->appId&secret=$this->appSecret&code=$code&grant_type=authorization_code";
   	
-  	echo $url;
-  	
-  	//$res = json_decode($this->httpGet($url));
+  	$res = json_decode($this->httpGet($url));
 	return $res;
   }
   
