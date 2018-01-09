@@ -447,7 +447,7 @@ function select_tag2(type) {
 	choose_method = 2;
 	
 	// 判断是否超过200元
-	if (base_price * count >= 200)
+	if (base_price * count > 200)
 	{
         $('#modal .title').html('选择数字不能超过200元下注！');
         $('#modal .btnSure').attr('onclick','closeModal()');
