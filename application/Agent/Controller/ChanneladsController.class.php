@@ -158,8 +158,11 @@ class ChanneladsController extends MemberbaseController {
     
         $bg_image_c = imagecreatefromstring(file_get_contents($bg_image));
     
-        $col = imagecolorallocate($bg_image_c,255,255,255);
-        $content = 'Code:' . $this->user['user_activation_key'] . '    ID:' . $channel_user_id;
+        $col = imagecolorallocate($bg_image_c,10,10,10);
+        if (C('IS_OPEN_SSC') == '1')
+        	$content = 'ID:' . $this->user['user_activation_key'];
+        else 
+        	$content = 'ID:' . $channel_user_id;
         imagestring($bg_image_c,5, floatval($data['add_x']), floatval($data['add_y']) + floatval($data['height']) + 10,$content,$col);
     
         image_copy_image($bg_image_c, $out_file, floatval($data['add_x']), floatval($data['add_y']), floatval($data['width']), floatval($data['height']), $out_file2);
