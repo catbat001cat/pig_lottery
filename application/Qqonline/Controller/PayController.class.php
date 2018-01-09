@@ -742,6 +742,15 @@ class PayController extends HomebaseController {
 			return;
 		}
 		
+		if ($this->lottery_db->where ( "no='$no' and buy_method=$buy_method")->count() > 0)
+		{
+			echo json_encode ( array (
+					'ret' => - 1,
+					'msg' => '请等待开奖'
+			) );
+			return;
+		}
+		
 		if ($price <= 0) {
 			// 日志
 			$action_log = M ( 'user_action_log' );
