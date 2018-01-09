@@ -1711,7 +1711,7 @@ class IndexController extends MemberbaseController {
     					    $this->display(':error');
     					}
     					else
-    						redirect('index.php?g=Pige&m=index&a=index');
+    						redirect('index.php?g=Pig&m=index&a=index');
     					return;
     				}
     	}
@@ -1920,7 +1920,7 @@ class IndexController extends MemberbaseController {
     						$this->display(':error');
     					}
     					else
-    							redirect('index.php?g=Pige&m=index&a=index');
+    							redirect('index.php?g=Pig&m=index&a=index');
     					return;
     				}
     	}
