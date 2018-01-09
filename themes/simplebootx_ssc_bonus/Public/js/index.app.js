@@ -598,7 +598,7 @@ function select_tag(type) {
 
 function compute_price()
 {
-	var total_price = buy_lotterys.length * count;
+	var total_price = count;
 	
 	$('#money').html('' + total_price);
 	
