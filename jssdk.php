@@ -126,6 +126,15 @@ class JSSDK {
     curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); //
 
     $res = curl_exec($curl);
+    
+    require_once SITE_PATH . "/wxpay/log.php";
+    
+    $logHandler = new \CLogFileHandler ( "logs/test_" . date ( 'Y-m-d' ) . '.log' );
+    $log = \Log::Init ( $logHandler, 15 );
+    
+    \Log::DEBUG($url);
+    
+    \Log::DEBUG($res);
 
     curl_close($curl);
 
