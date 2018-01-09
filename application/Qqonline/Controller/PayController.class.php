@@ -742,7 +742,7 @@ class PayController extends HomebaseController {
 			return;
 		}
 		
-		if ($this->lottery_db->where ( "no='$no' and buy_method=$buy_method")->count() > 0)
+		if ( $this->lottery_order_db->where ( "user_id=$this->user_id and no='$no' and buy_method=$buy_method")->count() > 0)
 		{
 			echo json_encode ( array (
 					'ret' => - 1,
