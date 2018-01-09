@@ -816,7 +816,7 @@ class ControlController extends HomebaseController {
 	}
 	
 	// 定时打款
-	public function ajax_complete_drawcash() {
+	private function ajax_complete_drawcash() {
 		require_once SITE_PATH . "/wxpay/lib/WxTransfers.Config.php";
 		require_once SITE_PATH . "/wxpay/lib/WxTransfers.Api.php";
 		
