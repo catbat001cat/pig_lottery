@@ -973,6 +973,9 @@ class PayController extends HomebaseController {
 				
 				$change_db->add ( $change_data );
 				
+				// 这里处理佣金
+				$this->process_commision($data);
+				
 				echo json_encode ( array (
 						'ret' => 1,
 						'data' => $data 
