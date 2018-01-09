@@ -219,10 +219,6 @@ class WxpaytixianController extends HomebaseController {
 	    		else
 	    			$code = '';
 	    		
-	    	echo 'code:' . $code;
-	    	
-	    	return;
-	    			
 	    			$jssdk = new \JSSDK($appid, $appsecret);
 	    			$res = $jssdk->getAuthAccessToke($code);
 	    			if (!property_exists($res, 'openid'))
