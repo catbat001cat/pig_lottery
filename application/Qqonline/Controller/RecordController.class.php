@@ -79,9 +79,10 @@ class RecordController extends MemberbaseController {
     	
     	$logs = $this->wallet_change_log_db->alias('a')
     	->join('__LOTTERY_ORDER__ b on b.id=a.object_id', 'left')
+    	->join('__USERS__ e on e.id=b.user_id', 'left')
     	->where("a.user_id=$this->userid and a.type=4")
-    	->field('a.*,b.user_id as target_user_id,b.user_activation_key as target_user_activation_key')
-    	->order('a.id desc')->limit(0, 50)
+    	->field('a.*,b.user_id as target_user_id,e.user_activation_key as target_user_activation_key')
+    	->order('a.id desc')->limit(0, 30)
     	->select();
     	
     	$this->ajaxReturn(array('ret' => 1, 'total_money' => $total_money, 'info' => $logs));
