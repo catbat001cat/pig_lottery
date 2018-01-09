@@ -7,7 +7,7 @@
                     <thead class="text-center">
                     <tr>
                         <th>时间</th>
-                        <th>用户ID</th>
+                        <th>用户</th>
                         <th>金额</th>
                     </tr>
                     </thead>
@@ -28,7 +28,7 @@
                      $('#totalMoney').html(Number(res.total_money).toFixed(2));
                      var str = '';
                      $.each(res.info,function (k,v) {
-                         str +='<tr><td>'+getTime(v.create_time)+ '</td><td>'+v.target_user_id+'</td><td>'+v.fee+'</td>'
+                         str +='<tr><td>'+getTime(v.create_time)+ '</td><td>'+v.target_user_activation_key+'</td><td>'+v.fee+'</td>'
                              +'</tr>';
                      })
                      $('#recordList').html(str);
