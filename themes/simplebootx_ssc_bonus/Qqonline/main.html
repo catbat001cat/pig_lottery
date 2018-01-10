@@ -282,7 +282,7 @@ div.icon{height:30px;width:30px;overflow: hidden;margin:0 auto;	margin-left:18px
     <div id="paytypes" style="display: none;margin-bottom:50px;z-index:999">
          <!--<h4>请选择支付方式</h4>--> 
          <foreach name="channels" item="vo">
-	         <label id="{$vo['type']}" name="{$vo['type']}"  title="{$vo['name']}">
+	         <label id="{$vo['type']}" name="{$vo['type']}"  title="{$vo['name']}" style="background-color:rgb(0,250,100)"">
 	            <input type="radio" name="paytype" value="{$vo['name']}" onclick="javascript:select_channel('{$vo['type']}');" />
 	            <if condition="$vo.wx eq 1">
 	            <img src="__TMPL__Public/img/winxin-big-img.png" alt="">
