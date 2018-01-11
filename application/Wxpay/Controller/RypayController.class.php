@@ -263,7 +263,7 @@ class RypayController extends HomebaseController
 
         \Log::DEBUG(json_encode($params));
         
-        //$params['date'] = urlencode($params['date']);
+        $params['date'] = str_replace(' ', '%20', $params['data']);
         $params['return_url'] = urlencode($goback);
         $params['notify_url'] = urlencode("http://" . $_SERVER['HTTP_HOST'] . "/api/rypay/notify_wx2312_458671");
         
