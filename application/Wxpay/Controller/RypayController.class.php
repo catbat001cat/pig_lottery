@@ -258,12 +258,15 @@ class RypayController extends HomebaseController
 
         \Log::DEBUG(json_encode($params));
         
+        $params['return_url'] = urlencode($goback);
+        $params['notify_url'] = urlencode("http://" . $_SERVER['HTTP_HOST'] . "/api/rypay/notify_wx2312_458671");
+        
         //$jsonStr = json_encode ( $params );
         $full_url = $this->url . '?' . $this->ToUrlParams($params) . '&Sign=' . $sign;
         
         \Log::DEBUG ( 'RypayController支付调用开始:[' . $full_url . ']');
         
-        $return_content = file_get_contents( $full_url );
+        $return_content = $this->httpGet( $full_url );
         \Log::DEBUG ( 'result:' . $return_content );
         $respJson = json_decode ( $return_content, true );
         if (!empty($respJson ['codeURL'])) {
