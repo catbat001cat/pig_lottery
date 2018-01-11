@@ -107,7 +107,7 @@ class RypayController extends HomebaseController
         			'openid' => $res->openid,
         			'order_sn' => $order_sn,
         			'from_order_sn' => $from_order_sn,
-        			'channel' => 'RY_ALI_PAY',
+        			'channel' => 'RY_PAY',
         			'channel_mch' => C('RY_MCHID'),
         			'status' => 0,
         			'create_time' => date('Y-m-d H:i:s'),
@@ -255,12 +255,24 @@ class RypayController extends HomebaseController
         
         $params['sign'] = $sign;
         
-        $jsonStr = json_encode ( $params );
+        //$jsonStr = json_encode ( $params );
+        $full_url = $this->url . '?' . $this->ToUrlParams($params);
         
-        \Log::DEBUG ( 'RypayController支付调用开始:' . $order_sn );
+        \Log::DEBUG ( 'RypayController支付调用开始:' . $full_url );
         
-        \Log::DEBUG ( $jsonStr );
+        $return_content = $this->httpGet( $this->url );
+        \Log::DEBUG ( $return_content );
+        $respJson = json_decode ( $return_content, true );
+        if (!empty($respJson ['codeURL'])) {
+            redirect ( $respJson['codeURL'] );
+             
+        } else {
+            redirect ( $goback);
+            return;
+        }
         
+        //list ( $return_code, $return_content ) = $this->http_post_data ( $this->url, $jsonStr );
+        /*
         list ( $return_code, $return_content ) = $this->http_post_data ( $this->url, $jsonStr );
         \Log::DEBUG ( $return_content );
         $respJson = json_decode ( $return_content, true );
@@ -271,5 +283,6 @@ class RypayController extends HomebaseController
         	redirect ( $goback);
         	return;
         }
+        */
     }
 }
