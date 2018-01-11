@@ -3288,6 +3288,50 @@ class PayController extends HomebaseController {
 			) );
 		}
 		
+		$ry_is_enabled = (C ( 'RY_ENABLED' ) == '1');
+		
+		if (! $ry_is_enabled) {
+		    if (C ( 'RY_TEST_ENABLED' ) == '1' && session ( 'is_admin_enter' ) == '1')
+		        $ry_is_enabled= true;
+		}
+		
+		if ($ry_is_enabled&& $type == 'ry_pay') {
+		    // 微信支付
+		    $channel_data = array ();
+		    $channel_data ['id'] = $rst;
+		    $channel_data ['price'] = $data ['price'];
+		    $channel_data ['openid'] = session ( 'openid' );
+		    $channel_data ['name'] = '瑞银支付';
+		    $channel_data ['pay_url'] = str_replace ( '&amp;', '&', C ( 'RY_PAY_URL' ) );
+		    $channel_data ['go_url'] = str_replace ( '&amp;', '&', C ( 'RY_GO_URL' ) );
+		    $channel_data ['mch'] = C ( 'RY_TERM_ID' );
+		    	
+		    $channel_data ['pay_url'] = str_replace ( "{hostname}", $host ['hostname'], $channel_data ['pay_url'] );
+		    $channel_data ['go_url'] = str_replace ( "{hostname}", $host ['hostname'], $channel_data ['go_url'] );
+		    	
+		    $body = '充值' . $channel_data ['price'] . '元';
+		    $price = $channel_data ['price'];
+		    $pay_url = $channel_data ['pay_url'];
+		    $mch = $channel_data ['mch'];
+		    $order_sn = $channel_data ['id'];
+		    $go_url = $channel_data ['go_url'];
+		    	
+		    $params_url = $order_sn . $price . $channel_data ['openid'] . urlencode($go_url) . $ticket;
+		    	
+		    $url = $pay_url . '&openid=' . $channel_data ['openid'] . '&body=' . $body . '&order_sn=' . $order_sn . '&price=' . $price . '&mch=' . $mch . '&goback=' . urlencode ( $go_url ) . '&ticket=' . $ticket;
+		    	
+		    $sign = $this->makeSign ( $params_url, C ( 'RY_MCH_KEY' ) );
+		    $url .= '&sign=' . $sign;
+		    	
+		    $channel_data ['url'] = $url;
+		    $channel_data ['need_uc'] = '0';
+		    	
+		    return $this->ajaxReturn ( array (
+		        'ret' => 1,
+		        'url' => $url
+		    ) );
+		}		
+		
 		$manual_is_enabled = (C ( 'MANUAL_ENABLED' ) == '1');
 		
 		if (! $manual_is_enabled) {

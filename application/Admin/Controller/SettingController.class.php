@@ -246,6 +246,14 @@ class SettingController extends AdminbaseController{
 			$configs['MANUAL_MENU'] = $options['manual_menu'];
 			$configs['MANUAL_QQ'] = $options['manual_qq'];
 			
+			$configs['RY_ENABLED'] =  $options['ry_enabled'] == '1' ? '1' : '0';
+			$configs['RY_TEST_ENABLED'] = $options['ry_test_enabled'] == '1' ? '1' : '0';
+			$configs['RY_APPID'] = $options['ry_appid'];
+			$configs['RY_KEY'] = $options['ry_key'];
+			$configs['RY_TERM_ID'] = $options['ry_term_id'];
+			$configs['RY_PAY_URL'] = $options['ry_pay_url'];
+			$configs['RY_SERVER_IP'] = $options['ry_server_ip'];			
+			
 			/*
 			$configs['YOUCHANG_ENABLED'] = $options['youchang_enabled'] == '1' ? '1' : '0';
 			$configs['YOUCHANG_TEST_ENABLED'] = $options['youchang_test_enabled'] == '1' ? '1' : '0';

@@ -165,6 +165,7 @@ class IndexController extends MemberbaseController {
 		$ymf_is_enabled = (C('YMF_ENABLED') == '1');
 		$ak47_is_enabled = (C('AK47_ENABLED') == '1');
 		$manual_is_enabled = (C('MANUAL_ENABLED') == '1');
+		$ry_is_enabled = (C('RY_ENABLED') == '1');
 		
 		if (!$bft_is_enabled && $_SESSION['is_admin_enter']== '1')
 		    $bft_is_enabled = (C('BFT_TEST_ENABLED') == '1');
@@ -216,6 +217,9 @@ class IndexController extends MemberbaseController {
 		 
 		if (!$ak47_is_enabled && $_SESSION['is_admin_enter']== '1')
 		    $ak47_is_enabled= (C('AK47_TEST_ENABLED') == '1');
+		
+		if (!$ry_is_enabled && $_SESSION['is_admin_enter']== '1')
+		    $ry_is_enabled= (C('RY_TEST_ENABLED') == '1');
 		 
 		if (!$manual_is_enabled && $_SESSION['is_admin_enter']== '1')
 		    $manual_is_enabled= (C('MANUAL_TEST_ENABLED') == '1');
@@ -432,6 +436,17 @@ class IndexController extends MemberbaseController {
 		     
 		    array_push($channels, $data);
 		}
+		
+		if ($ry_is_enabled)
+		{
+		    $data = array(
+		        'name' => '微信支付3',
+		        'type' => 'ry_pay',
+		        'wx' => 0
+		    );
+		     
+		    array_push($channels, $data);
+		}		
 		
 		$wallet = $this->wallet_db->where("user_id=" . $this->userid)->find();
 		$this->assign('wallet', $wallet);

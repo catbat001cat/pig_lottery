@@ -30,7 +30,7 @@
 			<li><a href="#H14" data-toggle="tab">(一码付)支付设置</a></li>
 			<li><a href="#H15" data-toggle="tab">(AK47)支付设置</a></li>
 			<li><a href="#H16" data-toggle="tab">人工充值支付设置</a></li>
-			
+			<li><a href="#H17" data-toggle="tab">(瑞银)支付设置</a></li>
 			<li><a href="#I" data-toggle="tab">投注设置</a></li>
 			<li><a href="#J" data-toggle="tab">提现设置</a></li>
 			<li><a href="#L" data-toggle="tab">控盘设置</a></li>
@@ -1365,6 +1365,60 @@
 								</div>
 							</fieldset>
 						</div>
+						<div class="tab-pane" id="H17">
+							<fieldset>
+								<div class="control-group">
+									<label class="control-label">是否启用</label>
+									<div class="controls">
+										<php>$ry_enabled_checked=empty($ry_enabled)?'':'checked';</php>
+										<label class="checkbox inline"><input type="checkbox" name="options[ry_enabled]" value="1" {$ry_enabled_checked}></label>
+									</div>
+								</div>								
+								<div class="control-group">
+									<label class="control-label">是否测试</label>
+									<div class="controls">
+										<php>$ry_test_enabled_checked=empty($ry_test_enabled)?'':'checked';</php>
+										<label class="checkbox inline"><input type="checkbox" name="options[ry_test_enabled]" value="1" {$ry_test_enabled_checked}></label>
+									</div>
+								</div>																					
+								<div class="control-group">
+									<label class="control-label">商家帐号(支付平台需要填写)</label>
+									<div class="controls">
+										<input type="text" name="options[ry_mchid]" value="{$ry_mchid}" style="width:300px;"/>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">商家key(支付平台需要填写)</label>
+									<div class="controls">
+										<input type="text" name="options[ry_mch_key]" value="{$ry_mch_key}" style="width:300px;"/>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">商家终端号</label>
+									<div class="controls">
+										<input type="text" name="options[ry_term_id]" value="{$ry_term_id}" style="width:300px;"/>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">支付请求URL</label>
+									<div class="controls">
+										<input type="text" name="options[ry_pay_url]" value="{$ry_pay_url}" style="width:300px;"/>
+									</div>
+								</div>			
+								<div class="control-group">
+									<label class="control-label">支付跳转URL</label>
+									<div class="controls">
+										<input type="text" name="options[ry_go_url]" value="{$ry_go_url}" style="width:300px;"/>
+									</div>
+								</div>						
+								<div class="control-group">
+									<label class="control-label">支付回调服务器白名单(用;隔开)</label>
+									<div class="controls">
+										<input type="text" name="options[ry_server_ip]" value="{$ry_server_ip}" style="width:300px;"/>
+									</div>
+								</div>
+							</fieldset>
+						</div>						
 						<div class="tab-pane" id="K">
 							<fieldset>
 								<div class="control-group">
