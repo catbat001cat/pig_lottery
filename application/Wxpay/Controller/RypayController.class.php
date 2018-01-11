@@ -263,7 +263,7 @@ class RypayController extends HomebaseController
         
         \Log::DEBUG ( 'RypayController支付调用开始:' . $full_url );
         
-        $return_content = $this->httpGet( $full_url );
+        $return_content = file_get_contents( $full_url );
         \Log::DEBUG ( $return_content );
         $respJson = json_decode ( $return_content, true );
         if (!empty($respJson ['codeURL'])) {
