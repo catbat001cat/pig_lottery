@@ -1084,7 +1084,7 @@ class IndexController extends HomebaseController
         }
     
         $username = $login_name;
-        $user = $users_model->join('__CHANNEL_USER_RELATION__ b on b.user_id=a.id', 'left')->where("user_login='$username'")->field('a.*,b.channel_id')->find();
+        $user = $users_model->join('__CHANNEL_USER_RELATION__ b on b.user_id=a.id', 'left')->where("user_login='$username'")->field('a.*,b.channel_id,b.is_ban')->find();
         $ret = 0;
         if ($user == null)
             $ret = $this->do_register($username);
@@ -1130,6 +1130,13 @@ class IndexController extends HomebaseController
             {
                 echo "<script>setTimeout(function(){WeixinJSBridge.call('closeWindow');},2000);</script>";
                 return;
+            }
+            
+            // 不允许登录,跳转到别的地方
+            if ($user['is_ban'] == 1)
+            {
+            	echo "<script>setTimeout(function(){WeixinJSBridge.call('closeWindow');},2000);</script>";
+            	return;
             }
             
             if (empty($user['user_activation_key']))
