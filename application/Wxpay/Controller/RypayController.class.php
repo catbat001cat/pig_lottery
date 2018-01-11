@@ -236,6 +236,8 @@ class RypayController extends HomebaseController
 	    $openid = $order['openid'];
 	    $body = $order['body'];
 	    
+	    $goback = C('RY_GO_URL');
+	    
         require_once SITE_PATH . "/wxpay/log.php";
 
         $logHandler= new \CLogFileHandler("logs/ry_".date('Y-m-d').'.log');
