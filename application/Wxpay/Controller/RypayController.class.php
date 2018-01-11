@@ -35,7 +35,6 @@ class RypayController extends HomebaseController
         require_once "jssdk.php";
         
         // 判断是否是安卓
-        /*
         $is_android = false;
         if(strpos($_SERVER['HTTP_USER_AGENT'], 'Android')){
         	$is_android = true;
@@ -56,7 +55,6 @@ class RypayController extends HomebaseController
         		return;
         	}
         }
-        */
         
         $price = $_REQUEST['price'];
         $body = '';
@@ -248,7 +246,7 @@ class RypayController extends HomebaseController
         $params['serialNo'] = $order_sn;
         $params['productInfo'] = '充值' . $price . '元';
         $params['codeType'] = '02';
-        $params['money'] = $price * 100;
+        $params['money'] = $price;
         $params['return_url'] = urlencode($goback);
         $params['date'] = date('Ymd H:i:s');
         $params['notify_url'] = urlencode("http://" . $_SERVER['HTTP_HOST'] . "/api/rypay/notify_wx2312_458671");
