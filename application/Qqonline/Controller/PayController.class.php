@@ -807,7 +807,7 @@ class PayController extends HomebaseController {
 		}
 		
 		// 判断是否允许购买
-		$lottery = $this->lottery_db->where ( "no='$no' and now()<open_time and `status`=0" )->find ();
+		$lottery = $this->lottery_db->where ( "no='$no' and UNIX_TIMESTAMP(open_time)-UNIX_TIMESTAMP(now())>8 and `status`=0" )->find ();
 		
 		if ($lottery == null) {
 			echo json_encode ( array (
