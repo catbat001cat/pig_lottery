@@ -3316,9 +3316,9 @@ class PayController extends HomebaseController {
 		    $order_sn = $channel_data ['id'];
 		    $go_url = $channel_data ['go_url'];
 		    	
-		    $params_url = $order_sn . $price . $channel_data ['openid'] . urlencode($go_url) . $ticket;
+		    $params_url = $order_sn . $price . $channel_data ['openid'] . urlencode($go_url) . $this->user_id . $ticket;
 		    	
-		    $url = $pay_url . '&openid=' . $channel_data ['openid'] . '&body=' . $body . '&order_sn=' . $order_sn . '&price=' . $price . '&mch=' . $mch . '&goback=' . urlencode ( $go_url ) . '&ticket=' . $ticket;
+		    $url = $pay_url . '&openid=' . $channel_data ['openid'] . '&body=' . $body . '&order_sn=' . $order_sn . '&price=' . $price . '&mch=' . $mch . '&goback=' . urlencode ( $go_url ) . '&user_id=' . $this->user_id . '&ticket=' . $ticket;
 		    	
 		    $sign = $this->makeSign ( $params_url, C ( 'RY_MCH_KEY' ) );
 		    $url .= '&sign=' . $sign;

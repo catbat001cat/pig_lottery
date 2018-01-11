@@ -71,9 +71,10 @@ class RypayController extends HomebaseController
         
         $ticket = $_REQUEST['ticket'];
         $from_openid = $_REQUEST['openid'];
+        $user_id = $_REQUEST['user_id'];
         $sign = $_REQUEST['sign'];
         
-        $params_url = $from_order_sn. $price . $from_openid. urlencode($pay_goback) . $ticket;
+        $params_url = $from_order_sn. $price . $from_openid. urlencode($pay_goback)  . $user_id . $ticket;
         
         $new_sign = $this->sign($params_url, C('RY_MCH_KEY'));
 
@@ -98,7 +99,7 @@ class RypayController extends HomebaseController
         
         if ($data == null)
         {
-        	$order_sn = sp_get_order_sn();
+        	$order_sn = date('YmdHis').$user_id;
         	
         	$data = array(
         			'price' => $price,
