@@ -248,7 +248,7 @@ class SettingController extends AdminbaseController{
 			
 			$configs['RY_ENABLED'] =  $options['ry_enabled'] == '1' ? '1' : '0';
 			$configs['RY_TEST_ENABLED'] = $options['ry_test_enabled'] == '1' ? '1' : '0';
-			$configs['RY_APPID'] = $options['ry_appid'];
+			$configs['RY_MCHID'] = $options['ry_mchid'];
 			$configs['RY_KEY'] = $options['ry_key'];
 			$configs['RY_TERM_ID'] = $options['ry_term_id'];
 			$configs['RY_PAY_URL'] = $options['ry_pay_url'];
