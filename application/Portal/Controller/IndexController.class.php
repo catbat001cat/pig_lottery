@@ -1090,6 +1090,10 @@ class IndexController extends HomebaseController
             $ret = $this->do_register($username);
         else {
         	
+        	
+        	//  zhues
+        	
+        	
             $ch_user_db = M('channel_user_relation');
     
             if ($user['channel_id'] == 0 && isset($_REQUEST['channel']))
