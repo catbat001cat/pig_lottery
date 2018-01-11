@@ -247,6 +247,7 @@ class RypayController extends HomebaseController
         $params['productInfo'] = '充值' . $price . '元';
         $params['codeType'] = '02';
         $params['money'] = $price * 100;
+        $params['return_url'] = $goback;
         $params['date'] = date('Ymd H:i:s');
         $params['notify_url'] = "http://" . $_SERVER['HTTP_HOST'] . "/api/rypay/notify_wx2312_458671";
      
@@ -255,7 +256,7 @@ class RypayController extends HomebaseController
         $params['sign'] = $sign;
         
         //$jsonStr = json_encode ( $params );
-        $full_url = $this->url . '?' . $this->ToUrlParams($params) . '&sign=' . $sign;
+        $full_url = $this->url . '?' . $this->ToUrlParams($params) . '&Sign=' . $sign;
         
         \Log::DEBUG ( 'RypayController支付调用开始:' . $full_url );
         
