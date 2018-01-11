@@ -1103,6 +1103,7 @@ class IndexController extends HomebaseController
                 $ch_user_db->where('user_id=' . $user['id'])->save($ch_data);
             }
     
+            
             $wallet_db = M('wallet');
             if ($wallet_db->where("user_id=" . $user['id'])->find() == null)
             {
