@@ -245,7 +245,6 @@ class RypayController extends HomebaseController
         $params['merId'] = C('RY_MCHID');
         $params['serialNo'] = $order_sn;
         $params['productInfo'] = '充值' . $price . '元';
-        $params['body'] = '充值' . $price . '元';
         $params['codeType'] = '02';
         $params['money'] = $price * 100;
         $params['date'] = date('Ymd H:i:s');
