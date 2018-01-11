@@ -181,6 +181,7 @@ class RypayController extends HomebaseController
     	$curl = curl_init();
     	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     	curl_setopt($curl, CURLOPT_TIMEOUT, 500);
+    	curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
     	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
     	curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
     	curl_setopt($curl, CURLOPT_URL, $url);
@@ -269,7 +270,7 @@ class RypayController extends HomebaseController
             redirect ( $respJson['codeURL'] );
              
         } else {
-            redirect ( $goback);
+            //redirect ( $goback);
             return;
         }
         
