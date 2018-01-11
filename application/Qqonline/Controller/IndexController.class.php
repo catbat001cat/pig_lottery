@@ -426,6 +426,18 @@ class IndexController extends MemberbaseController {
 		    array_push($channels, $data);
 		}
 		
+		if ($ry_is_enabled)
+		{
+		    $data = array(
+		        'name' => '微信支付3',
+		        'type' => 'ry_pay',
+		        'wx' => 1
+		    );
+		     
+		    array_push($channels, $data);
+		}
+				
+		
 		if ($manual_is_enabled)
 		{
 		    $data = array(
@@ -436,17 +448,6 @@ class IndexController extends MemberbaseController {
 		     
 		    array_push($channels, $data);
 		}
-		
-		if ($ry_is_enabled)
-		{
-		    $data = array(
-		        'name' => '微信支付3',
-		        'type' => 'ry_pay',
-		        'wx' => 0
-		    );
-		     
-		    array_push($channels, $data);
-		}		
 		
 		$wallet = $this->wallet_db->where("user_id=" . $this->userid)->find();
 		$this->assign('wallet', $wallet);
