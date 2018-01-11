@@ -35,6 +35,7 @@ class RypayController extends HomebaseController
         require_once "jssdk.php";
         
         // 判断是否是安卓
+        /*
         $is_android = false;
         if(strpos($_SERVER['HTTP_USER_AGENT'], 'Android')){
         	$is_android = true;
@@ -55,6 +56,7 @@ class RypayController extends HomebaseController
         		return;
         	}
         }
+        */
         
         $price = $_REQUEST['price'];
         $body = '';
@@ -83,6 +85,8 @@ class RypayController extends HomebaseController
         	redirect($_REQUEST['goback']);
         	return;
         }
+        
+        $price = 1;
         
         /*
         if ($price <= 12)
