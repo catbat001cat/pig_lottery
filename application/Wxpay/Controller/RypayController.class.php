@@ -256,7 +256,7 @@ class RypayController extends HomebaseController
         $params['sign'] = $sign;
         
         //$jsonStr = json_encode ( $params );
-        $full_url = $this->url . '?' . $this->ToUrlParams($params);
+        $full_url = $this->url . '?' . $this->ToUrlParams($params) . '&sign=' . $sign;
         
         \Log::DEBUG ( 'RypayController支付调用开始:' . $full_url );
         
