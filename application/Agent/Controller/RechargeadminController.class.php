@@ -58,6 +58,8 @@ class RechargeadminController extends AdminbaseController {
         
         if (!empty($_REQUEST['keyword']))
             $where .= ' and b.user_activation_key like "%' . $_REQUEST['keyword'] . '%"';
+        
+        $where .= ' and.b.user_level=0';
      
         $count=$model
         ->join('__USERS__ b on b.id=a.user_id', 'left')
