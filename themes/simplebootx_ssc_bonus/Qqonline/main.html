@@ -279,6 +279,8 @@ div.icon{height:30px;width:30px;overflow: hidden;margin:0 auto;	margin-left:18px
         <div class="buy-btn" id="successConfirm">确定</div>
     </div>
 </div>
+    <div class="div_huibg" style="display: none;">
+    </div>
     <div id="paytypes" style="display: none;margin-bottom:50px;z-index:999">
          <!--<h4>请选择支付方式</h4>--> 
          <foreach name="channels" item="vo">
@@ -289,7 +291,7 @@ div.icon{height:30px;width:30px;overflow: hidden;margin:0 auto;	margin-left:18px
 	            <else/>
 	            <img src="__TMPL__Public/img/alipay-big-img.png" alt="">
 	            </if>
-	          	  {$vo['name']}
+	          	  <span style="font-size:16px">{$vo['name']}</span>
 	        </label>    
          </foreach>	
      </div>
