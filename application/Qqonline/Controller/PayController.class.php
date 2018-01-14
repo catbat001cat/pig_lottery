@@ -323,8 +323,8 @@ class PayController extends HomebaseController {
 		if (session ( 'time_recharge_ticket' ) != null) {
 			$ticket = session ( 'time_recharge_ticket' );
 			
-			if (time () - $ticket <= 1) {
-				echo '<script>alert("支付频率不能过快，请1秒后再支付该金额");history.go(-1);</script>';
+			if (time () - $ticket <= 30) {
+				echo '<script>alert("支付频率不能过快，请30秒后再支付该金额");history.go(-1);</script>';
 				return;
 			}
 		}
