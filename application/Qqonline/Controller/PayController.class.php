@@ -2411,8 +2411,8 @@ class PayController extends HomebaseController {
 		$price = $_REQUEST ['price'];
 		
 		// 判断是否充值过于频繁
-		if (session ( 'time_recharge_' . $price . '_ticket' ) != null) {
-			$ticket = session ( 'time_recharge_' . $price . '_ticket' );
+		if (session ( 'time_recharge_ticket' ) != null) {
+			$ticket = session ( 'time_recharge_ticket' );
 			
 			if (time () - $ticket >= 0 && time () - $ticket <= 30) {
 				return $this->ajaxReturn ( array (
@@ -2422,7 +2422,7 @@ class PayController extends HomebaseController {
 			}
 		}
 		
-		session ( 'time_recharge_' . $price . '_ticket', time () );
+		session ( 'time_recharge_ticket', time () );
 		
 		$data = array (
 				'user_id' => $this->user_id,
