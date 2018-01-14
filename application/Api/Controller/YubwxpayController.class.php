@@ -14,7 +14,7 @@ class YubwxpayController extends HomebaseController {
 	}
         
         // 支付结果异步回调
-	public function notify_wx2312_458671() {
+	public function notify_wx2312_347810() {
             require_once SITE_PATH . "/wxpay/log.php";
             
             $logHandler= new \CLogFileHandler("logs/deal_yubwx_".date('Y-m-d').'.log');
