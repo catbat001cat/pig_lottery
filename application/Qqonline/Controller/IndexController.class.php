@@ -1251,7 +1251,7 @@ class IndexController extends MemberbaseController {
     
     public function apply_drawcash_with_money_after()
     {
-    	$this->filterAttack2();
+    	//$this->filterAttack2();
     	
     	if (session ( 'time_tx_ticket2' ) != null) {
     		$ticket = session ( 'time_tx_ticket2' );

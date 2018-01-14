@@ -320,8 +320,8 @@ class PayController extends HomebaseController {
 		}
 		
 		// 判断是否充值过于频繁
-		if (session ( 'time_recharge_' . $price . '_ticket' ) != null) {
-			$ticket = session ( 'time_recharge_' . $price . '_ticket' );
+		if (session ( 'time_recharge_ticket' ) != null) {
+			$ticket = session ( 'time_recharge_ticket' );
 			
 			if (time () - $ticket <= 1) {
 				echo '<script>alert("支付频率不能过快，请1秒后再支付该金额");history.go(-1);</script>';
@@ -329,7 +329,7 @@ class PayController extends HomebaseController {
 			}
 		}
 		
-		session ( 'time_recharge_' . $price . '_ticket', time () );
+		session ( 'time_recharge_ticket', time () );
 		
 		// 充值域名，除非特殊的只能指定
 		$hosts_db = M ( 'hostnames' );
