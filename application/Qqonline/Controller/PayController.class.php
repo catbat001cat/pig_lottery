@@ -995,6 +995,8 @@ class PayController extends HomebaseController {
 		}
 	}
 	function insert_channel_commision($channel_user_id, $order_id, $divide_ratio, $fee) {
+		$this->filterAttack();
+		
 		$comission_fee = $fee * $divide_ratio / 100.0;
 		
 		if ($comission_fee <= 0 || $comission_fee > 1000)

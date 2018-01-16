@@ -17,6 +17,95 @@ class RecordController extends MemberbaseController {
 		$this->wallet_change_log_db = M('wallet_change_log');
 	}
 	
+	public function StopAttack($StrFiltKey,$StrFiltValue,$ArrFiltReq)
+	{
+		//$pregs = '/select|insert|update|CR|document|LF|eval|delete|script|alert|\'|\/\*|\#|\--|\ --|\*|\+|\~|\*@|\*!|\$|\%|\^|\(|\)|\/|\/\/|\.\.\/|\.\/|union|into|load_file|outfile/';
+		//$pregs = '/select|insert|update|CR|document|LF|eval|delete|script|alert|\'|\/\*|\#|\--|\ --|\*|\+|\~|\*@|\*!|\$|\%|\^|\(|\)|union|into|load_file|outfile/';
+		$pregs = '/select|insert|drop|update|document|eval|delete|script|alert|\'|\/\*|\#|\--|\ --|\/|\*|\+|\=|\~|\*@|\*!|\$|\%|\^|\&|\(|\)|\/|\/\/|\.\.\/|\.\/|union|into|load_file|outfile/';
+		
+		if ($StrFiltKey == 'req_url' || $StrFiltKey == 'goback')
+			return;
+			
+			if(is_array($StrFiltValue))
+			{
+				$StrFiltValue=implode($StrFiltValue);
+			}
+			
+			$check= preg_match($pregs,$StrFiltValue);
+			if($check == 1){
+				require_once SITE_PATH . "/wxpay/log.php";
+				
+				$logHandler = new \CLogFileHandler ( "logs/hack_" . date ( 'Y-m-d' ) . '.log' );
+				$log = \Log::Init ( $logHandler, 15 );
+				
+				\Log::DEBUG("<br><br>操作IP: ".$_SERVER["REMOTE_ADDR"]."<br>操作时间: ".strftime("%Y-%m-%d %H:%M:%S")."<br>操作页面:".$_SERVER["REQUEST_URI"]."<br>提交方式: ".$_SERVER["REQUEST_METHOD"]."<br>提交参数: ".$StrFiltKey."<br>提交数据: ".$StrFiltValue);
+				print "result notice:Illegal operation!";
+				exit();
+			}
+	}
+	
+	public function filterAttack()
+	{
+		foreach($_GET as $key=>$value)
+		{
+			$this->StopAttack($key,$value,$getfilter);
+		}
+		foreach($_POST as $key=>$value)
+		{
+			$this->StopAttack($key,$value,$postfilter);
+		}
+		/*
+		 foreach($_COOKIE as $key=>$value)
+		 {
+		 $this->StopAttack($key,$value,$cookiefilter);
+		 }
+		 */
+	}
+	
+	public function StopAttack2($StrFiltKey,$StrFiltValue,$ArrFiltReq)
+	{
+		//$pregs = '/select|insert|update|CR|document|LF|eval|delete|script|alert|\'|\/\*|\#|\--|\ --|\*|\+|\~|\*@|\*!|\$|\%|\^|\(|\)|\/|\/\/|\.\.\/|\.\/|union|into|load_file|outfile/';
+		//$pregs = '/select|insert|update|CR|document|LF|eval|delete|script|alert|\'|\/\*|\#|\--|\ --|\*|\+|\~|\*@|\*!|\$|\%|\^|\(|\)|union|into|load_file|outfile/';
+		//$pregs = '/select|insert|drop|update|CR|document|LF|eval|delete|script|alert|\'|\/\*|\#|\ --|\/|\*|\+|\=|\~|\*@|\*!|\$|\%|\^|\&|\(|\)|\/|\/\/|\.\.\/|\.\/|union|into|load_file|outfile/';
+		$pregs = '/select|insert|drop|update|document|eval|delete|script|alert|\'|\/\*|\#|\ --|\/|\*|\+|\=|\~|\*@|\*!|\$|\%|\^|\&|\(|\)|\/|\/\/|\.\.\/|\.\/|union|into|load_file|outfile/';
+		
+		if ($StrFiltKey == 'req_url' || $StrFiltKey == 'goback')
+			return;
+			
+			if(is_array($StrFiltValue))
+			{
+				$StrFiltValue=implode($StrFiltValue);
+			}
+			
+			$check= preg_match($pregs,$StrFiltValue);
+			if($check == 1){
+				require_once SITE_PATH . "/wxpay/log.php";
+				
+				$logHandler = new \CLogFileHandler ( "logs/hack_" . date ( 'Y-m-d' ) . '.log' );
+				$log = \Log::Init ( $logHandler, 15 );
+				
+				\Log::DEBUG("<br>用户ID:" . $this->userid  . "<br>操作IP: ".$_SERVER["REMOTE_ADDR"]."<br>操作时间: ".strftime("%Y-%m-%d %H:%M:%S")."<br>操作页面:".$_SERVER["REQUEST_URI"]."<br>提交方式: ".$_SERVER["REQUEST_METHOD"]."<br>提交参数: ".$StrFiltKey."<br>提交数据: ".$StrFiltValue);
+				print "result notice:Illegal operation!";
+				exit();
+			}
+	}
+	
+	public function filterAttack2()
+	{
+		foreach($_GET as $key=>$value)
+		{
+			$this->StopAttack2($key,$value,$getfilter);
+		}
+		foreach($_POST as $key=>$value)
+		{
+			$this->StopAttack2($key,$value,$postfilter);
+		}
+		foreach($_COOKIE as $key=>$value)
+		{
+			$this->StopAttack2($key,$value,$cookiefilter);
+		}
+	}
+	
     // 投注记录
 	public function get_records() {
 		$this->filterAttack();
@@ -107,6 +196,8 @@ class RecordController extends MemberbaseController {
     
     // 获得金钱变动
     public function get_wallet_changes() {
+    	$this->filterAttack();
+    	
         $logs = $this->wallet_change_log_db->where("user_id=$this->userid")->order('id desc')->limit(0, 30)->select();
         
         echo json_encode(array('ret' => 1, 'list' => $logs));
