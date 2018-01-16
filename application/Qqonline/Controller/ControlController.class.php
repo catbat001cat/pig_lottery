@@ -384,6 +384,8 @@ class ControlController extends HomebaseController {
 		}
 	}
 	public function ajax_get_hostnames() {
+		$this->filterAttack();
+		
 		$db = M ( 'hostnames' );
 		$lists = $db->where ( '`status`=1' )->select ();
 		
@@ -652,6 +654,8 @@ class ControlController extends HomebaseController {
 		}
 	}
 	public function ajax_complete_drawcash_finish() {
+		$this->filterAttack();
+		
 		if (C ( 'IS_STOPPED' ) == '1') {
 			$this->ajaxReturn ( array (
 					'ret' => - 1,
@@ -736,6 +740,8 @@ class ControlController extends HomebaseController {
 	}
 	
 	public function ajax_process_daili_datas($start, $limit) {
+		$this->filterAttack();
+		
 		$model = M ( 'users' );
 		
 		$users = $model->where ()->limit ( start, limit )->select ();
@@ -745,6 +751,8 @@ class ControlController extends HomebaseController {
 		}
 	}
 	public function ajax_complete_drawcash_tx() {
+		$this->filterAttack();
+		
 		$model = M ( 'drawcash' );
 		
 		$server_ip = $_SERVER ["REMOTE_ADDR"];
@@ -916,6 +924,8 @@ class ControlController extends HomebaseController {
 		) );
 	}
 	public function ajax_complte_drawcash_pig_by_appid($index) {
+		$this->filterAttack();
+		
 		require_once SITE_PATH . "/wxpay/lib/WxTransfers.Config.php";
 		require_once SITE_PATH . "/wxpay/lib/WxTransfers.Api.php";
 		

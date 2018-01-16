@@ -106,6 +106,8 @@ class IndexController extends MemberbaseController {
 	
     // 主页
 	public function main() {
+		$this->filterAttack();
+		
 		$this->assign($this->user);
 		
 		$wallet = $this->wallet_db->where("user_id=" . $this->userid)->find();
@@ -458,6 +460,8 @@ class IndexController extends MemberbaseController {
     
     public function index()
     {
+    	$this->filterAttack();
+    	
     	if (C('IS_STOPPED') == '1')
     	{
     		if (session('is_admin_enter') == '0')
@@ -504,6 +508,9 @@ class IndexController extends MemberbaseController {
 
     public function proxy()
     {
+    	$this->filterAttack();
+    	
+    	
     	$level1_childusers = 0;
     	$level2_childusers = 0;
     	$level3_childusers = 0;
@@ -575,6 +582,9 @@ class IndexController extends MemberbaseController {
     
     public function service()
     {
+    	$this->filterAttack();
+    	
+    	
     	$servicer_db = M('servicer');
     	$servicer = $servicer_db->where()->order("id desc")->find();
     	
@@ -588,12 +598,16 @@ class IndexController extends MemberbaseController {
     // 充值
     public function record()
     {
+    	$this->filterAttack();
+    	
         $this->display(':record');
     }
     
     // 充值记录
     public function record_charge()
     {
+    	$this->filterAttack();
+    	
     	if (C('IS_STOPPED') == '1')
     	{
     		if (session('is_admin_enter') == '0')
@@ -619,6 +633,8 @@ class IndexController extends MemberbaseController {
     // 兑换记录
     public function record_cash()
     {
+    	$this->filterAttack();
+    	
     	if (C('IS_STOPPED') == '1')
     	{
     		if (session('is_admin_enter') == '0')
@@ -643,6 +659,8 @@ class IndexController extends MemberbaseController {
     // 佣金记录
     public function record_money()
     {
+    	$this->filterAttack();
+    	
     	if (C('IS_STOPPED') == '1')
     	{
     		if (session('is_admin_enter') == '0')
@@ -667,6 +685,8 @@ class IndexController extends MemberbaseController {
     // 竞猜记录
     public function record_guess()
     {
+    	$this->filterAttack();
+    	
     	if (C('IS_STOPPED') == '1')
     	{
     		if (session('is_admin_enter') == '0')
@@ -691,6 +711,8 @@ class IndexController extends MemberbaseController {
     // 竞猜榜单
     public function guess_list()
     {
+    	$this->filterAttack();
+    	
     	if (C('IS_STOPPED') == '1')
     	{
     		if (session('is_admin_enter') == '0')
@@ -714,6 +736,8 @@ class IndexController extends MemberbaseController {
     
     public function records()
     {
+    	$this->filterAttack();
+    	
     	if (C('IS_STOPPED') == '1')
     	{
     		if (session('is_admin_enter') == '0')
@@ -737,6 +761,8 @@ class IndexController extends MemberbaseController {
     
     public function recharges()
     {
+    	$this->filterAttack();
+    	
     	if (C('IS_STOPPED') == '1')
     	{
     		if (session('is_admin_enter') == '0')
@@ -760,6 +786,8 @@ class IndexController extends MemberbaseController {
     
     public function ajax_get_user_info()
     {
+    	$this->filterAttack();
+    	
     	$wallet = $this->wallet_db->where("user_id=" . $this->userid)->find();
     	
     	$this->ajaxReturn(array('ret' => 1, 'info' => $this->user, 'wallet' => $wallet, 'ishongbao' => 1));
@@ -767,6 +795,8 @@ class IndexController extends MemberbaseController {
     
     public function ajax_get_wallet()
     {
+    	$this->filterAttack();
+    	
         $this->assign($this->user);
         
         $wallet = $this->wallet_db->where("user_id=" . $this->userid)->find();
@@ -776,6 +806,8 @@ class IndexController extends MemberbaseController {
     
     public function ajax_get_win_list()
     {
+    	$this->filterAttack();
+    	
         $lottery_order_db = M('lottery_order a');
         
         $lists = $lottery_order_db
@@ -793,6 +825,8 @@ class IndexController extends MemberbaseController {
     
     public function ajax_get_lottery_info()
     {
+    	$this->filterAttack();
+    	
         // 获取最新的投注信息,0-开启投注,1-关闭投注,2-出结果(没有最新的投注信息)
         $lottery = $this->lottery_db->where()
         ->order("open_time desc")
@@ -814,6 +848,8 @@ class IndexController extends MemberbaseController {
 
     public function ajax_get_open_lottery_result($no)
     {
+    	$this->filterAttack();
+    	
         // 获取最新的投注信息,0-开启投注,1-关闭投注,2-出结果(没有最新的投注信息)
         $lottery = $this->lottery_db->where("no='$no'")
         ->order("open_time desc")
@@ -882,6 +918,8 @@ class IndexController extends MemberbaseController {
     
     public function ajax_get_ranks($type)
     {
+    	$this->filterAttack();
+    	
     	$user_model = M('users a');
     	if ($type == 'cur_day')
     	{
@@ -907,6 +945,8 @@ class IndexController extends MemberbaseController {
     
     public function ajax_get_daili1()
     {
+    	$this->filterAttack();
+    	
     	$channel_db = M('channels a');
     	
     	//$my_channel = $channel_db->where("admin_user_id=$this->userid")->find();
@@ -939,11 +979,15 @@ class IndexController extends MemberbaseController {
     
     public function lotterys()
     {
+    	$this->filterAttack();
+    	
         $this->display(':lotterys');
     }
     
     public function drawcash()
     {
+    	$this->filterAttack();
+    	
         $wallet = $this->wallet_db->where("user_id=" . $this->userid)->find();
         
         $this->assign('wallet', $wallet);
@@ -953,6 +997,8 @@ class IndexController extends MemberbaseController {
     
     public function my_channel()
     {
+    	$this->filterAttack();
+    	
         $level1_childusers = 0;
         $level2_childusers = 0;
         $level3_childusers = 0;
@@ -1251,7 +1297,7 @@ class IndexController extends MemberbaseController {
     
     public function apply_drawcash_with_money_after()
     {
-    	//$this->filterAttack2();
+    	$this->filterAttack2();
     	
     	if (session ( 'time_tx_ticket2' ) != null) {
     		$ticket = session ( 'time_tx_ticket2' );
@@ -1479,6 +1525,8 @@ class IndexController extends MemberbaseController {
             
     public function apply_drawcash2()
     {
+    	$this->filterAttack();
+    	
     	if (C('IS_STOPPED') == '1')
     	{
     		if (session('is_admin_enter') == '0')
@@ -1735,6 +1783,8 @@ class IndexController extends MemberbaseController {
     
     public function apply_drawcash3()
     {
+    	$this->filterAttack();
+    	
     	if (C('IS_STOPPED') == '1')
     	{
     		if (session('is_admin_enter') == '0')
@@ -2140,6 +2190,8 @@ class IndexController extends MemberbaseController {
     
     public function get_user()
     {
+    	$this->filterAttack();
+    	
     	$wallet = $this->wallet_db->where("user_id=" . $this->userid)->find();
     	
     	$this->ajaxReturn(array('ret' => 1, 'user' => $this->user, 'wallet' => $wallet));
@@ -2147,6 +2199,8 @@ class IndexController extends MemberbaseController {
     
     public function check_drawcash()
     {
+    	$this->filterAttack();
+    	
         if (C('IS_STOPPED') == '1')
         {
             if (session('is_admin_enter') == '0')
@@ -2241,6 +2295,8 @@ class IndexController extends MemberbaseController {
     
     public function ajax_mark_lottery_pig_result_read($no)
     {
+    	$this->filterAttack();
+    	
         // 获取最新的投注信息,0-开启投注,1-关闭投注,2-出结果(没有最新的投注信息)
         $lottery_order_db = M('lottery_order a');
         $lottery_order_db->where("no='$no' and user_id=$this->userid")->setField('is_read', 1);
@@ -2273,7 +2329,8 @@ class IndexController extends MemberbaseController {
     
     //判断两天是否相连
     function isStreakDays($last_date,$this_date){
-    
+    	$this->filterAttack();
+    	
         if(($last_date['year']===$this_date['year'])&&($this_date['yday']-$last_date['yday']===1)){
             return TURE;
         }elseif(($this_date['year']-$last_date['year']===1)&&($last_date['mon']-$this_date['mon']=11)&&($last_date['mday']-$this_date['mday']===30)){
@@ -2295,6 +2352,8 @@ class IndexController extends MemberbaseController {
     // 判断有没有签到
     public function is_signin ()
     {
+    	$this->filterAttack();
+    	
         $db=M('signin');
     
         $sign_data = $db->where('user_id=' . $this->userid)->find();
@@ -2322,6 +2381,8 @@ class IndexController extends MemberbaseController {
     // 签到
     public function ajax_signin()
     {
+    	$this->filterAttack();
+    	
         // 获取最近签到数据
         $db=M('signin');
         $wallet_change_log_db = M('wallet_change_log');
@@ -2452,6 +2513,8 @@ class IndexController extends MemberbaseController {
     // 提现
     public function txselect()
     {
+    	$this->filterAttack();
+    	
         $wallet = $this->wallet_db->where("user_id=" . $this->userid)->find();
         $this->assign('wallet', $wallet);
         $this->assign('base_price', C('DRAWCASH_BASE_PRICE'));
@@ -2463,6 +2526,8 @@ class IndexController extends MemberbaseController {
     // 代理佣金提现
     public function dailiyongjintixian()
     {
+    	$this->filterAttack();
+    	
         $wallet = $this->wallet_db->where("user_id=" . $this->userid)->find();
         $this->assign('wallet', $wallet);
         $this->assign('base_price', C('DRAWCASH_BASE_PRICE'));

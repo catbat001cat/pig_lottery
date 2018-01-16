@@ -19,6 +19,7 @@ class RecordController extends MemberbaseController {
 	
     // 投注记录
 	public function get_records() {
+		$this->filterAttack();
 		
 		//$this->assign($this->user);
 		
@@ -61,7 +62,8 @@ class RecordController extends MemberbaseController {
     
     // 兑换记录
     public function get_drawcashs() {
-        
+    	$this->filterAttack();
+    	
         $total_money = $this->drawcash_db->where("user_id=$this->userid")->sum('price');
         
         $drawcash_logs = $this->drawcash_db->where("user_id=$this->userid")->order('id desc')->limit(0, 50)->select();
@@ -72,6 +74,8 @@ class RecordController extends MemberbaseController {
     // 佣金记录
     public function get_comissions()
     {
+    	$this->filterAttack();
+    	
     	$total_money = $this->wallet_change_log_db->where("user_id=$this->userid and type=4")->sum('fee');
     	
     	if ($total_money == null)
@@ -90,6 +94,8 @@ class RecordController extends MemberbaseController {
     
     // 充值记录
     public function get_recharges() {
+    	$this->filterAttack();
+    	
     	$this->assign($this->user);
     
     	$total_money = $this->recharge_db->where("user_id=$this->userid and `status`=1")->sum('price');

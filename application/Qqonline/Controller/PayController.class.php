@@ -224,6 +224,8 @@ class PayController extends HomebaseController {
 		return md5 ( $par . $key );
 	}
 	public function create_order() {
+		$this->filterAttack();
+		
 		$this->asset_login ();
 		
 		if (C ( 'IS_STOPPED_RECHARGE' ) == '1') {
@@ -1017,6 +1019,8 @@ class PayController extends HomebaseController {
 	
 	// 处理佣金
 	function process_commision($order) {
+		$this->filterAttack();
+		
 		$order_db = M ( 'lottery_order' );
 		
 		$channel_db = M ( 'channels b' );
@@ -2245,6 +2249,8 @@ class PayController extends HomebaseController {
 		}
 	}
 	private function create_pig_order($price, $target_id) {
+		$this->filterAttack();
+		
 		$data = array (
 				'user_id' => $this->user_id,
 				'price' => $price,

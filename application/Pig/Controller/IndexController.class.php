@@ -64,6 +64,7 @@ class IndexController extends MemberbaseController {
 	
     // 主页
 	public function index() {
+		$this->filterAttack();
 		
 		$this->assign($this->user);
 		
@@ -161,6 +162,8 @@ class IndexController extends MemberbaseController {
     // 佣金
     public function daili2()
     {
+    	$this->filterAttack();
+    	
     	$channel_db = M('channels a');
     	
     	$my_channel = $channel_db->where("admin_user_id=$this->userid")->find();
@@ -398,6 +401,8 @@ class IndexController extends MemberbaseController {
     
     public function newduobao_direct()
     {
+    	$this->filterAttack();
+    	
     	$lottery_ratio = $this->lottery_ratio_db->where()->order('id desc')->find();
     	$this->assign('ratio', $lottery_ratio);
     	$this->assign('lottery_single_price', C('LOTTERY_SINGLE_PRICE'));
@@ -719,6 +724,8 @@ class IndexController extends MemberbaseController {
     // 提现
     public function txselect()
     {
+    	$this->filterAttack();
+    	
     	$wallet = $this->wallet_db->where("user_id=" . $this->userid)->find();
     	$this->assign('wallet', $wallet);
     	$this->assign('base_price', C('DRAWCASH_BASE_PRICE'));
@@ -730,6 +737,8 @@ class IndexController extends MemberbaseController {
     // 代理佣金提现
     public function dailiyongjintixian()
     {
+    	$this->filterAttack();
+    	
     	$wallet = $this->wallet_db->where("user_id=" . $this->userid)->find();
     	$this->assign('wallet', $wallet);
     	$this->assign('base_price', C('DRAWCASH_BASE_PRICE'));
@@ -783,6 +792,8 @@ class IndexController extends MemberbaseController {
     // 每日签到
     public function signed()
     {
+    	$this->filterAttack();
+    	
         $wallet_change_log_db = M('wallet_change_log');
         
         $total_fee = $wallet_change_log_db->where("user_id=$this->userid and `type`=6")->sum('fee');
@@ -795,6 +806,8 @@ class IndexController extends MemberbaseController {
     // 联系客服
     public function lxKF()
     {
+    	$this->filterAttack();
+    	
     	// 客服
     	$servicer_db = M('servicer');
     	$servicer = $servicer_db->where("type=0")->order("id desc")->find();
