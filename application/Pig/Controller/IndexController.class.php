@@ -92,6 +92,7 @@ class IndexController extends MemberbaseController {
 		$this->assign('servicer1_qr', sp_get_asset_upload_path($smeta1['thumb']));
 		$this->assign('servicer2_qr', sp_get_asset_upload_path($smeta2['thumb']));
 		
+		$this->assign('game1url', C('GAME1_URL'));
 		$this->assign('recharge_prices', C('RECHARGE_PRICES'));
 		$this->assign('lottery_single_price', C('LOTTERY_SINGLE_PRICE'));
 		$this->assign('lottery_ratio', $lottery_ratio);
